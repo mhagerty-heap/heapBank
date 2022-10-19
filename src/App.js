@@ -200,8 +200,8 @@ const App = () => {
         {
             label: 'Add Accounts',
             items: [
-                { label: 'Add New Savings/Checking Account', icon: 'pi pi-fw pi-pencil', to: '/addAccounts' },
-                { label: 'Add New Bill Pay Account', icon: 'pi pi-fw pi-send', to: '/addBillPayAccount' }
+                { label: 'Add Savings/Checking Accounts', icon: 'pi pi-fw pi-pencil', to: '/addAccounts' },
+                { label: 'Add Bill Pay Accounts', icon: 'pi pi-fw pi-send', to: '/addBillPayAccount' }
             ]
         },
         {
