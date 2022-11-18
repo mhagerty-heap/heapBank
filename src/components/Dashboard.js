@@ -295,46 +295,7 @@ const Dashboard = (props) => {
             </div>
             </div>
 
-            <div className="col-12 lg:col-6 xl:col-6">
-                <div className="card mb-0">
-                    <div >
-                        <Button label="Personalize Your Banking Experience" icon="pi pi-save" onClick={() => setDisplayBasic(true)}/>
-                        <Dialog header="Tell us about yourself" visible={displayBasic} style={{ width: '30vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
-                          <div className="progressbar">
-                            <div style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }}></div>
-                          </div>
-                          <div className="form-container">
-                            <div className="header">
-                              <h5>{FormTitles[page]}</h5>
-                            </div>
-                            <div className="body">{PageDisplay()}</div><h5></h5>
-                            <div className="footer">
 
-                              <Button disabled={page == 0} label="Previous" onClick={() => {setPage((currPage) => currPage - 1)}} />
-                              &nbsp;&nbsp;
-                              <Button label={page === FormTitles.length - 1 ? "Submit" : "Next"} onClick={() => {
-                                if (page === FormTitles.length - 1) {
-                                  console.log(formData);
-                                  setDisplayBasic(false);
-                                  formSubmitMessage();
-                                } else {
-                                  setPage((currPage) => currPage + 1);
-                                }
-
-                              }} />
-                            </div>
-                          </div>
-                        </Dialog>
-                        <Messages ref={formSuccessMessage} />
-                        <Messages ref={formFailMessage} />
-
-
-
-
-
-                </div>
-              </div>
-            </div>
 
 
 
