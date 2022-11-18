@@ -36,6 +36,7 @@ import CheckingPayBill from './components/CheckingPayBill';
 import SavingsDeposit from './components/SavingsDeposit';
 import SavingsPayBill from './components/SavingsPayBill';
 import AddAccounts from './components/AddAccounts';
+import AddAccountForm from './components/AddAccountForm';
 import ApplyForOurCard from './components/ApplyForOurCard';
 import FriendPay from './components/FriendPay';
 import AddBillPayAccount from './components/AddBillPayAccount';
@@ -287,6 +288,7 @@ const App = () => {
                     <Route path="/addBillPayAccount" component={AddBillPayAccount} />
                     <Route path="/addFriendPayFriend" component={AddFriendPayFriend} />
                     <Route path="/creditCardOffer" component={CreditCardOffer} />
+                    <Route path="/addAccountForm" component={AddAccountForm} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />

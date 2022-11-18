@@ -17,7 +17,7 @@ const AddFriendPayFriend = () => {
     { name: 'Alfred Bundy', code: 'BOA' },
     { name: 'John Smith', code: 'USM' },
     { name: 'Steve Johnson', code: 'VER' },
-    { name: 'Gabe Bernard', code: 'TMO' },
+    { name: 'Thomas Jefferson', code: 'TMO' },
     { name: 'PJ Thompson', code: 'AMA' },
     { name: 'George Davis', code: 'ZTR' },
     { name: 'Dan Ravellese', code: 'CHA' },
