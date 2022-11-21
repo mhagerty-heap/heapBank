@@ -88,7 +88,7 @@ export const AppTopbar = (props) => {
                     <Messages ref={formFailMessage} />
                     </li>
                     <li>
-                        <Button icon="pi pi-user-edit" onClick={() => setDisplayBasic(true)}></Button>
+                        <Button label="Personalize" icon="pi pi-user-edit"  className="p-button-success" onClick={() => setDisplayBasic(true)}></Button>
                     </li>
                     <li>
                         <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>
