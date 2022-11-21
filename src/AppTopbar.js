@@ -98,7 +98,7 @@ export const AppTopbar = (props) => {
                     </li>
                 </ul>
 
-                <Dialog header="Tell us about yourself" visible={displayBasic} style={{ width: '30vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
+                <Dialog header="Personalize your Banking Experience" visible={displayBasic} style={{ width: '30vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
                   <div className="progressbar">
                     <div style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }}></div>
                   </div>
