@@ -1,0 +1,9 @@
+{
+    "data": [
+        {"name": "Star Gas & Oil", "code": "StarOil" },
+        {"name": "Northstar Mortgage", "code": "NorthstarMortgage" },
+        {"name": "Benevolent Internet", "code": "BenevolentInternet" },
+        {"name": "NetQuix", "code": "NetQuix" },
+        {"name": "Affleck Insurance", "code": "AffleckInsurance" }
+    ]
+}

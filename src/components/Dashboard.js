@@ -248,7 +248,7 @@ const Dashboard = (props) => {
             <div className="col-12 xl:col-6">
                 <div className="card">
                     <h5>Balances</h5>
-                    <Chart type="line" data={lineData} options={lineOptions} />
+                    <img src="images/dashboard/balances.png" style={{width: '100%'}}/>
                 </div>
             </div>
 

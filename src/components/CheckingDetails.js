@@ -427,13 +427,13 @@ const CheckingDetails = (props) => {
           <div className="col-12 lg:col-6">
             <div className="card flex flex-column align-items-center">
                 <h5>Transaction Type</h5>
-                <Chart type="pie" data={pieData} options={pieOptions} style={{ width: '50%' }} />
+                <img src="images/dashboard/transactionType.png" style={{width: '100%'}}/>
             </div>
           </div>
           <div className="col-12 lg:col-6">
             <div className="card">
                 <h5>Account Comparison</h5>
-                <Chart type="bar" data={barData} options={barOptions} />
+                <img src="images/dashboard/accountComparison.png" style={{width: '100%'}}/>
             </div>
           </div>
           <div className="col-12 card">

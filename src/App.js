@@ -42,6 +42,7 @@ import FriendPay from './components/FriendPay';
 import AddBillPayAccount from './components/AddBillPayAccount';
 import AddFriendPayFriend from './components/AddFriendPayFriend';
 import CreditCardOffer from './components/CreditCardOffer'
+import TestComponent from './components/TestComponent'
 
 import Crud from './pages/Crud';
 import EmptyPage from './pages/EmptyPage';
@@ -289,6 +290,7 @@ const App = () => {
                     <Route path="/addFriendPayFriend" component={AddFriendPayFriend} />
                     <Route path="/creditCardOffer" component={CreditCardOffer} />
                     <Route path="/addAccountForm" component={AddAccountForm} />
+                    <Route path="/testComponent" component={TestComponent} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />
