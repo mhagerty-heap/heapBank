@@ -19,10 +19,10 @@ import { ProductService } from '../service/ProductService';
 import { Toast } from 'primereact/toast';
 
 
-const CheckingDetails = (props) => {
+const SavingsActivity = (props) => {
     const customerService = new CustomerService();
-    const [initiallyRetrievedCheckingData, setInitiallyRetrievedCheckingData] = useState('');
-    const [checkingData, setCheckingData] = useState('');
+    const [initiallyRetrievedSavingsData, setInitiallyRetrievedSavingsData] = useState('');
+    const [savingsData, setSavingsData] = useState('');
     const [filters, setFilters] = useState('');
     const downloadToast = useRef(null);
 
@@ -32,39 +32,25 @@ const CheckingDetails = (props) => {
     ////////////////////////////////
 
     useEffect(() => {
-      //customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(formatInitialDate(data));  });
-      customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(data);  });
+      //customerService.getCustomersSavingsData().then(data => { setInitiallyRetrievedSavingsData(formatInitialDate(data));  });
+      customerService.getCustomersSavingsData().then(data => { setInitiallyRetrievedSavingsData(data);  });
       initFilters();
-      //setCheckingData(checkingDataLocalCopyParsed);
+      //setSavingsData(savingsDataLocalCopyParsed);
     },[]);
-    if ("customerCheckingData" in sessionStorage && sessionStorage.getItem("customerCheckingData") !== null && sessionStorage.getItem("customerCheckingData") !== '""') { // check if data already exists in sessionStorage
-      console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
+    if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
+      console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
     } else {
-      console.log('customerCheckingData does not exist, so will create from initial data load ');
-      const customerCheckingString = JSON.stringify(initiallyRetrievedCheckingData); // stringify initiallyRetrievedTicketData, required for sessionStorage
-      const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', customerCheckingString); // store ticketsLocalCopy key data in localStorage
+      console.log('customerSavingsData does not exist, so will create from initial data load ');
+      const customerSavingsString = JSON.stringify(initiallyRetrievedSavingsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
+      const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', customerSavingsString); // store ticketsLocalCopy key data in localStorage
     }
-    const checkingDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerCheckingData"));
-    console.log("typeof checkingDataLocalCopyParsed = " + typeof checkingDataLocalCopyParsed);
-    console.log(checkingDataLocalCopyParsed);
-
-    // const checkingDataInSessionWithFormattedDate = checkingDataLocalCopyParsed.map(function (item) {  // THIS POS worked to change date correctly
-    //   return {...item, transactionDate: new Date(item.transactionDate)
-    //   };
-    // });
+    const savingsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerSavingsData"));
+    console.log("typeof savingsDataLocalCopyParsed = " + typeof savingsDataLocalCopyParsed);
+    console.log(savingsDataLocalCopyParsed);
 
     ////////////////////////////////
     ////////////////////////////////
     //END LOAD DATA//
-
-
-    // format date string in intitially retrieved json
-    // const formatInitialDate = (data) => {
-    //     return [...data || []].map(d => {
-    //         d.transactionDate = new Date(d.transactionDate); //must translate value into date so that the DataTable utilizes the value correctly
-    //         return d;
-    //     });
-    // }
 
     // format date string in intitially retrieved json
     const formatInitialDate = (data) => {
@@ -165,11 +151,11 @@ const CheckingDetails = (props) => {
 
     const downloadData = () => {
         console.log('download requested');
-        downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Download' });
+        downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Savings Download' });
     }
 
     const clearSessionStorage = () => {
-        sessionStorage.removeItem('customerCheckingData');
+        sessionStorage.removeItem('customerSavingsData');
     }
 
     return (
@@ -188,7 +174,7 @@ const CheckingDetails = (props) => {
           </div>
           <div className="col-12 card">
               <div>
-                <h5>Checking Transaction History &nbsp;&nbsp;
+                <h5>Savings Transaction History &nbsp;&nbsp;
                 <Toast ref={downloadToast} position="bottom-right"/>
                     <button onClick={downloadData} className="p-link layout-topbar-button" >
                       <i className="pi pi-cloud-download"/>
@@ -198,7 +184,7 @@ const CheckingDetails = (props) => {
                     </button>
                 </h5>
               </div>
-              <DataTable value={checkingDataLocalCopyParsed} sortField="transactionDate" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
+              <DataTable value={savingsDataLocalCopyParsed} sortField="transactionDate" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
                   <Column sortable field="transactionDate" header="Transaction Date" dataType="date" style={{ minWidth: '8rem' }} body={dateBodyTemplate} filterField="transactionDate" filterElement={dateFilterTemplate} />
                   <Column sortable field="transactorName" header="Account Name" filter filterPlaceholder="Search by Name" style={{ minWidth: '12rem' }} />
                   <Column sortable field="transactionAmount" header="Transaction Amount" filterField="transactionAmount" dataType="numeric" style={{ minWidth: '10rem' }} body={transactionAmountBodyTemplate} filter filterElement={transactionAmountFilterTemplate} />
@@ -214,4 +200,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return (prevProps.location.pathname === nextProps.location.pathname) && (prevProps.colorMode === nextProps.colorMode);
 };
 
-export default React.memo(CheckingDetails, comparisonFn);
+export default React.memo(SavingsActivity, comparisonFn);

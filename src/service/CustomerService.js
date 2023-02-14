@@ -21,5 +21,15 @@ export class CustomerService {
             .then(res => res.data.data);
     }
 
+    getCustomersCheckingData() {
+        return axios.get('assets/demo/data/heapbankCheckingData.json')
+            .then(res => res.data.data);
+    }
+
+    getCustomersSavingsData() {
+        return axios.get('assets/demo/data/heapbankSavingsData.json')
+            .then(res => res.data.data);
+    }
+
 
 }

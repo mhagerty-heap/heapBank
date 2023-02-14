@@ -19,7 +19,7 @@ import { ProductService } from '../service/ProductService';
 import { Toast } from 'primereact/toast';
 
 
-const CheckingDetails = (props) => {
+const CheckingActivity = (props) => {
     const customerService = new CustomerService();
     const [initiallyRetrievedCheckingData, setInitiallyRetrievedCheckingData] = useState('');
     const [checkingData, setCheckingData] = useState('');
@@ -165,7 +165,7 @@ const CheckingDetails = (props) => {
 
     const downloadData = () => {
         console.log('download requested');
-        downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Download' });
+        downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Checking Download' });
     }
 
     const clearSessionStorage = () => {
@@ -214,4 +214,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return (prevProps.location.pathname === nextProps.location.pathname) && (prevProps.colorMode === nextProps.colorMode);
 };
 
-export default React.memo(CheckingDetails, comparisonFn);
+export default React.memo(CheckingActivity, comparisonFn);

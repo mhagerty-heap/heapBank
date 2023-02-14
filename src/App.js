@@ -24,8 +24,8 @@ import OverlayDemo from './components/OverlayDemo';
 import MediaDemo from './components/MediaDemo';
 import PanelDemo from './components/PanelDemo';
 import TableDemo from './components/TableDemo';
-import CheckingDetails from './components/CheckingDetails';
-import SavingsDetails from './components/SavingsDetails';
+import CheckingActivity from './components/CheckingActivity';
+import SavingsActivity from './components/SavingsActivity';
 import TreeDemo from './components/TreeDemo';
 import InvalidStateDemo from './components/InvalidStateDemo';
 import BlocksDemo from './components/BlocksDemo';
@@ -180,7 +180,7 @@ const App = () => {
         {
             label: 'Checking (XX91)',
             items: [
-                { label: 'Activity', icon: 'pi pi-fw pi-list', to: '/checkingDetails' },
+                { label: 'Activity', icon: 'pi pi-fw pi-list', to: '/checkingActivity' },
                 { label: 'Deposit', icon: 'pi pi-fw pi-wallet', to: '/checkingDeposit' },
                 { label: 'Pay Bill', icon: 'pi pi-fw pi-send', to: '/checkingPayBill' }
             ]
@@ -188,7 +188,7 @@ const App = () => {
         {
             label: 'Savings (XX45)',
             items: [
-                { label: 'Activity', icon: 'pi pi-fw pi-list', to: '/savingsDetails' },
+                { label: 'Activity', icon: 'pi pi-fw pi-list', to: '/savingsActivity' },
                 { label: 'Deposit', icon: 'pi pi-fw pi-wallet', to: '/savingsDeposit' },
                 { label: 'Pay Bill', icon: 'pi pi-fw pi-send', to: '/savingsPayBill' }
             ]
@@ -277,8 +277,8 @@ const App = () => {
                     <Route path="/empty" component={EmptyPage} />
                     <Route path="/makeatransfer" component={MakeATransfer} />
                     <Route path="/documentation" component={Documentation} />
-                    <Route path="/checkingDetails" component={CheckingDetails} />
-                    <Route path="/savingsDetails" component={SavingsDetails} />
+                    <Route path="/checkingActivity" component={CheckingActivity} />
+                    <Route path="/savingsActivity" component={SavingsActivity} />
                     <Route path="/checkingDeposit" component={CheckingDeposit} />
                     <Route path="/checkingPayBill" component={CheckingPayBill} />
                     <Route path="/savingsDeposit" component={SavingsDeposit} />
