@@ -48,23 +48,23 @@ const AdminScreen = () => {
               <h5>Admin Settings</h5>
               <Toast ref={deleteToast} />
               <div className="col-12">
-                  <Button label="Delete Checking Data" onClick={deleteCheckingData}/>
+                  <Button label="Reset Checking Demo Data" onClick={deleteCheckingData}/>
               </div>
               <div className="col-12">
-                  <Button label="Delete Savings Data" onClick={deleteSavingsData}/>
+                  <Button label="Reset Savings Demo Data" onClick={deleteSavingsData}/>
               </div>
               <div className="col-12">
-                  <Button label="Delete Account List Data" onClick={deleteAccountData}/>
+                  <Button label="Reset Account List Data" onClick={deleteAccountData}/>
               </div>
               <div className="col-12">
-                  <Button label="Delete Friend Data" onClick={deleteFriendData}/>
+                  <Button label="Reset Friend Data" onClick={deleteFriendData}/>
               </div>
               <div className="col-12">
               </div>
               <div className="col-12">
               </div>
               <div className="col-12">
-                  <Button label="Delete All Local Storage Data" severity="danger" onClick={deleteAllData}/>
+                  <Button label="Reset All Demo Data" severity="danger" onClick={deleteAllData}/>
               </div>
             </div>
           </div>
