@@ -91,10 +91,18 @@ export const AppTopbar = (props) => {
                         <Button label="Personalize" icon="pi pi-user-edit"  className="p-button-success" onClick={() => setDisplayBasic(true)}></Button>
                     </li>
                     <li>
-                        <button className="p-link layout-topbar-button" onClick={props.onMobileSubTopbarMenuClick}>
-                            <i className="pi pi-sign-out"/>
-                            <span>Profile</span>
-                        </button>
+                        <a href="/adminScreen">
+                          <button className="p-link layout-topbar-button" >
+                              <i className="pi pi-cog"/>
+                              <span>Admin</span>
+                          </button>
+                        </a>
+                        <a href="/signin.html">
+                          <button className="p-link layout-topbar-button" >
+                              <i className="pi pi-sign-out"/>
+                              <span>Sign Out</span>
+                          </button>
+                        </a>
                     </li>
                 </ul>
 
