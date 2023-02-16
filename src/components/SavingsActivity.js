@@ -63,7 +63,7 @@ const SavingsActivity = (props) => {
     }
 
     const statuses = [
-        'Paid', 'Received', 'Transferred'
+        'Paid', 'Received', 'Transferred In', 'Transferred Out'
     ];
 
     const formatCurrency = (value) => {
