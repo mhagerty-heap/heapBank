@@ -1,217 +1,140 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Chart } from 'primereact/chart';
-import { classNames } from 'primereact/utils';
-import { FilterMatchMode, FilterOperator } from 'primereact/api';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { Dropdown } from 'primereact/dropdown';
+import React, { useState, useRef, useEffect } from 'react';
+import { ListBox } from 'primereact/listbox';
 import { InputNumber } from 'primereact/inputnumber';
+import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
-import { ProgressBar } from 'primereact/progressbar';
-import { Calendar } from 'primereact/calendar';
-import { MultiSelect } from 'primereact/multiselect';
-import { Slider } from 'primereact/slider';
-import { TriStateCheckbox } from 'primereact/tristatecheckbox';
-import { ToggleButton } from 'primereact/togglebutton';
-import { Rating } from 'primereact/rating';
-import { CustomerService } from '../service/CustomerService';
-import { ProductService } from '../service/ProductService';
 import { Toast } from 'primereact/toast';
+import { Messages } from 'primereact/messages';
+import { Message } from 'primereact/message';
+import { Calendar } from 'primereact/calendar';
+import { CustomerService } from '../service/CustomerService';
+
+const SavingsPayBill = () => {
+  const savingsDataService = new CustomerService(); // savingsDataService is used to request savings json data
+  const billPayAccountsDataService = new CustomerService(); // billPayAccountsDataService is used to billPayAccount json data
+  const [initiallyRetrievedSavingsData, setInitiallyRetrievedSavingsData] = useState('');
+  const [initiallyRetrievedBillPayAccountsData, setInitiallyRetrievedBillPayAccountsData] = useState('');
+  const [listOfAccounts, setListOfAccounts] = useState(null);
+  const [transactorName, setTransactorName] = useState('');
+  const [transactionDate, setTransactionDate] = useState('');
+  const [transactionAmount, setTransactionAmount] = useState('');
+  const [transactionNotes, setTransactionNotes] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
+  const depositSuccessMessage = useRef(null);
+  const depositFailMessage = useRef(null);
+  const defaultListOfAccounts = [
+      { name: 'Star Gas & Oil', code: 'StarOil' },
+      { name: 'Northstar Mortgage', code: 'NorthstarMortgage' },
+      { name: 'Benevolent Internet', code: 'BenevolentInternet' },
+      { name: 'NetQuix', code: 'NetQuix' },
+      { name: 'Affleck Insurance', code: 'AffleckInsurance' }
+  ];
+
+  //LOAD DATA//
+  ////////////////////////////////
+  ////////////////////////////////
+  useEffect(() => {
+      savingsDataService.getCustomersSavingsData().then(data => {setInitiallyRetrievedSavingsData(data);});
+      billPayAccountsDataService.getCustomersBillPayAccountsData().then(data => {setInitiallyRetrievedBillPayAccountsData(data);});
+      //if bill pay data is available locally, use it, otherwise load default list
+      if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
+        setListOfAccounts(customerBillPayAccountsDataLocalCopyParsed);
+      } else {
+        setListOfAccounts(defaultListOfAccounts);
+
+      }
+  },[]);
+  // set local data for savings
+  if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
+    console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
+  } else {
+    console.log('customerSavingsData does not exist, so will create from initial data load ');
+    const customerSavingsString = JSON.stringify(initiallyRetrievedSavingsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
+    const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', customerSavingsString); // store ticketsLocalCopy key data in localStorage
+  }
+  const savingsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerSavingsData"));
+// set local data for list of bill pay accounts
+  if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
+    console.log('customerBillPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
+  } else {
+    console.log('customerBillPayAccountsData does not exist, so will create from initial data load ');
+    const customerBillPayAccountsString = JSON.stringify(initiallyRetrievedBillPayAccountsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
+    const customerBillPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', customerBillPayAccountsString); // store ticketsLocalCopy key data in localStorage
+  }
+  const customerBillPayAccountsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerBillPayAccountsData"));
+  ////////////////////////////////
+  ////////////////////////////////
+  //END LOAD DATA//
+
+  function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
 
-const CheckingDetails = (props) => {
-    const customerService = new CustomerService();
-    const [initiallyRetrievedCheckingData, setInitiallyRetrievedCheckingData] = useState('');
-    const [checkingData, setCheckingData] = useState('');
-    const [filters, setFilters] = useState('');
-    const downloadToast = useRef(null);
-
-
-    //LOAD DATA//
-    ////////////////////////////////
-    ////////////////////////////////
-
-    useEffect(() => {
-      //customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(formatInitialDate(data));  });
-      customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(data);  });
-      initFilters();
-      //setCheckingData(checkingDataLocalCopyParsed);
-    },[]);
-    if ("customerCheckingData" in sessionStorage && sessionStorage.getItem("customerCheckingData") !== null && sessionStorage.getItem("customerCheckingData") !== '""') { // check if data already exists in sessionStorage
-      console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
+  // what happens when they click the submit deposit button
+  const submitPayment = (e) => {
+    e.preventDefault(); // prevents page from reloading
+    if (transactorName && transactionAmount && transactionDate) {
+      var newTransactionNumber = getRandomInt(300000, 399999);  //define random value between 69999 and 80000
+      var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
+      var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
+      var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
+      var transactionSelectedDate = new Date(transactionDate).toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
+      var transactionArray = {
+        transactionNumber: newTransactionNumber,
+        transactorName: transactorName.name,
+        transactionDate: transactionSelectedDate,
+        transactionAmount: transactionAmount,
+        transactionStatus: "PAID",
+        transactorPastActivity: randomAccountPastActivityNumber,
+        transactionNotes: transactionNotes,
+        transactionAccountNumber: newTransactionAccountNumber,
+        transactionRoutingNumber: newTransactionRoutingNumber
+      }
+      //console.log(transactionArray);
+      savingsDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of savings data
+      const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
+      const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
+      depositSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Bill Paid'});
+      setTransactorName('');
+      setTransactionAmount('');
+      setTransactionDate('');
+      setTransactionNotes('');
     } else {
-      console.log('customerCheckingData does not exist, so will create from initial data load ');
-      const customerCheckingString = JSON.stringify(initiallyRetrievedCheckingData); // stringify initiallyRetrievedTicketData, required for sessionStorage
-      const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', customerCheckingString); // store ticketsLocalCopy key data in localStorage
-    }
-    const checkingDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerCheckingData"));
-    console.log("typeof checkingDataLocalCopyParsed = " + typeof checkingDataLocalCopyParsed);
-    console.log(checkingDataLocalCopyParsed);
-
-    // const checkingDataInSessionWithFormattedDate = checkingDataLocalCopyParsed.map(function (item) {  // THIS POS worked to change date correctly
-    //   return {...item, transactionDate: new Date(item.transactionDate)
-    //   };
-    // });
-
-    ////////////////////////////////
-    ////////////////////////////////
-    //END LOAD DATA//
-
-
-    // format date string in intitially retrieved json
-    // const formatInitialDate = (data) => {
-    //     return [...data || []].map(d => {
-    //         d.transactionDate = new Date(d.transactionDate); //must translate value into date so that the DataTable utilizes the value correctly
-    //         return d;
-    //     });
-    // }
-
-    // format date string in intitially retrieved json
-    const formatInitialDate = (data) => {
-        return [...data || []].map(d => {
-            d.transactionDate = new Date(d.transactionDate); //must translate value into date so that the DataTable utilizes the value correctly
-            d.transactionDate.toLocaleDateString('en-US', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-            });
-            return d;
-        });
-    }
-
-
-    const statuses = [
-        'Paid', 'Received'
-    ];
-
-    const formatCurrency = (value) => {
-        return value.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-    }
-
-    const initFilters = () => {
-        setFilters({
-            'transactorName': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }] },
-            'transactionDate': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
-            'transactionAmount': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            'transactionStatus': { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            'transactorPastActivity': { value: null, matchMode: FilterMatchMode.BETWEEN }
-        });
-    }
-
-    const filterClearTemplate = (options) => {
-        return <Button type="button" icon="pi pi-times" onClick={options.filterClearCallback} className="p-button-secondary"></Button>;
-    }
-
-    const filterApplyTemplate = (options) => {
-        return <Button type="button" icon="pi pi-check" onClick={options.filterApplyCallback} className="p-button-success"></Button>
-    }
-
-    const dateBodyTemplate = (rowData) => {
-        return formatDate(rowData.transactionDate);
-    }
-
-    const formatDate = (value) => {
-        value = new Date(value);
-        return value.toLocaleDateString('en-US', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        });
-    }
-
-    const dateFilterTemplate = (options) => {
-        return <Calendar value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />
-    }
-
-    const transactionAmountBodyTemplate = (rowData) => {
-        return formatCurrency(rowData.transactionAmount);
-    }
-
-    const transactionAmountFilterTemplate = (options) => {
-        return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} mode="currency" currency="USD" locale="en-US" />
-    }
-
-    const statusBodyTemplate = (rowData) => {
-        return <span className={`customer-badge status-${rowData.transactionStatus}`}>{rowData.transactionStatus}</span>;
-    }
-
-    const statusFilterTemplate = (options) => {
-        return <Dropdown value={options.value} options={statuses} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Select a Status" className="p-column-filter" showClear />;
-    }
-
-    const statusItemTemplate = (option) => {
-        return <span className={`customer-badge status-${option}`}>{option}</span>;
-    }
-
-    const activityBodyTemplate = (rowData) => {
-        return <ProgressBar value={rowData.transactorPastActivity} showValue={false} style={{ height: '.5rem' }}></ProgressBar>;
-    }
-
-    const activityFilterTemplate = (options) => {
-        return (
-            <React.Fragment>
-                <Slider value={options.value} onChange={(e) => options.filterCallback(e.value)} range className="m-3"></Slider>
-                <div className="flex align-items-center justify-content-between px-2">
-                    <span>{options.value ? options.value[0] : 0}</span>
-                    <span>{options.value ? options.value[1] : 100}</span>
-                </div>
-            </React.Fragment>
-        )
-    }
-
-    const searchBodyTemplate = () => {
-        return <Button icon="pi pi-search" />;
-    }
-
-    const downloadData = () => {
-        console.log('download requested');
-        downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Download' });
-    }
-
-    const clearSessionStorage = () => {
-        sessionStorage.removeItem('customerCheckingData');
-    }
+      depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
+    };
+  };
 
     return (
-        <div className="grid p-fluid">
-          <div className="col-12 lg:col-6">
-            <div className="card flex flex-column align-items-center">
-                <h5>Transaction Type</h5>
-                <img src="images/dashboard/transactionType.png" style={{width: '100%'}}/>
-            </div>
-          </div>
-          <div className="col-12 lg:col-6">
-            <div className="card flex flex-column align-items-center">
-                <h5>Account Comparison</h5>
-                <img src="images/dashboard/accountComparison.png" style={{width: '100%'}}/>
-            </div>
-          </div>
-          <div className="col-12 card">
-              <div>
-                <h5>Checking Transaction History &nbsp;&nbsp;
-                <Toast ref={downloadToast} position="bottom-right"/>
-                    <button onClick={downloadData} className="p-link layout-topbar-button" >
-                      <i className="pi pi-cloud-download"/>
-                    </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button className="p-link layout-topbar-button" style={{ color: 'transparent' }} onClick={clearSessionStorage} >
-                      <i className="pi pi-minus"/>
-                    </button>
-                </h5>
+        <form onSubmit={submitPayment}>
+          <div className="grid">
+              <div className="col-12">
+                  <div className="card">
+                      <h5>Step #1: Select an Account</h5>
+                      <ListBox value={transactorName} options={listOfAccounts} onChange={(e) => setTransactorName(e.value)} optionLabel="name" style={{ width: '15rem' }} />
+                      <h5>Step #2: Enter a Payment Amount</h5>
+                      <InputNumber value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
+                      <h5>Step #3: Select a Date</h5>
+                      <Calendar id="transactionDate" value={transactionDate} onChange={(e) => setTransactionDate(e.value)} />
+                      <h5>Step #4: Enter Note</h5>
+                      <InputText name="transactionNote"s value={transactionNotes} onChange={(e) => setTransactionNotes(e.target.value)} />
+                      <h5>Step #5: Submit Payment</h5>
+                      <Button label="Submit Payment" icon="pi pi-check-square" className="p-button-success"></Button>
+                      <div classname="card">
+                          <Messages ref={depositSuccessMessage} />
+                          <Messages ref={depositFailMessage} />
+                      </div>
+                  </div>
               </div>
-              <DataTable value={checkingDataLocalCopyParsed} sortField="transactionDate" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
-                  <Column sortable field="transactionDate" header="Transaction Date" dataType="date" style={{ minWidth: '8rem' }} body={dateBodyTemplate} filterField="transactionDate" filterElement={dateFilterTemplate} />
-                  <Column sortable field="transactorName" header="Account Name" filter filterPlaceholder="Search by Name" style={{ minWidth: '12rem' }} />
-                  <Column sortable field="transactionAmount" header="Transaction Amount" filterField="transactionAmount" dataType="numeric" style={{ minWidth: '10rem' }} body={transactionAmountBodyTemplate} filter filterElement={transactionAmountFilterTemplate} />
-                  <Column sortable field="transactionStatus" header="Status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filter filterElement={statusFilterTemplate} />
-                  <Column sortable field="transactorPastActivity" header="Account Past Activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filter filterElement={activityFilterTemplate} />
-              </DataTable>
           </div>
-        </div>
+        </form>
     );
 }
 
 const comparisonFn = function (prevProps, nextProps) {
-    return (prevProps.location.pathname === nextProps.location.pathname) && (prevProps.colorMode === nextProps.colorMode);
+    return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(CheckingDetails, comparisonFn);
+export default React.memo(SavingsPayBill, comparisonFn);

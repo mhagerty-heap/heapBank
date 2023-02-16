@@ -31,5 +31,8 @@ export class CustomerService {
             .then(res => res.data.data);
     }
 
-
+    getCustomersBillPayAccountsData() {
+        return axios.get('assets/demo/data/heapbankBillPayAccounts.json')
+            .then(res => res.data.data);
+    }
 }

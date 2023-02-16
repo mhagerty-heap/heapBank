@@ -26,11 +26,9 @@ const SavingsActivity = (props) => {
     const [filters, setFilters] = useState('');
     const downloadToast = useRef(null);
 
-
     //LOAD DATA//
     ////////////////////////////////
     ////////////////////////////////
-
     useEffect(() => {
       //customerService.getCustomersSavingsData().then(data => { setInitiallyRetrievedSavingsData(formatInitialDate(data));  });
       customerService.getCustomersSavingsData().then(data => { setInitiallyRetrievedSavingsData(data);  });
@@ -47,7 +45,6 @@ const SavingsActivity = (props) => {
     const savingsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerSavingsData"));
     console.log("typeof savingsDataLocalCopyParsed = " + typeof savingsDataLocalCopyParsed);
     console.log(savingsDataLocalCopyParsed);
-
     ////////////////////////////////
     ////////////////////////////////
     //END LOAD DATA//
@@ -65,9 +62,8 @@ const SavingsActivity = (props) => {
         });
     }
 
-
     const statuses = [
-        'Paid', 'Received'
+        'Paid', 'Received', 'Transferred'
     ];
 
     const formatCurrency = (value) => {
@@ -80,7 +76,8 @@ const SavingsActivity = (props) => {
             'transactionDate': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
             'transactionAmount': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             'transactionStatus': { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            'transactorPastActivity': { value: null, matchMode: FilterMatchMode.BETWEEN }
+            'transactorPastActivity': { value: null, matchMode: FilterMatchMode.BETWEEN },
+            'transactionNumber': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
         });
     }
 
@@ -184,12 +181,14 @@ const SavingsActivity = (props) => {
                     </button>
                 </h5>
               </div>
-              <DataTable value={savingsDataLocalCopyParsed} sortField="transactionDate" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
+              <DataTable value={savingsDataLocalCopyParsed} sortField="transactionNumber" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
+                  <Column sortable field="transactionNumber" header="Transaction Number" style={{ minWidth: '8rem' }} />
                   <Column sortable field="transactionDate" header="Transaction Date" dataType="date" style={{ minWidth: '8rem' }} body={dateBodyTemplate} filterField="transactionDate" filterElement={dateFilterTemplate} />
                   <Column sortable field="transactorName" header="Account Name" filter filterPlaceholder="Search by Name" style={{ minWidth: '12rem' }} />
                   <Column sortable field="transactionAmount" header="Transaction Amount" filterField="transactionAmount" dataType="numeric" style={{ minWidth: '10rem' }} body={transactionAmountBodyTemplate} filter filterElement={transactionAmountFilterTemplate} />
                   <Column sortable field="transactionStatus" header="Status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filter filterElement={statusFilterTemplate} />
                   <Column sortable field="transactorPastActivity" header="Account Past Activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filter filterElement={activityFilterTemplate} />
+                  <Column sortable field="transactionNotes" header="Transaction Note" style={{ minWidth: '8rem' }} />
               </DataTable>
           </div>
         </div>

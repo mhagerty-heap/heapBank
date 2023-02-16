@@ -26,11 +26,9 @@ const CheckingActivity = (props) => {
     const [filters, setFilters] = useState('');
     const downloadToast = useRef(null);
 
-
     //LOAD DATA//
     ////////////////////////////////
     ////////////////////////////////
-
     useEffect(() => {
       //customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(formatInitialDate(data));  });
       customerService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(data);  });
@@ -47,24 +45,9 @@ const CheckingActivity = (props) => {
     const checkingDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerCheckingData"));
     console.log("typeof checkingDataLocalCopyParsed = " + typeof checkingDataLocalCopyParsed);
     console.log(checkingDataLocalCopyParsed);
-
-    // const checkingDataInSessionWithFormattedDate = checkingDataLocalCopyParsed.map(function (item) {  // THIS POS worked to change date correctly
-    //   return {...item, transactionDate: new Date(item.transactionDate)
-    //   };
-    // });
-
     ////////////////////////////////
     ////////////////////////////////
     //END LOAD DATA//
-
-
-    // format date string in intitially retrieved json
-    // const formatInitialDate = (data) => {
-    //     return [...data || []].map(d => {
-    //         d.transactionDate = new Date(d.transactionDate); //must translate value into date so that the DataTable utilizes the value correctly
-    //         return d;
-    //     });
-    // }
 
     // format date string in intitially retrieved json
     const formatInitialDate = (data) => {
@@ -79,9 +62,8 @@ const CheckingActivity = (props) => {
         });
     }
 
-
     const statuses = [
-        'Paid', 'Received'
+        'Paid', 'Received', 'Transferred'
     ];
 
     const formatCurrency = (value) => {
@@ -94,7 +76,8 @@ const CheckingActivity = (props) => {
             'transactionDate': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }] },
             'transactionAmount': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
             'transactionStatus': { operator: FilterOperator.OR, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
-            'transactorPastActivity': { value: null, matchMode: FilterMatchMode.BETWEEN }
+            'transactorPastActivity': { value: null, matchMode: FilterMatchMode.BETWEEN },
+            'transactionNumber': { operator: FilterOperator.AND, constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }] },
         });
     }
 
@@ -198,12 +181,14 @@ const CheckingActivity = (props) => {
                     </button>
                 </h5>
               </div>
-              <DataTable value={checkingDataLocalCopyParsed} sortField="transactionDate" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
+              <DataTable value={checkingDataLocalCopyParsed} sortField="transactionNumber" sortOrder={-1} paginator className="p-datatable-gridlines" showGridlines rows={5} dataKey="transactionNumber" filters={filters} responsiveLayout="scroll" emptyMessage="No customers found.">
+                  <Column sortable field="transactionNumber" header="Transaction Number" style={{ minWidth: '8rem' }} />
                   <Column sortable field="transactionDate" header="Transaction Date" dataType="date" style={{ minWidth: '8rem' }} body={dateBodyTemplate} filterField="transactionDate" filterElement={dateFilterTemplate} />
                   <Column sortable field="transactorName" header="Account Name" filter filterPlaceholder="Search by Name" style={{ minWidth: '12rem' }} />
                   <Column sortable field="transactionAmount" header="Transaction Amount" filterField="transactionAmount" dataType="numeric" style={{ minWidth: '10rem' }} body={transactionAmountBodyTemplate} filter filterElement={transactionAmountFilterTemplate} />
                   <Column sortable field="transactionStatus" header="Status" filterMenuStyle={{ width: '14rem' }} style={{ minWidth: '12rem' }} body={statusBodyTemplate} filter filterElement={statusFilterTemplate} />
                   <Column sortable field="transactorPastActivity" header="Account Past Activity" showFilterMatchModes={false} style={{ minWidth: '12rem' }} body={activityBodyTemplate} filter filterElement={activityFilterTemplate} />
+                  <Column sortable field="transactionNotes" header="Transaction Note" style={{ minWidth: '8rem' }} />
               </DataTable>
           </div>
         </div>
