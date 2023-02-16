@@ -125,13 +125,13 @@ const MakeATransfer = () => {
           <div className="col-12 lg:col-6">
             <div className="card">
                 <h5>Step1: Select From Account</h5>
-                <ListBox value={toAccount} options={accounts} onChange={(e) => setToAccount(e.value)} />
+                <ListBox value={fromAccount} options={accounts} onChange={(e) => setFromAccount(e.value)} />
             </div>
           </div>
           <div className="col-12 lg:col-6">
             <div className="card">
                 <h5>Step2: Select To Account</h5>
-                <ListBox value={fromAccount} options={accounts} onChange={(e) => setFromAccount(e.value)} />
+                <ListBox value={toAccount} options={accounts} onChange={(e) => setToAccount(e.value)} />
             </div>
           </div>
           <div className="col-6">
