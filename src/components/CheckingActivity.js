@@ -63,7 +63,7 @@ const CheckingActivity = (props) => {
     }
 
     const statuses = [
-        'Paid', 'Received', 'Transferred In', 'Transferred Out'
+        'Paid', 'Received', 'Transferred In', 'Transferred Out', 'Friend Pay In', 'Friend Pay Out'
     ];
 
     const formatCurrency = (value) => {
