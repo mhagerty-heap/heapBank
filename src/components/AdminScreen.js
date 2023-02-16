@@ -36,7 +36,7 @@ const AdminScreen = () => {
     sessionStorage.removeItem('customerCheckingData');
     sessionStorage.removeItem('customerSavingsData');
     sessionStorage.removeItem('customerBillPayAccountsData');
-    sessionStorage.removeItem('customerFriendData');        
+    sessionStorage.removeItem('customerFriendData');
     deleteToast.current.show({severity:'success', summary: 'Success', detail:'All Data Deleted'});
   }
 
@@ -64,7 +64,7 @@ const AdminScreen = () => {
               <div className="col-12">
               </div>
               <div className="col-12">
-                  <Button label="Delete All Local Storage Data" onClick={deleteAllData}/>
+                  <Button label="Delete All Local Storage Data" severity="danger" onClick={deleteAllData}/>
               </div>
             </div>
           </div>
