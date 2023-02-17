@@ -44,7 +44,7 @@ const AddBillPayAccount = () => {
     { name: 'Chasem', code: 'CHA' },
     { name: 'Tulu', code: 'TUL' },
     { name: 'NewTube', code: 'NEW' },
-    { name: 'Wizney', code: 'WIZ' }
+    { name: 'Bizney', code: 'BIZ' }
   ];
 
   const addBillPayAccountTemplate = (option) => {
