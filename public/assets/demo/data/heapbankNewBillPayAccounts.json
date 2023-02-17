@@ -1,0 +1,14 @@
+{
+    "data": [
+        {"name": "Bank of Americorp", "code": "BOA" },
+        {"name": "USA Mortgage", "code": "USM" },
+        {"name": "Verizap", "code": "VER" },
+        {"name": "TMobits", "code": "TMO" },
+        {"name": "Amazonk", "code": "AMA" },
+        {"name": "Z-Trade", "code": "ZTR" },
+        {"name": "Chasem", "code": "CHA" },
+        {"name": "Tulu", "code": "TUL" },
+        {"name": "NewTube", "code": "NEW" },
+        {"name": "Wizney", "code": "WIZ" }
+    ]
+}

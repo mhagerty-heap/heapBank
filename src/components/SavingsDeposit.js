@@ -23,9 +23,9 @@ const SavingsDeposit = () => {
       customerService.getCustomersSavingsData().then(data => { setInitiallyRetrievedSavingsData(data);  });
     },[]);
     if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
-      console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
+      //console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
     } else {
-      console.log('customerSavingsData does not exist, so will create from initial data load ');
+      //console.log('customerSavingsData does not exist, so will create from initial data load ');
       const customerSavingsString = JSON.stringify(initiallyRetrievedSavingsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
       const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', customerSavingsString); // store ticketsLocalCopy key data in localStorage
     }
@@ -66,13 +66,13 @@ const SavingsDeposit = () => {
         // var day = date.toLocaleString("default", { day: "2-digit" });
         // var todaysDate = year + "-" + month + "-" + day;
         var todaysDate = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        console.log('transactorName = ' + transactorName);
-        console.log('transactionAmount = ' + transactionAmount);
-        console.log('transactionNote = '+ transactionNotes);
-        console.log('transactionNumber = ' + newTransactionNumber);
-        console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
-        console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
-        console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
+        // console.log('transactorName = ' + transactorName);
+        // console.log('transactionAmount = ' + transactionAmount);
+        // console.log('transactionNote = '+ transactionNotes);
+        // console.log('transactionNumber = ' + newTransactionNumber);
+        // console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
+        // console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
+        // console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
         var transactionArray = {
           transactionNumber: newTransactionNumber,
           transactorName: transactorName,

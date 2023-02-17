@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ListBox } from 'primereact/listbox';
 import { InputNumber } from 'primereact/inputnumber';
 import { Button } from 'primereact/button';
@@ -6,20 +6,33 @@ import { Toast } from 'primereact/toast';
 import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
-
-const accounts = [
-    { name: 'Star Gas & Oil', code: 'StarOil' },
-    { name: 'Northstar Mortgage', code: 'NorthstarMortgage' },
-    { name: 'Benevolent Internet', code: 'BenevolentInternet' },
-    { name: 'NetQuix', code: 'NetQuix' },
-    { name: 'Affleck Insurance', code: 'AffleckInsurance' }
-];
-
+import { CustomerService } from '../service/CustomerService';
 
 const AddBillPayAccount = () => {
+  const billPayAccountsDataService = new CustomerService();
+  const [initiallyRetrievedBillPayAccountsData, setInitiallyRetrievedBillPayAccountsData] = useState('');
   const [addBillPayAccount, setAddBillPayAccount] = useState(null)
   const addBillPayAccountSuccessMessage = useRef(null);
   const addBillPayAccountFailMessage = useRef(null);
+
+  //LOAD DATA//
+  ////////////////////////////////
+  ////////////////////////////////
+  useEffect(() => {
+      billPayAccountsDataService.getCustomersBillPayAccountsData().then(data => {setInitiallyRetrievedBillPayAccountsData(data);});
+      //if bill pay data is available locally, use it, otherwise load default list
+  },[]);
+  if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
+    //console.log('customerBillPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
+  } else {
+    //console.log('customerBillPayAccountsData does not exist, so will create from initial data load ');
+    const customerBillPayAccountsString = JSON.stringify(initiallyRetrievedBillPayAccountsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
+    const customerBillPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', customerBillPayAccountsString); // store ticketsLocalCopy key data in localStorage
+  }
+  const customerBillPayAccountsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerBillPayAccountsData"));
+  ////////////////////////////////
+  ////////////////////////////////
+  //END LOAD DATA//
 
   const billPayAccountOptions = [
     { name: 'Bank of Americorp', code: 'BOA' },
@@ -45,9 +58,19 @@ const AddBillPayAccount = () => {
   const onAddBillPayAccount = (e) => {
     e.preventDefault(); // prevents page from reloading
     if (addBillPayAccount) {
-      addBillPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Bill Pay List'});
+      //console.log(addBillPayAccount.name);
+
+      var addAccountArray = {
+        name: addBillPayAccount.name,
+        code: addBillPayAccount.code,
+      }
+      customerBillPayAccountsDataLocalCopyParsed.push(addAccountArray); // add form data array to local copy of checking data
+      const billPayAccountDataString = JSON.stringify(customerBillPayAccountsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
+      const billPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', billPayAccountDataString); // store updated ticketsLocalCopy sessionStorage
+
+      addBillPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to Bill Pay List'});
     } else {
-      addBillPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Select Account'});
+      addBillPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});
     }
     setAddBillPayAccount('');
   }

@@ -36,15 +36,15 @@ const SavingsActivity = (props) => {
       //setSavingsData(savingsDataLocalCopyParsed);
     },[]);
     if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
-      console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
+      //console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
     } else {
-      console.log('customerSavingsData does not exist, so will create from initial data load ');
+      //console.log('customerSavingsData does not exist, so will create from initial data load ');
       const customerSavingsString = JSON.stringify(initiallyRetrievedSavingsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
       const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', customerSavingsString); // store ticketsLocalCopy key data in localStorage
     }
     const savingsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerSavingsData"));
-    console.log("typeof savingsDataLocalCopyParsed = " + typeof savingsDataLocalCopyParsed);
-    console.log(savingsDataLocalCopyParsed);
+    //console.log("typeof savingsDataLocalCopyParsed = " + typeof savingsDataLocalCopyParsed);
+    //console.log(savingsDataLocalCopyParsed);
     ////////////////////////////////
     ////////////////////////////////
     //END LOAD DATA//
@@ -147,7 +147,7 @@ const SavingsActivity = (props) => {
     }
 
     const downloadData = () => {
-        console.log('download requested');
+        //console.log('download requested');
         downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Savings Download' });
     }
 

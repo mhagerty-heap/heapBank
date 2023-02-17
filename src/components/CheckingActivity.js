@@ -36,15 +36,15 @@ const CheckingActivity = (props) => {
       //setCheckingData(checkingDataLocalCopyParsed);
     },[]);
     if ("customerCheckingData" in sessionStorage && sessionStorage.getItem("customerCheckingData") !== null && sessionStorage.getItem("customerCheckingData") !== '""') { // check if data already exists in sessionStorage
-      console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
+      //console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
     } else {
-      console.log('customerCheckingData does not exist, so will create from initial data load ');
+      //console.log('customerCheckingData does not exist, so will create from initial data load ');
       const customerCheckingString = JSON.stringify(initiallyRetrievedCheckingData); // stringify initiallyRetrievedTicketData, required for sessionStorage
       const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', customerCheckingString); // store ticketsLocalCopy key data in localStorage
     }
     const checkingDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerCheckingData"));
-    console.log("typeof checkingDataLocalCopyParsed = " + typeof checkingDataLocalCopyParsed);
-    console.log(checkingDataLocalCopyParsed);
+    //console.log("typeof checkingDataLocalCopyParsed = " + typeof checkingDataLocalCopyParsed);
+    //console.log(checkingDataLocalCopyParsed);
     ////////////////////////////////
     ////////////////////////////////
     //END LOAD DATA//
@@ -147,7 +147,7 @@ const CheckingActivity = (props) => {
     }
 
     const downloadData = () => {
-        console.log('download requested');
+        //console.log('download requested');
         downloadToast.current.show({ severity: 'success', summary: 'Download Requested', detail: 'Starting Checking Download' });
     }
 

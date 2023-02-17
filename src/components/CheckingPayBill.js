@@ -46,18 +46,18 @@ const CheckingPayBill = () => {
   },[]);
   // set local data for checking
   if ("customerCheckingData" in sessionStorage && sessionStorage.getItem("customerCheckingData") !== null && sessionStorage.getItem("customerCheckingData") !== '""') { // check if data already exists in sessionStorage
-    console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
+    //console.log('customerCheckingData already exists and is not null, so will use existing value from sessionStorage');
   } else {
-    console.log('customerCheckingData does not exist, so will create from initial data load ');
+    //console.log('customerCheckingData does not exist, so will create from initial data load ');
     const customerCheckingString = JSON.stringify(initiallyRetrievedCheckingData); // stringify initiallyRetrievedTicketData, required for sessionStorage
     const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', customerCheckingString); // store ticketsLocalCopy key data in localStorage
   }
   const checkingDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerCheckingData"));
 // set local data for list of bill pay accounts
   if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
-    console.log('customerBillPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
+    //console.log('customerBillPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
   } else {
-    console.log('customerBillPayAccountsData does not exist, so will create from initial data load ');
+    //console.log('customerBillPayAccountsData does not exist, so will create from initial data load ');
     const customerBillPayAccountsString = JSON.stringify(initiallyRetrievedBillPayAccountsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
     const customerBillPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', customerBillPayAccountsString); // store ticketsLocalCopy key data in localStorage
   }
