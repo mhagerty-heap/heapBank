@@ -1,9 +1,6 @@
 {
     "data": [
         {"name": "Carol Carpenter", "code": "cc" },
-        {"name": "Tim Holmes", "code": "th" },
-        {"name": "Steve Sobande", "code": "ss" },
-        {"name": "Mike Swanson", "code": "ms" },
         {"name": "Derek Crisafi", "code": "dc" }
     ]
 }
