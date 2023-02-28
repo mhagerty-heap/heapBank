@@ -28,7 +28,7 @@ const AdminScreen = () => {
   }
 
   const deleteFriendData = () => {
-    sessionStorage.removeItem('customerFriendData');
+    sessionStorage.removeItem('customerFriendPayAccountsData');
     deleteToast.current.show({severity:'success', summary: 'Success', detail:'Friend Data Deleted'});
   }
 
@@ -36,7 +36,7 @@ const AdminScreen = () => {
     sessionStorage.removeItem('customerCheckingData');
     sessionStorage.removeItem('customerSavingsData');
     sessionStorage.removeItem('customerBillPayAccountsData');
-    sessionStorage.removeItem('customerFriendData');
+    sessionStorage.removeItem('customerFriendPayAccountsData');
     deleteToast.current.show({severity:'success', summary: 'Success', detail:'All Data Deleted'});
   }
 

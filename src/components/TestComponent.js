@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ListBox } from 'primereact/listbox';
 import { InputNumber } from 'primereact/inputnumber';
-import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Messages } from 'primereact/messages';
@@ -9,127 +8,91 @@ import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
 import { CustomerService } from '../service/CustomerService';
 
-const SavingsPayBill = () => {
-  const savingsDataService = new CustomerService(); // savingsDataService is used to request savings json data
-  const billPayAccountsDataService = new CustomerService(); // billPayAccountsDataService is used to billPayAccount json data
-  const [initiallyRetrievedSavingsData, setInitiallyRetrievedSavingsData] = useState('');
-  const [initiallyRetrievedBillPayAccountsData, setInitiallyRetrievedBillPayAccountsData] = useState('');
-  const [listOfAccounts, setListOfAccounts] = useState(null);
-  const [transactorName, setTransactorName] = useState('');
-  const [transactionDate, setTransactionDate] = useState('');
-  const [transactionAmount, setTransactionAmount] = useState('');
-  const [transactionNotes, setTransactionNotes] = useState('');
-  const [selectedDate, setSelectedDate] = useState(null);
-  const depositSuccessMessage = useRef(null);
-  const depositFailMessage = useRef(null);
-  const defaultListOfAccounts = [
-      { name: 'Star Gas & Oil', code: 'StarOil' },
-      { name: 'Northstar Mortgage', code: 'NorthstarMortgage' },
-      { name: 'Benevolent Internet', code: 'BenevolentInternet' },
-      { name: 'NetQuix', code: 'NetQuix' },
-      { name: 'Affleck Insurance', code: 'AffleckInsurance' }
-  ];
+const AddFriendPayAccount = () => {
+  const friendPayAccountsDataService = new CustomerService();
+  const [initiallyRetrievedFriendPayAccountsData, setInitiallyRetrievedFriendPayAccountsData] = useState('');
+  const [addFriendPayAccount, setAddFriendPayAccount] = useState(null)
+  const addFriendPayAccountSuccessMessage = useRef(null);
+  const addFriendPayAccountFailMessage = useRef(null);
 
   //LOAD DATA//
   ////////////////////////////////
   ////////////////////////////////
   useEffect(() => {
-      savingsDataService.getCustomersSavingsData().then(data => {setInitiallyRetrievedSavingsData(data);});
-      billPayAccountsDataService.getCustomersBillPayAccountsData().then(data => {setInitiallyRetrievedBillPayAccountsData(data);});
+      friendPayAccountsDataService.getCustomersFriendPayAccountsData().then(data => {setInitiallyRetrievedFriendPayAccountsData(data);});
       //if bill pay data is available locally, use it, otherwise load default list
-      if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
-        setListOfAccounts(customerBillPayAccountsDataLocalCopyParsed);
-      } else {
-        setListOfAccounts(defaultListOfAccounts);
-
-      }
   },[]);
-  // set local data for savings
-  if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
-    console.log('customerSavingsData already exists and is not null, so will use existing value from sessionStorage');
+  if ("customerFriendPayAccountsData" in sessionStorage && sessionStorage.getItem("customerFriendPayAccountsData") !== null && sessionStorage.getItem("customerFriendPayAccountsData") !== '""') { // check if data already exists in sessionStorage
+    //console.log('customerFriendPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
   } else {
-    console.log('customerSavingsData does not exist, so will create from initial data load ');
-    const customerSavingsString = JSON.stringify(initiallyRetrievedSavingsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
-    const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', customerSavingsString); // store ticketsLocalCopy key data in localStorage
+    //console.log('customerFriendPayAccountsData does not exist, so will create from initial data load ');
+    const customerFriendPayAccountsString = JSON.stringify(initiallyRetrievedFriendPayAccountsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
+    const customerFriendPayAccountsDataLocalCopy = sessionStorage.setItem('customerFriendPayAccountsData', customerFriendPayAccountsString); // store ticketsLocalCopy key data in localStorage
   }
-  const savingsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerSavingsData"));
-// set local data for list of bill pay accounts
-  if ("customerBillPayAccountsData" in sessionStorage && sessionStorage.getItem("customerBillPayAccountsData") !== null && sessionStorage.getItem("customerBillPayAccountsData") !== '""') { // check if data already exists in sessionStorage
-    console.log('customerBillPayAccountsData already exists and is not null, so will use existing value from sessionStorage');
-  } else {
-    console.log('customerBillPayAccountsData does not exist, so will create from initial data load ');
-    const customerBillPayAccountsString = JSON.stringify(initiallyRetrievedBillPayAccountsData); // stringify initiallyRetrievedTicketData, required for sessionStorage
-    const customerBillPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', customerBillPayAccountsString); // store ticketsLocalCopy key data in localStorage
-  }
-  const customerBillPayAccountsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerBillPayAccountsData"));
+  const customerFriendPayAccountsDataLocalCopyParsed = JSON.parse(sessionStorage.getItem("customerFriendPayAccountsData"));
   ////////////////////////////////
   ////////////////////////////////
   //END LOAD DATA//
 
-  function getRandomInt(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+  const friendPayAccountOptions = [
+    { name: 'Alfred Bundy', code: 'BOA' },
+    { name: 'John Smith', code: 'USM' },
+    { name: 'Steve Johnson', code: 'VER' },
+    { name: 'Thomas Jefferson', code: 'TMO' },
+    { name: 'PJ Thompson', code: 'AMA' },
+    { name: 'George Davis', code: 'ZTR' },
+    { name: 'Dan Ravellese', code: 'CHA' },
+    { name: 'Travis Jimson', code: 'TUL' },
+    { name: 'Carly Stuebens', code: 'NEW' },
+    { name: 'Stephanie Flaunt', code: 'WIZ' }
+  ];
+
+  const addFriendPayAccountTemplate = (option) => {
+    return (
+        <div className="addFriendPay-item">
+            <div>{option.name}</div>
+        </div>
+    );
   }
 
-
-  // what happens when they click the submit deposit button
-  const submitPayment = (e) => {
+  const onAddFriendPayAccount = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (transactorName && transactionAmount && transactionDate) {
-      var newTransactionNumber = getRandomInt(300000, 399999);  //define random value between 69999 and 80000
-      var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
-      var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
-      var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
-      var transactionSelectedDate = new Date(transactionDate).toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
-      var transactionArray = {
-        transactionNumber: newTransactionNumber,
-        transactorName: transactorName.name,
-        transactionDate: transactionSelectedDate,
-        transactionAmount: transactionAmount,
-        transactionStatus: "PAID",
-        transactorPastActivity: randomAccountPastActivityNumber,
-        transactionNotes: transactionNotes,
-        transactionAccountNumber: newTransactionAccountNumber,
-        transactionRoutingNumber: newTransactionRoutingNumber
+    if (addFriendPayAccount) {
+      //console.log(addFriendPayAccount.name);
+
+      var addAccountArray = {
+        name: addFriendPayAccount.name,
+        code: addFriendPayAccount.code,
       }
-      //console.log(transactionArray);
-      savingsDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of savings data
-      const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
-      const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
-      depositSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Bill Paid'});
-      setTransactorName('');
-      setTransactionAmount('');
-      setTransactionDate('');
-      setTransactionNotes('');
+      customerFriendPayAccountsDataLocalCopyParsed.push(addAccountArray); // add form data array to local copy of checking data
+      const friendPayAccountDataString = JSON.stringify(customerFriendPayAccountsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
+      const friendPayAccountsDataLocalCopy = sessionStorage.setItem('customerFriendPayAccountsData', friendPayAccountDataString); // store updated ticketsLocalCopy sessionStorage
+
+      addFriendPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to FriendPay List'});
     } else {
-      depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
-    };
-  };
+      addFriendPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});
+    }
+    setAddFriendPayAccount('');
+  }
 
     return (
-        <form onSubmit={submitPayment}>
-          <div className="grid">
-              <div className="col-12">
-                  <div className="card">
-                      <h5>Step #1: Select an Account</h5>
-                      <ListBox value={transactorName} options={listOfAccounts} onChange={(e) => setTransactorName(e.value)} optionLabel="name" style={{ width: '15rem' }} />
-                      <h5>Step #2: Enter a Payment Amount</h5>
-                      <InputNumber value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
-                      <h5>Step #3: Select a Date</h5>
-                      <Calendar id="transactionDate" value={transactionDate} onChange={(e) => setTransactionDate(e.value)} />
-                      <h5>Step #4: Enter Note</h5>
-                      <InputText name="transactionNote"s value={transactionNotes} onChange={(e) => setTransactionNotes(e.target.value)} />
-                      <h5>Step #5: Submit Payment</h5>
-                      <Button label="Submit Payment" icon="pi pi-check-square" className="p-button-success"></Button>
-                      <div classname="card">
-                          <Messages ref={depositSuccessMessage} />
-                          <Messages ref={depositFailMessage} />
-                      </div>
-                  </div>
+      <form onSubmit={onAddFriendPayAccount}>
+        <div className="grid">
+          <div className="col-12">
+            <div className="card col-6">
+              <h5>Add a Suggested Friend from the list below</h5>
+              <ListBox value={addFriendPayAccount} options={friendPayAccountOptions} onChange={(e) => setAddFriendPayAccount(e.value)} filter optionLabel="name" itemTemplate={addFriendPayAccountTemplate} style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
+            </div>
+            <div className="card col-6">
+              <Button label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
+              <div>
+                <Messages ref={addFriendPayAccountSuccessMessage} />
+                <Messages ref={addFriendPayAccountFailMessage} />
               </div>
+            </div>
           </div>
-        </form>
+        </div>
+      </form>
     );
 }
 
@@ -137,4 +100,4 @@ const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(SavingsPayBill, comparisonFn);
+export default React.memo(AddFriendPayAccount, comparisonFn);

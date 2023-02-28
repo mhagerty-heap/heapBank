@@ -35,4 +35,9 @@ export class CustomerService {
         return axios.get('assets/demo/data/heapbankBillPayAccounts.json')
             .then(res => res.data.data);
     }
+
+    getCustomersFriendPayAccountsData() {
+        return axios.get('assets/demo/data/heapbankFriendPayAccounts.json')
+            .then(res => res.data.data);
+    }
 }
