@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import Link from 'react';
 import { SelectButton } from 'primereact/selectbutton';
 import { Accordion, AccordionTab } from 'primereact/accordion';
 import { RadioButton } from 'primereact/radiobutton';
@@ -11,6 +12,16 @@ import { Toast } from 'primereact/toast';
 import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { ListBox } from 'primereact/listbox';
+import { Dialog } from 'primereact/dialog';
+import SelectAccountType from "./addAccountForm/1SelectAccountType";
+import JointOrIndividual from "./addAccountForm/2JointOrIndividual";
+import ContactInformation from "./addAccountForm/3ContactInformation";
+import EmploymentDetails from "./addAccountForm/4EmploymentDetails";
+import BankInvestmentProfile from "./addAccountForm/5BankInvestmentProfile";
+import RegulatoryQuestions from "./addAccountForm/6RegulatoryQuestions";
+import Disclosures from "./addAccountForm/7Disclosures";
+import SubmitAddAccount from "./addAccountForm/8SubmitAddAccount";
+import axios from 'axios';
 
 
 const AddAccounts = () => {
@@ -57,6 +68,43 @@ const AddAccounts = () => {
   const [addBillPayAccount, setAddBillPayAccount] = useState(null)
   const addBillPayAccountSuccessMessage = useRef(null);
   const addBillPayAccountFailMessage = useRef(null);
+
+  const [wizardAccountIndOrJoint, setWizardAccountIndOrJoint] = useState('Individual');
+  const [wizardWithholding, setWizardWithholding] = useState('No');
+  const [wizardFirstName, setWizardFirstName] = useState('')
+  const [wizardLastName, setWizardLastName] = useState('')
+  const [wizardMiddleInitial, setWizardMiddleInitial] = useState('')
+  const [wizardPhoneNumber, setWizardPhoneNumber] = useState('')
+  const [wizardEmailAddress, setWizardEmailAddress] = useState('')
+  const [wizardOccupation, setWizardOccupation] = useState('')
+  const [wizardSelectAnnualIncome, setWizardSelectAnnualIncome] = useState(null)
+  const [wizardSelectNetWorth, setWizardSelectNetWorth] = useState(null)
+  const [wizardSourceOfNetWorth, setWizardSourceOfNetWorth] = useState(null)
+  const [wizardExpectedUseOfAccount, setWizardExpectedUseOfAccount] = useState(null)
+  const [wizardAccountUsageFrequency, setWizardAccountUsageFrequency] = useState(null)
+  const [wizardAccountDisclosure, setWizardAccountDisclosure] = useState('Yes');
+  const wizardFormSuccessMessage = useRef(null);
+  const wizardFormFailMessage = useRef(null);
+
+  const [displayBasic, setDisplayBasic] = useState(false);
+  const [position, setPosition] = useState('center');
+
+  const dialogFuncMap = {
+    'displayBasic': setDisplayBasic,
+  }
+
+  const onClickDialog = (name, position) => {
+      dialogFuncMap[`${name}`](true);
+
+      if (position) {
+          setPosition(position);
+      }
+  }
+
+  const onHide = (name) => {
+      dialogFuncMap[`${name}`](false);
+  }
+
 
   const billPayAccountOptions = [
     { name: 'Bank of Americorp', code: 'BOA' },
@@ -116,6 +164,7 @@ const AddAccounts = () => {
   ];
 
   const [activeIndex, setActiveIndex] = useState(null);
+
   const onClick = (itemIndex) => {
       let _activeIndex = activeIndex ? [...activeIndex] : [];
 
@@ -154,6 +203,48 @@ const AddAccounts = () => {
     }
   }
 
+  const [page, setPage] = useState(0);
+  const [formData, setFormData] = useState({
+    wizardAccountType: "",
+    wizardAccountIndOrJoint: "",
+    wizardWithholding: "",
+    wizardFirstName: "",
+    wizardLastName: "",
+    wizardMiddleInitial: "",
+    wizardPhoneNumber: "",
+    wizardEmailAddress: "",
+    wizardOccupation: "",
+    wizardSelectAnnualIncome: "",
+    wizardSelectNetWorth: "",
+    wizardSourceOfNetWorth: "",
+    wizardExpectedUseOfAccount: "",
+    wizardAccountUsageFrequency: "",
+    wizardAccountDisclosure: ""
+  });
+
+  const FormTitles = ["Select Account Type", "Individual or Joint Account", "Contact Information", "Employment Details", "Bank Investment Profile", "Regulatory Questions", "Disclosures", "Submit Account Request for Processing"];
+
+  const PageDisplay = () => {
+    if (page === 0) {
+      return <SelectAccountType formData={formData} setFormData={setFormData} />;
+    } else if (page === 1) {
+      return <JointOrIndividual formData={formData} setFormData={setFormData} />;
+    } else if (page === 2) {
+      return <ContactInformation formData={formData} setFormData={setFormData} />;
+    } else if (page === 3) {
+      return <EmploymentDetails formData={formData} setFormData={setFormData} />;
+    } else if (page === 4) {
+      return <BankInvestmentProfile formData={formData} setFormData={setFormData} />;
+    } else if (page === 5) {
+      return <RegulatoryQuestions formData={formData} setFormData={setFormData} />;
+    } else if (page === 6) {
+      return <Disclosures formData={formData} setFormData={setFormData} />;
+    }
+    else {
+      return <SubmitAddAccount formData={formData} setFormData={setFormData} />;
+    }
+  };
+
   const onSavingsButtonClick = (e) => {
     e.preventDefault(); // prevents page from reloading
     if (savingsLastName && savingsFirstName) {
@@ -172,15 +263,41 @@ const AddAccounts = () => {
     }
   };
 
+  async function heapCustomEvent() {
+    let payload = { name: 'John Doe', occupation: 'gardener' };
+    let res = await axios.post('http://httpbin.org/post', payload);
+    let data = res.data;
+    console.log(data);
+  }
+
+  const wizardFormSubmit = (e) => {
+    //e.preventDefault(); // prevents page from reloading
+    if (formData.wizardLastName && formData.wizardFirstName) {
+      console.log(window.heap.identity);
+      wizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
+    } else {
+      wizardFormFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
+    }
+  };
+
     return (
         <div className="grid">
-            <div className="col-12">
-                <div className="card">
-                <h5>Select Account Type</h5>
-                <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
+            <div className="card">
+                <b>Try our New Account Wizard here, or continue below:</b>&nbsp;&nbsp;
+                <Button label="Start Account Wizard" icon="pi pi-bolt" className="p-button-sm" onClick={() => onClickDialog('displayBasic')}></Button>
+                <Messages ref={wizardFormSuccessMessage} />
+                <Messages ref={wizardFormFailMessage} />
+            </div>
+            <div className="col-12 card">
+                <div className="col-4">
+                  <h5>Select Account Type</h5>
+                  <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
+                </div>
+                <div>
+                  &nbsp;
                 </div>
                 { showSavings &&
-                    <div className="card" id="savings">
+                    <div id="savings">
                       <form onSubmit={onSavingsButtonClick}>
                         <Accordion activeIndex={0}>
                           <AccordionTab header="Savings: Joint or Individual?">
@@ -299,7 +416,7 @@ const AddAccounts = () => {
                 }
 
                 { showchecking &&
-                  <div className="card" id="checking">
+                  <div id="checking">
                   <form onSubmit={onCheckingButtonClick}>
                     <Accordion activeIndex={0}>
                       <AccordionTab header="Checking: Joint or Individual?">
@@ -418,6 +535,39 @@ const AddAccounts = () => {
                 }
 
             </div>
+
+            <div className="form">
+              <form id="accountSettingsDialog" name="accountSettingsDialog">
+                <Dialog header="Apply for your new account" visible={displayBasic} style={{ width: '40vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
+                  <div className="progressbar">
+                    <div style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }}></div>
+                  </div>
+                  <div className="form-container">
+                    <div className="header">
+                      <h5>{FormTitles[page]}</h5>
+                    </div>
+                    <div className="body">{PageDisplay()}</div><h5></h5>
+                    <div className="footer">
+
+                      <Button id="Previous" disabled={page == 0} label="Previous" onClick={() => {setPage((currPage) => currPage - 1)}} />
+                      &nbsp;&nbsp;
+                      <Button id={page === FormTitles.length - 1 ? "Finish" : "Next"} label={page === FormTitles.length - 1 ? "Finish" : "Next"} onClick={() => {
+                        if (page === FormTitles.length - 1) {
+                          console.log(formData);
+                          setDisplayBasic(false);
+                          wizardFormSubmit();
+                        } else {
+                          setPage((currPage) => currPage + 1);
+                        }
+
+                      }} />
+                    </div>
+                  </div>
+                </Dialog>
+              </form>
+            </div>
+
+
         </div>
     );
 }
