@@ -14,8 +14,8 @@ function SubmitAddAccount({ formData, setFormData }) {
   return (
 
     <div className="personal-info-container">
-      <div className="field col-12 md:col-4">
-        <b>Please review any answers.  If you are satisfied with your answers, please select Finish below.</b>
+      <div className="field col-12 md:col-12">
+        <b>Please review your answers.  If you are satisfied with your answers, please select the Finish button below. Account access may take up to 14 days.</b>
       </div>
     </div>
 
