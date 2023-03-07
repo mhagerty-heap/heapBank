@@ -263,17 +263,16 @@ const AddAccounts = () => {
     }
   };
 
-  async function heapCustomEvent() {
-    let payload = { name: 'John Doe', occupation: 'gardener' };
-    let res = await axios.post('http://httpbin.org/post', payload);
-    let data = res.data;
-    console.log(data);
-  }
+  // async function heapCustomEvent() {
+  //   let payload = { name: 'John Doe', occupation: 'gardener' };
+  //   let res = await axios.post('http://httpbin.org/post', payload);
+  //   let data = res.data;
+  //   console.log(data);
+  // }
 
   const wizardFormSubmit = (e) => {
     //e.preventDefault(); // prevents page from reloading
     if (formData.wizardLastName && formData.wizardFirstName) {
-      console.log(window.heap.identity);
       wizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
     } else {
       wizardFormFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
