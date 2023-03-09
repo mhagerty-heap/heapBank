@@ -232,7 +232,7 @@ const Dashboard = (props) => {
                 <div className="card mb-0">
                     <div className="flex justify-content-between mb-3">
                         <div>
-                            <span className="block text-500 font-medium mb-3">Offers</span>
+                            <span className="block text-500 font-medium mb-3">Credit Card Offers</span>
                             <div className="text-900 font-medium text-xl">
                               <Link to='/creditCardOffer'>1 Unread</Link>
                             </div>

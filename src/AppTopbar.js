@@ -63,15 +63,19 @@ export const AppTopbar = (props) => {
     }
   };
 
+  const signOut = () => {
+      window.heap.resetIdentity();
+      console.log("reset Heap Identity");
+      window.location = '/signin.html';
+  }
 
 
     return (
         <div className="layout-topbar">
 
-            <Link to="/" className="layout-topbar-logo">
-                <img src={props.layoutColorMode === 'light' ? 'assets/layout/images/play-logo-light.png' : 'assets/layout/images/play-logo-dark.png'} alt="logo"/>
-                <span>PLAY</span>
-            </Link>
+            <a href="/signin.html" >
+                <img width="170" height="50" src={props.layoutColorMode === 'light' ? 'images/marketing/logo/logo-gray-black.png' : 'images/marketing/logo/logo-gray-white.png'} alt="logo"/>
+            </a>
 
             <button type="button" className="p-link  layout-menu-button layout-topbar-button" onClick={props.onToggleMenuClick}>
                 <i className="pi pi-bars"/>
@@ -97,12 +101,7 @@ export const AppTopbar = (props) => {
                               <span>Admin</span>
                           </button>
                         </a>
-                        <a href="/signin.html">
-                          <button className="p-link layout-topbar-button" >
-                              <i className="pi pi-sign-out"/>
-                              <span>Sign Out</span>
-                          </button>
-                        </a>
+                        <Button icon="pi pi-sign-out" onClick={() => signOut()}></Button>
                     </li>
                 </ul>
 
