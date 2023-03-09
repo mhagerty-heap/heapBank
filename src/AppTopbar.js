@@ -96,12 +96,14 @@ export const AppTopbar = (props) => {
                     </li>
                     <li>
                         <a href="/adminScreen">
-                          <button className="p-link layout-topbar-button" >
+                          <button className="p-link layout-topbar-button" id="adminScreenButton">
                               <i className="pi pi-cog"/>
                               <span>Admin</span>
                           </button>
                         </a>
-                        <Button icon="pi pi-sign-out" onClick={() => signOut()}></Button>
+                        <button className="p-link layout-topbar-button" id="adminScreenButton" onClick={() => signOut()}>
+                            <i className="pi pi-sign-out"/>
+                        </button>
                     </li>
                 </ul>
 
