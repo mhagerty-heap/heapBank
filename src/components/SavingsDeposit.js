@@ -87,7 +87,7 @@ const SavingsDeposit = () => {
         savingsDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of savings data
         const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
         const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
-        depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Download' });
+        depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Deposit' });
 
     };
 
