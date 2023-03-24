@@ -5,8 +5,8 @@ import { SelectButton } from 'primereact/selectbutton';
 function SelectAccountType({ formData, setFormData }) {
 
   const accountTypes = [
-    { name: 'Checking', code: 'checking' },
-    { name: 'Savings', code: 'savings' }
+    { name: 'Savings', code: 'Savings' },
+    { name: 'Checking', code: 'Checking' }
   ];
 
   const [selectButtonValue, setSelectButtonValue] = useState(null);
