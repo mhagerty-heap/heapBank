@@ -85,7 +85,7 @@ const AddBillPayAccount = () => {
             </div>
             <div className="card col-6">
               <Button label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
-              <div classname="card">
+              <div>
                 <Messages ref={addBillPayAccountSuccessMessage} />
                 <Messages ref={addBillPayAccountFailMessage} />
               </div>
