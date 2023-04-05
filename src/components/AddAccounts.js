@@ -22,6 +22,7 @@ import RegulatoryQuestions from "./addAccountForm/6RegulatoryQuestions";
 import Disclosures from "./addAccountForm/7Disclosures";
 import SubmitAddAccount from "./addAccountForm/8SubmitAddAccount";
 import axios from 'axios';
+import { Divider } from 'primereact/divider';
 
 
 const AddAccounts = () => {
@@ -46,8 +47,8 @@ const AddAccounts = () => {
   const [savingsExpectedUseOfAccount, setSavingsExpectedUseOfAccount] = useState(null)
   const [savingsAccountUsageFrequency, setSavingsAccountUsageFrequency] = useState(null)
   const [savingsAccountDisclosure, setSavingsAccountDisclosure] = useState('Yes');
-  const savingsAccountSuccessMessage = useRef(null);
-  const savingsAccountFailMessage = useRef(null);
+  const nonWizardAccountSuccessMessage = useRef(null);
+  const nonWizardAccountFailMessage = useRef(null);
 
   const [checkingAccountIndOrJoint, setCheckingAccountIndOrJoint] = useState('Individual');
   const [checkingWithholding, setCheckingWithholding] = useState('No');
@@ -85,6 +86,8 @@ const AddAccounts = () => {
   const [wizardAccountDisclosure, setWizardAccountDisclosure] = useState('Yes');
   const wizardFormSuccessMessage = useRef(null);
   const wizardFormFailMessage = useRef(null);
+  const nonWizardFormSuccessMessage = useRef(null);
+  const nonWizardFormFailMessage = useRef(null);
 
   const [displayBasic, setDisplayBasic] = useState(false);
   const [position, setPosition] = useState('center');
@@ -149,6 +152,11 @@ const AddAccounts = () => {
   const savingsSourceOfNetWorthOptions = [
     {label: 'Employment', value: 'Employment'},
     {label: 'Inheritance', value: 'Inheritance'},
+  ];
+
+  const accountIndOrJoint = [
+    { name: 'Individual', value: 'Individual'},
+    { name: 'Joint', value: 'Joint', constant: true }
   ];
 
   const savingsExpectedUseOfAccountOptions = [
@@ -245,30 +253,14 @@ const AddAccounts = () => {
     }
   };
 
-  const onSavingsButtonClick = (e) => {
+  const nonWizardFormSubmit = (e) => {
     e.preventDefault(); // prevents page from reloading
     if (savingsLastName && savingsFirstName) {
-      savingsAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Savings Account Submitted for Processing'});
+      nonWizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
     } else {
-      savingsAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
+      nonWizardFormFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
     }
   };
-
-  const onCheckingButtonClick = (e) => {
-    e.preventDefault(); // prevents page from reloading
-    if (checkingLastName && checkingFirstName) {
-      checkingAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Checking Account Submitted for Processing'});
-    } else {
-      checkingAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
-    }
-  };
-
-  // async function heapCustomEvent() {
-  //   let payload = { name: 'John Doe', occupation: 'gardener' };
-  //   let res = await axios.post('http://httpbin.org/post', payload);
-  //   let data = res.data;
-  //   console.log(data);
-  // }
 
   const wizardFormSubmit = (e) => {
     //e.preventDefault(); // prevents page from reloading
@@ -280,292 +272,213 @@ const AddAccounts = () => {
   };
 
     return (
-        <div className="grid">
+        <div>
             <div className="card">
-                <b>Try our New Account Wizard here, or continue below:</b>&nbsp;&nbsp;
-                <Button label="Start Account Wizard" icon="pi pi-bolt" className="p-button-sm" onClick={() => onClickDialog('displayBasic')}></Button>
+                <h5>Add New Account &nbsp;&nbsp;
+                <Button label="Start New Account Wizard" icon="pi pi-bolt" className="p-button-sm" onClick={() => onClickDialog('displayBasic')}></Button>
+                </h5>
+                <div className="field col-12 md:col-4"></div>
                 <Messages ref={wizardFormSuccessMessage} />
                 <Messages ref={wizardFormFailMessage} />
-            </div>
-            <div className="col-12 card">
-                <div className="col-4">
-                  <h5>Select Account Type</h5>
-                  <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
-                </div>
-                <div>
-                  &nbsp;
-                </div>
-                { showSavings &&
-                    <div id="savings">
-                      <form onSubmit={onSavingsButtonClick}>
-                        <Accordion activeIndex={0}>
-                          <AccordionTab header="Savings: Joint or Individual?">
-                              <div className="field-radiobutton">
-                                <RadioButton inputId="individual" name="savingsAccountIndOrJoint" value="Individual" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Individual'} />
-                                <label htmlFor="individual">Individual</label>
-                              </div>
-                              <div className="field-radiobutton">
-                                <RadioButton inputId="joint" name="savingsAccountIndOrJoint" value="Joint" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Joint'} />
-                                <label htmlFor="joint">Joint</label>
-                              </div>
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Contact Information">
-                            <div className="grid p-fluid">
-                              <div className="col-12 lg:col-6">
-                                <h6>First Name</h6>
-                                <InputText value={savingsFirstName} onChange={(e) => setSavingsFirstName(e.target.value)} />
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h6>Last Name</h6>
-                                <InputText value={savingsLastName} onChange={(e) => setSavingsLastName(e.target.value)} />
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h6>Middle Initial</h6>
-                                <InputText value={savingsMiddleInitial} onChange={(e) => setSavingsMiddleInitial(e.target.value)} />
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h6>Phone Number</h6>
-                                <InputText value={savingsPhoneNumber} onChange={(e) => setSavingsPhoneNumber(e.target.value)} />
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h6>Email Address</h6>
-                                <InputText value={savingsEmailAddress} onChange={(e) => setSavingsEmailAddress(e.target.value)} />
-                              </div>
-                            </div>
 
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Employment Details">
-                            <div className="col-12 lg:col-6">
-                              <h6>Occupation</h6>
-                              <InputText value={savingsOccupation} onChange={(e) => setSavingsOccupation(e.target.value)} />
-                            </div>
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Bank Investment Profile">
-                            <div className="grid p-fluid">
-                              <div className="col-12 lg:col-6">
-                                <h6>Annual Income</h6>
-                                <Dropdown value={savingsSelectAnnualIncome} options={savingsSelectAnnualIncomeItems} onChange={(e) => setSavingsSelectAnnualIncome(e.value)} placeholder="Select an Answer"/>
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h6>Total Net Worth</h6>
-                                <Dropdown value={savingsSelectNetWorth} options={savingsSelectNetWorthItems} onChange={(e) => setSavingsSelectNetWorth(e.value)} placeholder="Select an Answer"/>
-                              </div>
-                            </div>
 
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Regulatory Questions">
-                          <div className="grid p-fluid">
-                            <div className="col-12 lg:col-6">
-                              <h6>Backup Withholding?</h6>
-                              <SelectButton value={savingsWithholding} options={savingsWithholdingOptions} onChange={(e) => setSavingsWithholding(e.value)}></SelectButton>
-                            </div>
-                            <div className="col-12 lg:col-6">
-                              <h6>Source of Net Worth</h6>
-                              <Dropdown value={savingsSourceOfNetWorth} options={savingsSourceOfNetWorthOptions} onChange={(e) => setSavingsSourceOfNetWorth(e.value)} placeholder="Select an Answer"/>
-                            </div>
-                            <div className="col-12 lg:col-6">
-                              <h6>Expected Use of Account</h6>
-                              <Dropdown value={savingsExpectedUseOfAccount} options={savingsExpectedUseOfAccountOptions} onChange={(e) => setSavingsExpectedUseOfAccount(e.value)} placeholder="Select an Answer"/>
-                            </div>
-                            <div className="col-12 lg:col-6">
-                              <h6>Account Usage Frequency</h6>
-                              <Dropdown value={savingsAccountUsageFrequency} options={savingsAccountUsageFrequencyOptions} onChange={(e) => setSavingsAccountUsageFrequency(e.value)} placeholder="Select an Answer"/>
-                            </div>
+                <form id="accountSettingsNonWizard" name="accountSettingsNonWizard" onSubmit={nonWizardFormSubmit}>
+                  <div className="p-fluid grid">
+                    <div className="card grid col-12">
+
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-wallet mr-2"></i>
+                            <b>Account Type</b>
                           </div>
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Disclosures">
-                            <div className="grid p-fluid">
-                              <div className="col-12">
-                                <p>
-                                This Deposit Agreement and Disclosures, the applicable Schedule of Fees, the signature card and
-                                other account opening documents for your account are part of the binding contract between you and
-                                us (this “Agreement”) for your deposit account and your deposit relationship with us. They contain
-                                the terms of our agreement with you. Please read all of these documents carefully.
-                                This Deposit Agreement and Disclosures also summarizes certain laws and regulations that apply to
-                                common transactions, provides some disclosures for deposit accounts required by federal law, and
-                                establishes terms that cover some transactions or situations that the law either does not cover or
-                                allows us to change by this contract.
-                                </p>
-                              </div>
-                              <div className="col-12 lg:col-6">
-                                <h5> Do you agree with these disclosures?</h5>
-                                <div className="field-radiobutton">
-                                  <RadioButton inputId="disclosureYes" name="savingsAccountDisclosure" value="Yes" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'Yes'} />
-                                  <label htmlFor="individual">Yes</label>
-                                </div>
-                                <div className="field-radiobutton">
-                                  <RadioButton inputId="disclosureNo" name="savingsAccountDisclosure" value="No" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'No'} />
-                                  <label htmlFor="joint">No</label>
-                                </div>
+                        </Divider>
+                        <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
+                      </div>
 
-
-                              </div>
-                            </div>
-                          </AccordionTab>
-                          <AccordionTab header="Savings: Submit">
-                            <Button label="Add Account for Processing" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
-                            <div className="card">
-                                <Messages ref={savingsAccountSuccessMessage} />
-                                <Messages ref={savingsAccountFailMessage} />
-                            </div>
-                          </AccordionTab>
-                      </Accordion>
-                    </form>
-                  </div>
-                }
-
-                { showchecking &&
-                  <div id="checking">
-                  <form onSubmit={onCheckingButtonClick}>
-                    <Accordion activeIndex={0}>
-                      <AccordionTab header="Checking: Joint or Individual?">
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-user-plus mr-2"></i>
+                            <b>Joint or Individual</b>
+                          </div>
+                        </Divider>
                           <div className="field-radiobutton">
-                            <RadioButton inputId="individual" name="checkingAccountIndOrJoint" value="Individual" onChange={(e) => setCheckingAccountIndOrJoint(e.value)} checked={checkingAccountIndOrJoint === 'Individual'} />
+                            <RadioButton inputId="individual" name="savingsAccountIndOrJoint" value="Individual" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Individual'} />
                             <label htmlFor="individual">Individual</label>
-                          </div>
+                          </div>&nbsp;&nbsp;
                           <div className="field-radiobutton">
-                            <RadioButton inputId="joint" name="checkingAccountIndOrJoint" value="Joint" onChange={(e) => setCheckingAccountIndOrJoint(e.value)} checked={checkingAccountIndOrJoint === 'Joint'} />
+                            <RadioButton inputId="joint" name="savingsAccountIndOrJoint" value="Joint" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Joint'} />
                             <label htmlFor="joint">Joint</label>
                           </div>
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Contact Information">
-                        <div className="grid p-fluid">
-                          <div className="col-12 lg:col-6">
-                            <h6>First Name</h6>
-                            <InputText value={checkingFirstName} onChange={(e) => setCheckingFirstName(e.target.value)} />
-                          </div>
-                          <div className="col-12 lg:col-6">
-                            <h6>Last Name</h6>
-                            <InputText value={checkingLastName} onChange={(e) => setCheckingLastName(e.target.value)} />
-                          </div>
-                          <div className="col-12 lg:col-6">
-                            <h6>Middle Initial</h6>
-                            <InputText value={checkingMiddleInitial} onChange={(e) => setCheckingMiddleInitial(e.target.value)} />
-                          </div>
-                          <div className="col-12 lg:col-6">
-                            <h6>Phone Number</h6>
-                            <InputText value={checkingPhoneNumber} onChange={(e) => setCheckingPhoneNumber(e.target.value)} />
-                          </div>
-                          <div className="col-12 lg:col-6">
-                            <h6>Email Address</h6>
-                            <InputText value={checkingEmailAddress} onChange={(e) => setCheckingEmailAddress(e.target.value)} />
-                          </div>
-                        </div>
+                      </div>
 
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Employment Details">
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-tags mr-2"></i>
+                            <b>Contact Information</b>
+                          </div>
+                        </Divider>
+                        <div className="col-12 lg:col-6">
+                          <h6>First Name</h6>
+                          <InputText value={savingsFirstName} onChange={(e) => setSavingsFirstName(e.target.value)} />
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h6>Last Name</h6>
+                          <InputText value={savingsLastName} onChange={(e) => setSavingsLastName(e.target.value)} />
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h6>Middle Initial</h6>
+                          <InputText value={savingsMiddleInitial} onChange={(e) => setSavingsMiddleInitial(e.target.value)} />
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h6>Phone Number</h6>
+                          <InputText value={savingsPhoneNumber} onChange={(e) => setSavingsPhoneNumber(e.target.value)} />
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h6>Email Address</h6>
+                          <InputText value={savingsEmailAddress} onChange={(e) => setSavingsEmailAddress(e.target.value)} />
+                        </div>
+                      </div>
+
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-car mr-2"></i>
+                            <b>Employment Details</b>
+                          </div>
+                        </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>Occupation</h6>
-                          <InputText value={checkingOccupation} onChange={(e) => setCheckingOccupation(e.target.value)} />
+                          <InputText value={savingsOccupation} onChange={(e) => setSavingsOccupation(e.target.value)} />
                         </div>
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Bank Investment Profile">
-                        <div className="grid p-fluid">
-                          <div className="col-12 lg:col-6">
-                            <h6>Annual Income</h6>
-                            <Dropdown value={checkingSelectAnnualIncome} options={savingsSelectAnnualIncomeItems} onChange={(e) => setCheckingSelectAnnualIncome(e.value)} placeholder="Select an Answer"/>
-                          </div>
-                          <div className="col-12 lg:col-6">
-                            <h6>Total Net Worth</h6>
-                            <Dropdown value={checkingSelectNetWorth} options={savingsSelectNetWorthItems} onChange={(e) => setCheckingSelectNetWorth(e.value)} placeholder="Select an Answer"/>
-                          </div>
-                        </div>
+                      </div>
 
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Regulatory Questions">
-                      <div className="grid p-fluid">
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-dollar mr-2"></i>
+                            <b>Bank Investment Profile</b>
+                          </div>
+                        </Divider>
+                        <div className="col-12 lg:col-6">
+                          <h6>Annual Income</h6>
+                          <Dropdown value={savingsSelectAnnualIncome} options={savingsSelectAnnualIncomeItems} onChange={(e) => setSavingsSelectAnnualIncome(e.value)} placeholder="Select an Answer"/>
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h6>Total Net Worth</h6>
+                          <Dropdown value={savingsSelectNetWorth} options={savingsSelectNetWorthItems} onChange={(e) => setSavingsSelectNetWorth(e.value)} placeholder="Select an Answer"/>
+                        </div>
+                      </div>
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-question-circle mr-2"></i>
+                            <b>Regulatory Questions</b>
+                          </div>
+                        </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>Backup Withholding?</h6>
-                          <SelectButton value={checkingWithholding} options={savingsWithholdingOptions} onChange={(e) => setCheckingWithholding(e.value)}></SelectButton>
+                          <SelectButton value={savingsWithholding} options={savingsWithholdingOptions} onChange={(e) => setSavingsWithholding(e.value)}></SelectButton>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Source of Net Worth</h6>
-                          <Dropdown value={checkingSourceOfNetWorth} options={savingsSourceOfNetWorthOptions} onChange={(e) => setCheckingSourceOfNetWorth(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown value={savingsSourceOfNetWorth} options={savingsSourceOfNetWorthOptions} onChange={(e) => setSavingsSourceOfNetWorth(e.value)} placeholder="Select an Answer"/>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Expected Use of Account</h6>
-                          <Dropdown value={checkingExpectedUseOfAccount} options={savingsExpectedUseOfAccountOptions} onChange={(e) => setCheckingExpectedUseOfAccount(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown value={savingsExpectedUseOfAccount} options={savingsExpectedUseOfAccountOptions} onChange={(e) => setSavingsExpectedUseOfAccount(e.value)} placeholder="Select an Answer"/>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Account Usage Frequency</h6>
-                          <Dropdown value={checkingAccountUsageFrequency} options={savingsAccountUsageFrequencyOptions} onChange={(e) => setCheckingAccountUsageFrequency(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown value={savingsAccountUsageFrequency} options={savingsAccountUsageFrequencyOptions} onChange={(e) => setSavingsAccountUsageFrequency(e.value)} placeholder="Select an Answer"/>
                         </div>
                       </div>
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Disclosures">
-                        <div className="grid p-fluid">
-                          <div className="col-12">
-                            <p>
-                            This Deposit Agreement and Disclosures, the applicable Schedule of Fees, the signature card and
-                            other account opening documents for your account are part of the binding contract between you and
-                            us (this “Agreement”) for your deposit account and your deposit relationship with us. They contain
-                            the terms of our agreement with you. Please read all of these documents carefully.
-                            This Deposit Agreement and Disclosures also summarizes certain laws and regulations that apply to
-                            common transactions, provides some disclosures for deposit accounts required by federal law, and
-                            establishes terms that cover some transactions or situations that the law either does not cover or
-                            allows us to change by this contract.
-                            </p>
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-volume-off mr-2"></i>
+                            <b>Disclosures</b>
                           </div>
-                          <div className="col-12 lg:col-6">
-                            <h5> Do you agree with these disclosures?</h5>
-                            <div className="field-radiobutton">
-                              <RadioButton inputId="checkingDisclosureYes" name="checkingAccountDisclosure" value="Yes" onChange={(e) => setCheckingAccountDisclosure(e.value)} checked={checkingAccountDisclosure === 'Yes'} />
-                              <label htmlFor="individual">Yes</label>
-                            </div>
-                            <div className="field-radiobutton">
-                              <RadioButton inputId="checkingDisclosureNo" name="checkingAccountDisclosure" value="No" onChange={(e) => setCheckingAccountDisclosure(e.value)} checked={checkingAccountDisclosure === 'No'} />
-                              <label htmlFor="joint">No</label>
-                            </div>
-
-
+                        </Divider>
+                        <div className="col-12">
+                          <p>
+                          This Deposit Agreement and Disclosures, the applicable Schedule of Fees, the signature card and
+                          other account opening documents for your account are part of the binding contract between you and
+                          us (this “Agreement”) for your deposit account and your deposit relationship with us. They contain
+                          the terms of our agreement with you. Please read all of these documents carefully.
+                          This Deposit Agreement and Disclosures also summarizes certain laws and regulations that apply to
+                          common transactions, provides some disclosures for deposit accounts required by federal law, and
+                          establishes terms that cover some transactions or situations that the law either does not cover or
+                          allows us to change by this contract.
+                          </p>
+                        </div>
+                        <div className="col-12 lg:col-6">
+                          <h5> Do you agree with these disclosures?</h5>
+                          <div className="field-radiobutton">
+                            <RadioButton inputId="disclosureYes" name="savingsAccountDisclosure" value="Yes" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'Yes'} />
+                            <label htmlFor="individual">Yes</label>
+                          </div>
+                          <div className="field-radiobutton">
+                            <RadioButton inputId="disclosureNo" name="savingsAccountDisclosure" value="No" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'No'} />
+                            <label htmlFor="joint">No</label>
                           </div>
                         </div>
-                      </AccordionTab>
-                      <AccordionTab header="Checking: Submit">
-                        <Button label="Add Account for Processing" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
-                        <div className="card">
-                            <Messages ref={checkingAccountSuccessMessage} />
-                            <Messages ref={checkingAccountFailMessage} />
+                      </div>
+                      <div className="grid col-12">
+                        <Divider align="left">
+                          <div className="inline-flex align-items-center">
+                            <i className="pi pi-check-circle mr-2"></i>
+                            <b>Submit Application</b>
+                          </div>
+                        </Divider>
+                        <div className="grid col-2">
+                          <Button label="Add Account for Processing" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
                         </div>
-                      </AccordionTab>
-                  </Accordion>
+                      </div>
+                      <Toast ref={nonWizardFormSuccessMessage} />
+                      <Toast ref={nonWizardFormFailMessage} />
+
+                    </div>
+
+
+                  </div>
                 </form>
-                  </div>
-                }
+
+
+              <div className="form">
+                <form id="accountSettingsDialog" name="accountSettingsDialog">
+                  <Dialog header="Apply for your new account" visible={displayBasic} style={{ width: '40vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
+                    <div className="progressbar">
+                      <div style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }}></div>
+                    </div>
+                    <div className="form-container">
+                      <div className="header">
+                        <h5>{FormTitles[page]}</h5>
+                      </div>
+                      <div className="body">{PageDisplay()}</div><h5></h5>
+                      <div className="footer">
+
+                        <Button id="Previous" disabled={page == 0} label="Previous" onClick={() => {setPage((currPage) => currPage - 1)}} />
+                        &nbsp;&nbsp;
+                        <Button id={page === FormTitles.length - 1 ? "Finish" : "Next"} label={page === FormTitles.length - 1 ? "Finish" : "Next"} onClick={() => {
+                          if (page === FormTitles.length - 1) {
+                            console.log(formData);
+                            setDisplayBasic(false);
+                            wizardFormSubmit();
+                          } else {
+                            setPage((currPage) => currPage + 1);
+                          }
+
+                        }} />
+                      </div>
+                    </div>
+                  </Dialog>
+                </form>
+              </div>
 
             </div>
-
-            <div className="form">
-              <form id="accountSettingsDialog" name="accountSettingsDialog">
-                <Dialog header="Apply for your new account" visible={displayBasic} style={{ width: '40vw' }} onHide={() => {console.log("clicked close button"); setDisplayBasic(false);}}>
-                  <div className="progressbar">
-                    <div style={{ width: page === 0 ? "33.3%" : page == 1 ? "66.6%" : "100%" }}></div>
-                  </div>
-                  <div className="form-container">
-                    <div className="header">
-                      <h5>{FormTitles[page]}</h5>
-                    </div>
-                    <div className="body">{PageDisplay()}</div><h5></h5>
-                    <div className="footer">
-
-                      <Button id="Previous" disabled={page == 0} label="Previous" onClick={() => {setPage((currPage) => currPage - 1)}} />
-                      &nbsp;&nbsp;
-                      <Button id={page === FormTitles.length - 1 ? "Finish" : "Next"} label={page === FormTitles.length - 1 ? "Finish" : "Next"} onClick={() => {
-                        if (page === FormTitles.length - 1) {
-                          console.log(formData);
-                          setDisplayBasic(false);
-                          wizardFormSubmit();
-                        } else {
-                          setPage((currPage) => currPage + 1);
-                        }
-
-                      }} />
-                    </div>
-                  </div>
-                </Dialog>
-              </form>
-            </div>
-
 
         </div>
     );
