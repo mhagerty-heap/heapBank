@@ -141,17 +141,17 @@ const FriendPay = () => {
               <div className="col-12">
                   <div className="card">
                       <h5>Step #1: Select a Friend to Pay</h5>
-                      <ListBox value={transactorName} options={listOfFriends} onChange={(e) => setTransactorName(e.value)} optionLabel="name" style={{ width: '15rem' }} />
+                      <ListBox id="transactorName" value={transactorName} options={listOfFriends} onChange={(e) => setTransactorName(e.value)} optionLabel="name" style={{ width: '15rem' }} />
                       <h5>Step #1: Select one of your accounts to fund the payment</h5>
-                      <ListBox value={transactionFromAccount} options={defaultListOfAccounts} onChange={(e) => setTransactionFromAccount(e.value)} optionLabel="name" style={{ width: '15rem' }} />
+                      <ListBox id="transactionFromAccount" value={transactionFromAccount} options={defaultListOfAccounts} onChange={(e) => setTransactionFromAccount(e.value)} optionLabel="name" style={{ width: '15rem' }} />
                       <h5>Step #3: Enter a Payment Amount</h5>
-                      <InputNumber value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
+                      <InputNumber id="transactionAmount" value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
                       <h5>Step #4: Select a Date</h5>
                       <Calendar id="transactionDate" value={transactionDate} onChange={(e) => setTransactionDate(e.value)} />
                       <h5>Step #5: Enter Note</h5>
-                      <InputText name="transactionNote"s value={transactionNotes} onChange={(e) => setTransactionNotes(e.target.value)} />
+                      <InputText id="transactionNotes" name="transactionNotes" value={transactionNotes} onChange={(e) => setTransactionNotes(e.target.value)} />
                       <h5>Step #6: Submit Payment</h5>
-                      <Button label="Submit Payment" icon="pi pi-check-square" className="p-button-success"></Button>
+                      <Button id="friendPaySubmitButton" label="Submit Payment" icon="pi pi-check-square" className="p-button-success"></Button>
                       <div classname="card">
                           <Messages ref={depositSuccessMessage} />
                           <Messages ref={depositFailMessage} />
