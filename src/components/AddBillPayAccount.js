@@ -81,10 +81,10 @@ const AddBillPayAccount = () => {
           <div className="col-12">
             <div className="card col-6">
               <h5>Select a New Bill Pay Account</h5>
-              <ListBox value={addBillPayAccount} options={billPayAccountOptions} onChange={(e) => setAddBillPayAccount(e.value)} filter optionLabel="name" itemTemplate={addBillPayAccountTemplate} style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
+              <ListBox id="addBillPayAccount" value={addBillPayAccount} options={billPayAccountOptions} onChange={(e) => setAddBillPayAccount(e.value)} filter optionLabel="name" itemTemplate={addBillPayAccountTemplate} style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
             </div>
             <div className="card col-6">
-              <Button label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
+              <Button id="addAccountButton" label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
               <div>
                 <Messages ref={addBillPayAccountSuccessMessage} />
                 <Messages ref={addBillPayAccountFailMessage} />
