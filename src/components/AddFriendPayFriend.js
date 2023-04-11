@@ -81,10 +81,10 @@ const AddFriendPayAccount = () => {
           <div className="col-12">
             <div className="card col-6">
               <h5>Add a Suggested Friend from the list below</h5>
-              <ListBox value={addFriendPayAccount} options={friendPayAccountOptions} onChange={(e) => setAddFriendPayAccount(e.value)} filter optionLabel="name" itemTemplate={addFriendPayAccountTemplate} style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
+              <ListBox id="listOfFriends" value={addFriendPayAccount} options={friendPayAccountOptions} onChange={(e) => setAddFriendPayAccount(e.value)} filter optionLabel="name" itemTemplate={addFriendPayAccountTemplate} style={{ width: '15rem' }} listStyle={{ maxHeight: '250px' }} />
             </div>
             <div className="card col-6">
-              <Button label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
+              <Button id="addFriendPayAccountButton" label="Add Account" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
               <div>
                 <Messages ref={addFriendPayAccountSuccessMessage} />
                 <Messages ref={addFriendPayAccountFailMessage} />
