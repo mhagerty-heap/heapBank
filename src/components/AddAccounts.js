@@ -293,7 +293,7 @@ const AddAccounts = () => {
                             <b>Account Type</b>
                           </div>
                         </Divider>
-                        <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
+                        <SelectButton id="accountType" value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
                       </div>
 
                       <div className="grid col-12">
@@ -304,11 +304,11 @@ const AddAccounts = () => {
                           </div>
                         </Divider>
                           <div className="field-radiobutton">
-                            <RadioButton inputId="individual" name="savingsAccountIndOrJoint" value="Individual" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Individual'} />
+                            <RadioButton id="individualButton" inputId="individual" name="savingsAccountIndOrJoint" value="Individual" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Individual'} />
                             <label htmlFor="individual">Individual</label>
                           </div>&nbsp;&nbsp;
                           <div className="field-radiobutton">
-                            <RadioButton inputId="joint" name="savingsAccountIndOrJoint" value="Joint" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Joint'} />
+                            <RadioButton id="jointButton" inputId="joint" name="savingsAccountIndOrJoint" value="Joint" onChange={(e) => setSavingsAccountIndOrJoint(e.value)} checked={savingsAccountIndOrJoint === 'Joint'} />
                             <label htmlFor="joint">Joint</label>
                           </div>
                       </div>
@@ -322,23 +322,23 @@ const AddAccounts = () => {
                         </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>First Name</h6>
-                          <InputText value={savingsFirstName} onChange={(e) => setSavingsFirstName(e.target.value)} />
+                          <InputText id="firstName" value={savingsFirstName} onChange={(e) => setSavingsFirstName(e.target.value)} />
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Last Name</h6>
-                          <InputText value={savingsLastName} onChange={(e) => setSavingsLastName(e.target.value)} />
+                          <InputText id="lastName" value={savingsLastName} onChange={(e) => setSavingsLastName(e.target.value)} />
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Middle Initial</h6>
-                          <InputText value={savingsMiddleInitial} onChange={(e) => setSavingsMiddleInitial(e.target.value)} />
+                          <InputText id="middleInitial" value={savingsMiddleInitial} onChange={(e) => setSavingsMiddleInitial(e.target.value)} />
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Phone Number</h6>
-                          <InputText value={savingsPhoneNumber} onChange={(e) => setSavingsPhoneNumber(e.target.value)} />
+                          <InputText id="phoneNumber" value={savingsPhoneNumber} onChange={(e) => setSavingsPhoneNumber(e.target.value)} />
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Email Address</h6>
-                          <InputText value={savingsEmailAddress} onChange={(e) => setSavingsEmailAddress(e.target.value)} />
+                          <InputText id="emailAddress" value={savingsEmailAddress} onChange={(e) => setSavingsEmailAddress(e.target.value)} />
                         </div>
                       </div>
 
@@ -351,7 +351,7 @@ const AddAccounts = () => {
                         </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>Occupation</h6>
-                          <InputText value={savingsOccupation} onChange={(e) => setSavingsOccupation(e.target.value)} />
+                          <InputText id="occupation" value={savingsOccupation} onChange={(e) => setSavingsOccupation(e.target.value)} />
                         </div>
                       </div>
 
@@ -364,11 +364,11 @@ const AddAccounts = () => {
                         </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>Annual Income</h6>
-                          <Dropdown value={savingsSelectAnnualIncome} options={savingsSelectAnnualIncomeItems} onChange={(e) => setSavingsSelectAnnualIncome(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown id="annualIncome" value={savingsSelectAnnualIncome} options={savingsSelectAnnualIncomeItems} onChange={(e) => setSavingsSelectAnnualIncome(e.value)} placeholder="Select an Answer"/>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Total Net Worth</h6>
-                          <Dropdown value={savingsSelectNetWorth} options={savingsSelectNetWorthItems} onChange={(e) => setSavingsSelectNetWorth(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown id="netWorth" value={savingsSelectNetWorth} options={savingsSelectNetWorthItems} onChange={(e) => setSavingsSelectNetWorth(e.value)} placeholder="Select an Answer"/>
                         </div>
                       </div>
                       <div className="grid col-12">
@@ -380,19 +380,19 @@ const AddAccounts = () => {
                         </Divider>
                         <div className="col-12 lg:col-6">
                           <h6>Backup Withholding?</h6>
-                          <SelectButton value={savingsWithholding} options={savingsWithholdingOptions} onChange={(e) => setSavingsWithholding(e.value)}></SelectButton>
+                          <SelectButton id="withholding" value={savingsWithholding} options={savingsWithholdingOptions} onChange={(e) => setSavingsWithholding(e.value)}></SelectButton>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Source of Net Worth</h6>
-                          <Dropdown value={savingsSourceOfNetWorth} options={savingsSourceOfNetWorthOptions} onChange={(e) => setSavingsSourceOfNetWorth(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown id="sourceOfNetWorth" value={savingsSourceOfNetWorth} options={savingsSourceOfNetWorthOptions} onChange={(e) => setSavingsSourceOfNetWorth(e.value)} placeholder="Select an Answer"/>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Expected Use of Account</h6>
-                          <Dropdown value={savingsExpectedUseOfAccount} options={savingsExpectedUseOfAccountOptions} onChange={(e) => setSavingsExpectedUseOfAccount(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown id="expectedUseOfAccount" value={savingsExpectedUseOfAccount} options={savingsExpectedUseOfAccountOptions} onChange={(e) => setSavingsExpectedUseOfAccount(e.value)} placeholder="Select an Answer"/>
                         </div>
                         <div className="col-12 lg:col-6">
                           <h6>Account Usage Frequency</h6>
-                          <Dropdown value={savingsAccountUsageFrequency} options={savingsAccountUsageFrequencyOptions} onChange={(e) => setSavingsAccountUsageFrequency(e.value)} placeholder="Select an Answer"/>
+                          <Dropdown id="accountUsageFrequency" value={savingsAccountUsageFrequency} options={savingsAccountUsageFrequencyOptions} onChange={(e) => setSavingsAccountUsageFrequency(e.value)} placeholder="Select an Answer"/>
                         </div>
                       </div>
                       <div className="grid col-12">
@@ -417,11 +417,11 @@ const AddAccounts = () => {
                         <div className="col-12 lg:col-6">
                           <h5> Do you agree with these disclosures?</h5>
                           <div className="field-radiobutton">
-                            <RadioButton inputId="disclosureYes" name="savingsAccountDisclosure" value="Yes" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'Yes'} />
+                            <RadioButton id="disclosureYes" inputId="disclosureYes" name="savingsAccountDisclosure" value="Yes" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'Yes'} />
                             <label htmlFor="individual">Yes</label>
                           </div>
                           <div className="field-radiobutton">
-                            <RadioButton inputId="disclosureNo" name="savingsAccountDisclosure" value="No" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'No'} />
+                            <RadioButton id="disclosureNo" inputId="disclosureNo" name="savingsAccountDisclosure" value="No" onChange={(e) => setSavingsAccountDisclosure(e.value)} checked={savingsAccountDisclosure === 'No'} />
                             <label htmlFor="joint">No</label>
                           </div>
                         </div>
@@ -434,7 +434,7 @@ const AddAccounts = () => {
                           </div>
                         </Divider>
                         <div className="grid col-2">
-                          <Button label="Add Account for Processing" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
+                          <Button id="addAccountButton" label="Add Account for Processing" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
                         </div>
                       </div>
                       <Toast ref={nonWizardFormSuccessMessage} />
