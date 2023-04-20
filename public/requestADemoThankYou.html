@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign In | BankOne</title>
+    <title>Request a Demo| BankOne</title>
     <link rel="shortcut icon" href="/images/marketing/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="marketing/css/animate.css" />
     <link rel="stylesheet" href="marketing/css/tailwind.css" />
@@ -101,7 +101,7 @@
               "
             >
               <ul class="blcok lg:flex">
-                <!-- <li class="relative group">
+                <li class="relative group">
                   <a
                     href="/main.html" id="mainHomeLink"
                     class="
@@ -204,8 +204,8 @@
                   >
                     Contact
                   </a>
-                </li> -->
-                <!-- <li class="relative group submenu-item">
+                </li>
+                <li class="relative group submenu-item">
                   <a
                     href="javascript:void(0)" id="pagesDropDownMenu"
                     class="
@@ -310,7 +310,7 @@
                     >
                       Contact Us
                     </a> -->
-                    <!-- <a
+                    <a
                       href="blog-grids.html" id="pagesBlogGridLink"
                       class="
                         block
@@ -349,13 +349,52 @@
                     >
                       Documentation
                     </a>
-                  </div> -->
+                    <!-- <a
+                      href="signup.html" id="pagesSignUpLink"
+                      class="
+                        block
+                        text-sm text-body-color
+                        rounded
+                        hover:text-primary
+                        py-[10px]
+                        px-4
+                      "
+                    >
+                      Account Plans Page
+                    </a>
+                    <a
+                      href="signin.html" id="pagesSignInLink"
+                      class="
+                        block
+                        text-sm text-body-color
+                        rounded
+                        hover:text-primary
+                        py-[10px]
+                        px-4
+                      "
+                    >
+                      Sign In Page
+                    </a> -->
+                    <!-- <a
+                      href="404.html" id="pages404Link"
+                      class="
+                        block
+                        text-sm text-body-color
+                        rounded
+                        hover:text-primary
+                        py-[10px]
+                        px-4
+                      "
+                    >
+                      404 Page
+                    </a> -->
+                  </div>
                 </li>
               </ul>
             </nav>
           </div>
           <div class="sm:flex justify-end hidden pr-16 lg:pr-0">
-            <!-- <a
+            <a
               href="signin.html" id="mainSignInLink"
               class="
                 text-base
@@ -368,8 +407,8 @@
               "
             >
               Sign In
-            </a> -->
-            <!-- <a
+            </a>
+            <a
               href="signup.html" id="mainSignUpLink"
               class="
                 text-base
@@ -385,8 +424,8 @@
                 ease-in-out
               "
             >
-              Account Plans
-            </a> -->
+              Open Account
+            </a>
           </div>
         </div>
       </div>
@@ -410,7 +449,7 @@
             <div class="flex flex-wrap items-center -mx-4">
                 <div class="w-full px-4">
                     <div class="text-center">
-                        <h1 class="font-semibold text-white text-4xl">Sign In Page</h1>
+                        <h1 class="font-semibold text-white text-4xl">Request a Demo</h1>
                     </div>
                 </div>
             </div>
@@ -459,82 +498,10 @@
                                 <img src="images/marketing/logo/logo-gray-black.png" alt="logo" />
                             </a>
                         </div>
-                        <form action="javascript:submitButton();">
-                            <div class="mb-6">
-                                <input type="email" id="signInEmailField" placeholder="Email: Use test data (no PII)" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="password" id="signInPasswordField" placeholder="Password" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-10">
-                                <input type="submit" id="signInButton" value="Sign In" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-primary
-                      py-3
-                      px-5
-                      bg-primary
-                      text-base text-white
-                      cursor-pointer
-                      hover:shadow-md
-                      transition
-                      duration-300
-                      ease-in-out
-                    " />
-                                <script>
-                                    function submitButton() {
-                                        var currentDateAndTime = new Date().toLocaleString();
-                                        // var currentdate = new Date();
-                                        // var currentLoginTime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-                                        var emailAddress = document.getElementById("signInEmailField").value;
-                                        if (emailAddress.indexOf('@') === -1) {
-                                            console.log("no @ in email address");
-                                        } else {
-                                            //replace with Identify call
-                                            console.log("@ in email address, Heap Identify Call made");
-                                            if (emailAddress != '') {
-                                                heap.identify(emailAddress);
-                                                // heap.addUserProperties({ "Account, Email Address": emailAddress });
-                                                heap.addUserProperties({
-                                                    "Account - Last Login": currentDateAndTime
-                                                });
-                                            }
-                                        }
-                                        window.location.href = "/";
-                                    }
-                                </script>
-                            </div>
+                        <form id="signUpForm" name="signUpForm" action="javascript:submitButton();">
+Thank you. A BankOne Team member will be contacting you within 1 Business Day.
                         </form>
-                        <!-- <p class="text-base mb-6 text-[#adadad]">Connect With</p>
+                        <!-- <p id="connectWith" class="text-base mb-6 text-[#adadad]">Connect With</p>
                         <ul class="flex justify-between -mx-2 mb-12">
                             <li class="px-2 w-full">
                                 <a href="javascript:void(0)" class="
@@ -590,20 +557,23 @@
                                     </svg>
                                 </a>
                             </li>
-                        </ul>
-                        <a href="javascript:void(0)" class="
-                  text-base
-                  inline-block
-                  mb-2
-                  text-[#adadad]
-                  hover:text-primary
-                ">
-                            Forget Password?
-                        </a>
+                        </ul> -->
+
+                        <p class="text-base text-[#adadad] mb-4">
+
+                            <!-- <a href="javascript:void(0)" class="text-primary hover:underline">
+                                Privacy
+                            </a>
+                            and
+                            <a href="javascript:void(0)" class="text-primary hover:underline">
+                                Policy
+                            </a> -->
+                        </p>
+<!--
                         <p class="text-base text-[#adadad]">
-                            Not a member yet?
-                            <a href="signup.html" class="text-primary hover:underline">
-                                Account Plans
+                            Already have an account?
+                            <a href="signin.html" class="text-primary hover:underline">
+                                Sign In
                             </a>
                         </p> -->
 
@@ -662,10 +632,11 @@
                             <img src="images/marketing/logo/logo-gray-white.png" alt="logo" class="max-w-full" />
                         </a>
                         <p class="text-base text-[#f3f4fe] mb-7">
-                            We create delightful digital banking experiences experiences.
+                            We create digital banking experiences for our customers by using
+                            technology.
                         </p>
                         <div class="flex items-center -mx-3">
-                            <!-- <a href="javascript:void(0)" class="px-3 text-[#dddddd] hover:text-white">
+                            <a href="javascript:void(0)" class="px-3 text-[#dddddd] hover:text-white">
                                 <svg width="10" height="18" viewBox="0 0 10 18" class="fill-current">
                                     <path
                                       d="M9.00007 6.82105H7.50006H6.96434V6.27097V4.56571V4.01562H7.50006H8.62507C8.91971 4.01562 9.16078 3.79559 9.16078 3.46554V0.550085C9.16078 0.247538 8.9465 0 8.62507 0H6.66969C4.55361 0 3.08038 1.54024 3.08038 3.82309V6.21596V6.76605H2.54466H0.72322C0.348217 6.76605 0 7.06859 0 7.50866V9.48897C0 9.87402 0.294645 10.2316 0.72322 10.2316H2.49109H3.02681V10.7817V16.31C3.02681 16.6951 3.32145 17.0526 3.75003 17.0526H6.26791C6.42862 17.0526 6.56255 16.9701 6.66969 16.8601C6.77684 16.7501 6.8572 16.5576 6.8572 16.3925V10.8092V10.2591H7.4197H8.62507C8.97328 10.2591 9.24114 10.0391 9.29471 9.709V9.6815V9.65399L9.66972 7.7562C9.6965 7.56367 9.66972 7.34363 9.509 7.1236C9.45543 6.98608 9.21436 6.84856 9.00007 6.82105Z" />
@@ -692,11 +663,11 @@
                                     <path
                                       d="M16.7821 0.947388H1.84847C1.14272 0.947388 0.578125 1.49747 0.578125 2.18508V16.7623C0.578125 17.4224 1.14272 18 1.84847 18H16.7257C17.4314 18 17.996 17.4499 17.996 16.7623V2.15757C18.0525 1.49747 17.4879 0.947388 16.7821 0.947388ZM5.7442 15.4421H3.17528V7.32837H5.7442V15.4421ZM4.44563 6.2007C3.59873 6.2007 2.94944 5.5406 2.94944 4.74297C2.94944 3.94535 3.62696 3.28525 4.44563 3.28525C5.26429 3.28525 5.94181 3.94535 5.94181 4.74297C5.94181 5.5406 5.32075 6.2007 4.44563 6.2007ZM15.4835 15.4421H12.9146V11.509C12.9146 10.5739 12.8864 9.33618 11.5596 9.33618C10.2045 9.33618 10.0069 10.3813 10.0069 11.4265V15.4421H7.438V7.32837H9.95046V8.45605H9.9787C10.3457 7.79594 11.1644 7.13584 12.4347 7.13584C15.0601 7.13584 15.54 8.7861 15.54 11.0414V15.4421H15.4835Z" />
                                 </svg>
-                            </a> -->
+                            </a>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="w-full sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12 px-4">
+                <div class="w-full sm:w-1/2 md:w-1/2 lg:w-2/12 xl:w-2/12 px-4">
                     <div class="w-full mb-10">
                         <h4 class="text-white text-lg font-semibold mb-9">About Us</h4>
                         <ul>
@@ -723,7 +694,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="/main.html#about" class="
+                                <a href="main.html#about" class="
                       inline-block
                       text-base text-[#f3f4fe]
                       hover:text-primary
@@ -746,13 +717,13 @@
                             </li>
                         </ul>
                     </div>
-                </div> -->
-                <!-- <div class="w-full sm:w-1/2 md:w-1/2 lg:w-3/12 xl:w-2/12 px-4"> -->
-                    <!-- <div class="w-full mb-10">
+                </div>
+                <div class="w-full sm:w-1/2 md:w-1/2 lg:w-3/12 xl:w-2/12 px-4">
+                    <div class="w-full mb-10">
                         <h4 class="text-white text-lg font-semibold mb-9">Features</h4>
                         <ul>
                             <li>
-                                <a href="/main.html#features" class="
+                                <a href="javascript:void(0)" class="
                       inline-block
                       text-base text-[#f3f4fe]
                       hover:text-primary
@@ -796,8 +767,8 @@
                                 </a>
                             </li>
                         </ul>
-                    </div> -->
-                <!-- </div> -->
+                    </div>
+                </div>
                 <!-- <div class="w-full sm:w-1/2 md:w-1/2 lg:w-3/12 xl:w-2/12 px-4">
                     <div class="w-full mb-10">
                         <h4 class="text-white text-lg font-semibold mb-9">
@@ -960,7 +931,10 @@
                     <div class="w-full md:w-1/3 lg:w-1/2 px-4">
                         <div class="flex justify-center md:justify-end my-1">
                             <p class="text-base text-[#f3f4fe]">
-                                Designed and Developed by BankOne
+                                Designed and Developed by
+                                <a href="https://tailgrids.com" rel="nofollow noopner" target="_blank" class="text-primary hover:underline">
+                                    TailGrids and UIdeck
+                                </a>
                             </p>
                         </div>
                     </div>

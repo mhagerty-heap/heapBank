@@ -16,7 +16,7 @@ function Form() {
     other: "",
   });
 
-  const FormTitles = ["Sign Up", "Personal Info", "Other"];
+  const FormTitles = ["Account Plans", "Personal Info", "Other"];
 
   const PageDisplay = () => {
     if (page === 0) {

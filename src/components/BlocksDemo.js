@@ -82,7 +82,7 @@ const BlocksDemo = () => {
 
     const block3 = `
 <div className="surface-ground px-4 py-8 md:px-6 lg:px-8">
-    <div className="text-900 font-bold text-6xl mb-4 text-center">Pricing Plans</div>
+    <div className="text-900 font-bold text-6xl mb-4 text-center">Account Plans Plans</div>
     <div className="text-700 text-xl mb-6 text-center line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
 
     <div className="grid">
@@ -491,9 +491,9 @@ const BlocksDemo = () => {
                 </div>
             </BlockViewer>
 
-            <BlockViewer header="Pricing" code={block3}>
+            <BlockViewer header="Account Plans" code={block3}>
                 <div className="surface-ground px-4 py-8 md:px-6 lg:px-8">
-                    <div className="text-900 font-bold text-6xl mb-4 text-center">Pricing Plans</div>
+                    <div className="text-900 font-bold text-6xl mb-4 text-center">Account Plans Plans</div>
                     <div className="text-700 text-xl mb-6 text-center line-height-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit numquam eligendi quos.</div>
 
                     <div className="grid">
