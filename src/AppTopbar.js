@@ -73,7 +73,7 @@ export const AppTopbar = (props) => {
     return (
         <div className="layout-topbar">
 
-            <a href="/signin.html" >
+            <a href="/main.html" >
                 <img width="170" height="50" src={props.layoutColorMode === 'light' ? 'images/marketing/logo/logo-gray-black.png' : 'images/marketing/logo/logo-gray-white.png'} alt="logo"/>
             </a>
 
