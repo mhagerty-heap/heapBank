@@ -814,13 +814,13 @@
                               var expectedUseOfAccount = document.getElementById("expectedUseOfAccount").value;
                               var accountUsageFrequency = document.getElementById("accountUsageFrequency").value;
                               var disclosureAgreement = document.getElementById("disclosureAgreement").value;
-                              console.log(annualIncome);
-                              console.log(totalNetWorth);
-                              console.log(backupWithholding);
-                              console.log(sourceOfNetWorth);
-                              console.log(expectedUseOfAccount);
-                              console.log(accountUsageFrequency);
-                              console.log(disclosureAgreement);
+                              // console.log(annualIncome);
+                              // console.log(totalNetWorth);
+                              // console.log(backupWithholding);
+                              // console.log(sourceOfNetWorth);
+                              // console.log(expectedUseOfAccount);
+                              // console.log(accountUsageFrequency);
+                              // console.log(disclosureAgreement);
 
                               if (emailAddress.indexOf('@') === -1) {
                                   console.log("no @ in email address, heap identify not fired");
@@ -831,7 +831,58 @@
                                   if (emailAddress != ''){
                                     heap.identify(emailAddress);
                                     console.log("Heap Identify Call Made");
-                                    console.log()
+
+                                    heap.track('Account Application Complete');
+                                    console.log('Heap.track - Account Application Complete - sent')
+
+                                    if (annualIncome) {
+                                        heap.addUserProperties({ "Account Opening - Annual Income": annualIncome });
+                                        console.log("annualIncome sent as user property")
+                                    } else {
+                                      console.log("blank annualIncome not sent as user property");
+                                    }
+
+                                    if (totalNetWorth) {
+                                        heap.addUserProperties({ "Account Opening - Total Net Worth": totalNetWorth });
+                                        console.log("totalNetWorth sent as user property");
+                                    } else {
+                                      console.log("blank totalNetWorth not sent as user property");
+                                    }
+
+                                    if (backupWithholding) {
+                                        heap.addUserProperties({ "Account Opening - Backup Withholding": backupWithholding });
+                                        console.log("backupWithholding sent as property");
+                                    } else {
+                                      console.log("blank backupWithholding not sent as property");
+                                    }
+
+                                    if (sourceOfNetWorth) {
+                                        heap.addUserProperties({ "Account Opening - Source of Net Worth": sourceOfNetWorth });
+                                        console.log("sourceOfNetWorth sent as property");
+                                    } else {
+                                      console.log("blank sourceOfNetWorth not sent as property");
+                                    }
+
+                                    if (expectedUseOfAccount) {
+                                        heap.addUserProperties({ "Account Opening - Expected Use Of Account": expectedUseOfAccount });
+                                        console.log("expectedUseOfAccount sent as property");
+                                    } else {
+                                      console.log("blank expectedUseOfAccount not sent as property");
+                                    }
+
+                                    if (accountUsageFrequency) {
+                                        heap.addUserProperties({ "Account Opening - Account User Frequency": accountUsageFrequency });
+                                        console.log("accountUsageFrequency sent as property");
+                                    } else {
+                                      console.log("blank accountUsageFrequency not sent as property");
+                                    }
+
+                                    if (disclosureAgreement) {
+                                        heap.addUserProperties({ "Account Opening - Disclosure Agreement": disclosureAgreement });
+                                        console.log("disclosureAgreement Income sent as property");
+                                    } else {
+                                      console.log("blank disclosureAgreement Income not sent as property");
+                                    }
                                   }
                                   successMessage.style.display = "block";
                                   failureMessage.style.display = "none";
