@@ -478,7 +478,7 @@
                           </a>
                       </div>
 
-                        <form class="w-full max-w-lg">
+                        <form id="openAccountForm" name="openAccountForm" action="javascript:openAccountButton();" class="w-full max-w-lg">
 
                           <hr><br>
                           <div class="mb-[0.125rem] block min-h-[1.5rem] pl-[1.5rem]">
@@ -560,7 +560,7 @@
                                 Email
                               </label>
                               <input id="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="abc@123.com">
-
+                              <p class="text-gray-600 text-xs italic">This is the one and only required field for this demonstration form.</p>
                             </div>
                             <div class="w-full md:w-1/2 px-3">
                               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
@@ -669,11 +669,11 @@
                               <div class="relative">
                                 <select id="annualIncome" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                   <option hidden disabled selected value> -- select an option -- </option>
-                                  <option value="AL">0-50k</option>
-                                  <option value="AK">50-100k</option>
-                                  <option value="AZ">100k-250k</option>
-                                  <option value="AR">250k-1mil</option>
-                                  <option value="CA">1mil+</option>
+                                  <option value="0-50k">0-50k</option>
+                                  <option value="50-100k">50-100k</option>
+                                  <option value="100k-250k">100k-250k</option>
+                                  <option value="250k-1mil">250k-1mil</option>
+                                  <option value="1mil+">1mil+</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                   <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -688,11 +688,11 @@
                               <div class="relative">
                                 <select id="totalNetWorth" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
                                   <option hidden disabled selected value> -- select an option -- </option>
-                                  <option value="AL">0-50k</option>
-                                  <option value="AK">50-100k</option>
-                                  <option value="AZ">100k-250k</option>
-                                  <option value="AR">250k-1mil</option>
-                                  <option value="CA">1mil+</option>
+                                  <option value="0-50k">0-50k</option>
+                                  <option value="50-100k">50-100k</option>
+                                  <option value="100k-250k">100k-250k</option>
+                                  <option value="250k-1mil">250k-1mil</option>
+                                  <option value="1mil+">1mil+</option>
                                 </select>
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                   <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -776,7 +776,7 @@
                           <div>
                             <b>Important Disclosures</b><br>
                             This Deposit Agreement and Disclosures, the applicable Schedule of Fees, the signature card and other account opening documents for your account are part of the binding contract between you and us (this “Agreement”) for your deposit account and your deposit relationship with us. They contain the terms of our agreement with you. Please read all of these documents carefully. This Deposit Agreement and Disclosures also summarizes certain laws and regulations that apply to common transactions, provides some disclosures for deposit accounts required by federal law, and establishes terms that cover some transactions or situations that the law either does not cover or allows us to change by this contract. Lastly, this is a demo account (no real financial accounts will be created).  Please do not share any PII in this form.  This is purely for demonstration purposes.
-                            <br><br>
+                            <br><br><br>
                             <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                               <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-state">
                                 Do you agree with these disclosures?
@@ -800,270 +800,54 @@
 
                           <br><hr><br>
 
+                          <script>
+                          function openAccountButton() {
+                              var currentDateAndTime = new Date().toLocaleString();
+                              // var currentdate = new Date();
+                              // var currentLoginTime = currentdate.getDay() + "/" + currentdate.getMonth()  +  "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+                              var emailAddress = document.getElementById("email").value;
+                              var successMessage = document.getElementById("successMessage");
+                              var annualIncome = document.getElementById("annualIncome").value;
+                              var totalNetWorth = document.getElementById("totalNetWorth").value;
+                              var backupWithholding = document.getElementById("backupWithholding").value;
+                              var sourceOfNetWorth = document.getElementById("sourceOfNetWorth").value;
+                              var expectedUseOfAccount = document.getElementById("expectedUseOfAccount").value;
+                              var accountUsageFrequency = document.getElementById("accountUsageFrequency").value;
+                              var disclosureAgreement = document.getElementById("disclosureAgreement").value;
+                              console.log(annualIncome);
+                              console.log(totalNetWorth);
+                              console.log(backupWithholding);
+                              console.log(sourceOfNetWorth);
+                              console.log(expectedUseOfAccount);
+                              console.log(accountUsageFrequency);
+                              console.log(disclosureAgreement);
 
-
-
-
+                              if (emailAddress.indexOf('@') === -1) {
+                                  console.log("no @ in email address, heap identify not fired");
+                                  failureMessage.style.display = "block";
+                                  successMessage.style.display = "none";
+                              } else {
+                                  //replace with Identify call
+                                  if (emailAddress != ''){
+                                    heap.identify(emailAddress);
+                                    console.log("Heap Identify Call Made");
+                                    console.log()
+                                  }
+                                  successMessage.style.display = "block";
+                                  failureMessage.style.display = "none";
+                              }
+                          }
+                          </script>
 
                         </form>
 
-                        <!-- <form id="signUpForm" name="signUpForm" action="javascript:submitButton();">
-                            <div class="mb-6">
-                                <input type="text" id="signUpNameField" name="signUpNameField" placeholder="Name" class="w-full rounded-md border bordder-[#E9EDF4] py-3 px-5 bg-[#FCFDFE] text-base text-body-color placeholder-[#ACB6BE] outline-none focus-visible:shadow-none focus:border-primary transition" />
-                            </div>
-                            <div class="mb-6">
-                                <input type="email" id="signUpEmailField" name="signUpEmailField" placeholder="Email: Use test data (no PII)" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="password" id="signUpPasswordField" name="signUpPasswordField" placeholder="Password" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="text" id="signUpStreetAddressField" name="signUpStreetAddressField" placeholder="Street Address" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="text" id="signUpZipCodeField" name="signUpZipCodeField" placeholder="Zip Code" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="text" id="signUpMobileNumberField" name="signUpMobileNumberField" placeholder="Mobile Number ex: (123) 123-1234" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
+                        <div id="successMessage" style="display: none">
+                          <br>Success!  You will receive an email shortly with instructions on how to access your account.  Thank you for joining BankOne!<br><br>
+                        </div>
 
-                            <div class="mb-6">
-                                <input type="radio" name="plan" id="freePlanRadioSelection" value="Free">
-                                <label for="freePlanRadioSelection">Free ($00.00 per month)</label><br><br>
-                                <input type="radio" name="plan" id="proPlanRadioSelection" value="Pro">
-                                <label for="proPlanRadioSelection">Pro ($19.99 per month)</label><br><br>
-                                <input type="radio" name="plan" id="enterprisePlanRadioSelection" value="Enterprise">
-                                <label for="enterprisePlanRadioSelection">Enterprise ($70.99 per month)</label><br><br>
-                                <input type="radio" name="plan" id="upgradePlanRadioSelection" value="Upgrade">
-                                <label for="upgradePlanRadioSelection">Upgrade ($10.00 per month)</label><br><br>
-                            </div>
-
-                            <script>
-                                function getParameterByName(name, url = window.location.href) {
-                                    name = name.replace(/[\[\]]/g, '\\$&');
-                                    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                                        results = regex.exec(url);
-                                    if (!results) return null;
-                                    if (!results[2]) return '';
-                                    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-                                }
-                                var planValue = getParameterByName('plan'); // grab plan from URL query string
-                                //document.forms.signUpForm.elements.plan.value="pro" // example code to set plan value, for reference
-
-                                if (planValue == "free") {
-                                    document.forms.signUpForm.elements.plan.value = "Free";
-                                } else if (planValue == "pro") {
-                                    document.forms.signUpForm.elements.plan.value = "Pro";
-                                } else if (planValue == "enterprise") {
-                                    document.forms.signUpForm.elements.plan.value = "Enterprise";
-                                } else if (planValue == "upgrade") {
-                                    document.forms.signUpForm.elements.plan.value = "Upgrade";
-                                }
-                            </script>
-
-                            <div class="mb-6">
-                                <input type="text" id="creditCardNumberField" name="creditCardNumberField" placeholder="Credit Card ex: XXXX-XXXX-XXXX-XXXX" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="text" id="creditCardExpirationField" name="creditCardExpirationField" placeholder="Credit Card Expiration ex: 4/26" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-6">
-                                <input type="text" id="creditCardCodeField" name="creditCardCodeField" placeholder="Credit Card Code ex: 1234" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-[#E9EDF4]
-                      py-3
-                      px-5
-                      bg-[#FCFDFE]
-                      text-base text-body-color
-                      placeholder-[#ACB6BE]
-                      outline-none
-                      focus-visible:shadow-none
-                      focus:border-primary
-                      transition
-                    " />
-                            </div>
-                            <div class="mb-10">
-                                <input type="submit" id="signUpButton" value="Open Account" class="
-                      w-full
-                      rounded-md
-                      border
-                      bordder-primary
-                      py-3
-                      px-5
-                      bg-primary
-                      text-base text-white
-                      cursor-pointer
-                      hover:shadow-md
-                      transition
-                      duration-300
-                      ease-in-out
-                    " />
-                                <script>
-                                    function submitButton() {
-                                        var currentDateAndTime = new Date().toLocaleString();
-                                        // var currentdate = new Date();
-                                        // var currentLoginTime = currentdate.getDay() + "/" + currentdate.getMonth()  +  "/" + currentdate.getFullYear() + " @ " + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-                                        var emailAddress = document.getElementById("signUpEmailField").value;
-                                        var streetAddress = document.getElementById("signUpStreetAddressField").value;
-                                        var zipCode = document.getElementById("signUpZipCodeField").value;
-                                        var planSelected = document.forms.signUpForm.elements.plan.value;
-                                        var customerName = document.getElementById("signUpNameField").value;
-
-                                        if (emailAddress.indexOf('@') === -1) {
-                                            console.log("no @ in email address");
-                                        } else {
-                                            //replace with Identify call
-                                            console.log("@ in email address, Heap Identify Call made");
-                                            if (emailAddress != '') {
-                                                heap.identify(emailAddress);
-                                                if (customerName != '') {
-                                                    heap.addUserProperties({
-                                                        "Account - Customer Name": customerName
-                                                    });
-                                                }
-                                                // if (emailAddress != ''){
-                                                //   heap.addUserProperties({ "Account- Email Address": emailAddress });
-                                                // }
-                                                if (emailAddress != '') {
-                                                    heap.addUserProperties({
-                                                        "Account - Last Login": currentDateAndTime
-                                                    });
-                                                }
-                                                if (emailAddress != '') {
-                                                    heap.addUserProperties({
-                                                        "Account - Subscription Date": currentDateAndTime
-                                                    });
-                                                }
-                                                // if (streetAddress != ''){
-                                                //   heap.addUserProperties({ "Account - Street Address": streetAddress });
-                                                // }
-                                                // if (zipCode != ''){
-                                                //   heap.addUserProperties({ "Account - Zip Code": zipCode });
-                                                // }
-                                                if (planSelected != '') {
-                                                    heap.addUserProperties({
-                                                        "Account - Subscribed Plan": planSelected
-                                                    });
-                                                }
-                                            }
-                                            window.location.href = "/";
-                                        }
-                                        // window.location.href = "/";
-                                    }
-                                </script>
-                            </div>
-                        </form> -->
-
-
-
-
-
-
-
-
-
-
-
+                        <div id="failureMessage" style="display: none">
+                          <br>This demonstration form requires, at a minimum, an email address.  Please try again.<br><br>
+                        </div>
 
                         <p class="text-base text-[#adadad] mb-4">
                             By creating an account you agree with our
