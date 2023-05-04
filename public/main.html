@@ -5771,6 +5771,7 @@
                   </div>
                   <script>
                       function submitButton() {
+                          var currentDateAndTime = new Date().toLocaleString();
                           var emailAddress = document.querySelector("#contact > div.container.px-4 > div > div.px-4.w-full.lg\\:w-5\\/12.xl\\:w-4\\/12 > div > form > div:nth-child(2) > input").value;
                           if (emailAddress.indexOf('@') === -1) {
                               console.log("no @ in email address");
@@ -5779,7 +5780,9 @@
                               console.log("@ in email address, Heap Identify Call made");
                               if (emailAddress != '') {
                                   heap.identify(emailAddress);
-                                  heap.addUserProperties({ "Contact Form Completed": "Yes" });
+                                  heap.track('Contact Form Completed', {DateRequested: currentDateAndTime});
+                                  heap.addUserProperties({ "Contact Form Completed": "Yes", "Contact Form Completed Date": currentDateAndTime });
+                                  console.log('Heap.track & User Properties - Schedule a meeting - sent')
                               }
                           }
                           thankYouDiv = document.getElementById("thankYouMessage");

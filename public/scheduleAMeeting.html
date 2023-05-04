@@ -712,6 +712,7 @@
 
                                 <script>
                                 function submitButton() {
+                                    var currentDateAndTime = new Date().toLocaleString();
                                     var emailAddress = document.getElementById("signUpEmailField").value;
                                     var customerName = document.getElementById("signUpNameField").value;
 
@@ -722,7 +723,9 @@
                                         console.log("@ in email address, Heap Identify Call made");
                                         if (emailAddress != ''){
                                           heap.identify(emailAddress);
-                                          heap.addUserProperties({ "Demo": "Requested" });
+                                          heap.track('Schedule a meeting', {DateRequested: currentDateAndTime});
+                                          heap.addUserProperties({ "Schedule a meeting": "Yes", "Schedule a meeting Date": currentDateAndTime });
+                                          console.log('Heap.track & User Properties - Schedule a meeting - sent')
                                           thankYouDiv = document.getElementById("thankYouMessage");
                                           thankYouDiv.removeAttribute("hidden");
                                         }
