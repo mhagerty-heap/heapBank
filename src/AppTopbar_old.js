@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import SignUpInfo from "./components/addAccountForm/SignUpInfo";
 import PersonalInfo from "./components/addAccountForm/PersonalInfo";
 import OtherInfo from "./components/addAccountForm/OtherInfo";
@@ -14,19 +14,10 @@ import classNames from 'classnames';
 
 export const AppTopbar = (props) => {
 
-  // useEffect(() => {
-  //     //if nickname data is available locally, use it, otherwise load default list
-  //     if ("customerNickname" in sessionStorage && sessionStorage.getItem("customerNickname") !== null && sessionStorage.getItem("customerNickname") !== '""') { // check if data already exists in sessionStorage
-  //       setCustomerNickname(customerCustomerNicknameParsed);
-  //     }
-  // },[]);
-
   const [displayBasic, setDisplayBasic] = useState(false);
   const [position, setPosition] = useState('center');
   const formSuccessMessage = useRef(null);
   const formFailMessage = useRef(null);
-  const [customerNickname, setCustomerNickname] = useState('');
-  const customerCustomerNicknameParsed = JSON.parse(sessionStorage.getItem("customerNickname"));
 
   const dialogFuncMap = {
     'displayBasic': setDisplayBasic,
@@ -66,13 +57,6 @@ export const AppTopbar = (props) => {
   const formSubmitMessage = (e) => {
     //e.preventDefault(); // prevents page from reloading
     if (formData.nickname) {
-      //console.log(formData.nickname);
-      const newNickname = "Welcome, " + formData.nickname + "!";
-      //console.log("newNickname = " + newNickname);
-      setCustomerNickname(newNickname);
-      //console.log('customerNickname = ' + customerNickname);
-      //const nicknameDataString = JSON.stringify(customerNickname);
-      //const customerNicknameDataLocalCopy = sessionStorage.setItem('customerNickname', nicknameDataString); // store updated ticketsLocalCopy sessionStorage
       formSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: ' Personal Details Saved!'});
     } else {
       formFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the nickname'});
@@ -85,9 +69,6 @@ export const AppTopbar = (props) => {
       window.location = '/signin.html';
   }
 
-  const style3 = {
-    alignSelf: 'flex-end'
-  };
 
     return (
         <div className="layout-topbar">
@@ -110,9 +91,8 @@ export const AppTopbar = (props) => {
                     <Messages ref={formSuccessMessage} />
                     <Messages ref={formFailMessage} />
                     </li>
-
                     <li>
-                        <Button label={customerNickname} icon="pi pi-user-edit"  className="p-button-success" onClick={() => setDisplayBasic(true)}></Button>
+                        <Button label="Personalize" icon="pi pi-user-edit"  className="p-button-success" onClick={() => setDisplayBasic(true)}></Button>
                     </li>
                     <li>
                         <a href="/adminScreen">
