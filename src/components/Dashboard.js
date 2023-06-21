@@ -203,7 +203,7 @@ const Dashboard = (props) => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Checking</span>
-                            <div className="text-900 font-medium text-xl" data-heap-redact-text data-heaptextredactionexample="yes">$5678.90</div>
+                            <div className="text-900 font-medium text-xl" data-heap-redact-text data-heaptextredactionexample>$5678.90</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
                             <i className="pi pi-map-marker text-orange-500 text-xl"/>
@@ -218,7 +218,7 @@ const Dashboard = (props) => {
                     <div className="flex justify-content-between mb-3">
                         <div>
                             <span className="block text-500 font-medium mb-3">Savings</span>
-                            <div className="text-900 font-medium text-xl" data-heap-redact-text data-heaptextredactionexample="yes">$1234.56</div>
+                            <div className="text-900 font-medium text-xl" data-heap-redact-text data-heaptextredactionexample>$1234.56</div>
                         </div>
                         <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{width: '2.5rem', height: '2.5rem'}}>
                             <i className="pi pi-inbox text-cyan-500 text-xl"/>
