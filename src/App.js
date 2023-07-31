@@ -61,6 +61,9 @@ import './assets/demo/Demos.scss';
 import './assets/layout/layout.scss';
 import './App.scss';
 
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+
 const App = () => {
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
@@ -213,6 +216,12 @@ const App = () => {
                 { label: 'FriendPay', icon: 'pi pi-fw pi-money-bill', to: '/friendPay', badge: "NEW" },
                 { label: 'Add a Friend', icon: 'pi pi-fw pi-user', to: '/addFriendPayFriend', badge: "NEW" },
             ]
+        },
+        {
+            label: 'Take a Tour',
+            items: [
+                { label: 'BankOne Tour', icon: 'pi pi-fw pi-sitemap', badge: "NEW", command: () => {driverObj.drive();} },
+            ]
         }
     ];
 
@@ -239,6 +248,21 @@ const App = () => {
         'p-input-filled': inputStyle === 'filled',
         'p-ripple-disabled': ripple === false,
         'layout-theme-light': layoutColorMode === 'light'
+    });
+
+    const driverObj = driver({
+      showProgress: true,
+      steps: [
+        { element: '#tour-example', popover: { title: 'BankOne Tour', description: 'Welcome to BankOne!  Let\'s take a quick look at your BankOne experience!', side: "left", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(1)', popover: { title: 'Banking Home', description: 'This is your Banking Homeg screen, where you can get a high-level overview of your accounts.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(2)', popover: { title: 'Checking', description: 'This is where you interact with your Checking accounts.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(3)', popover: { title: 'Savings', description: 'This is where you interact with your Savings accounts.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(4)', popover: { title: 'Transfers', description: 'This is where you perform account transfers.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(5)', popover: { title: 'Add Accounts', description: 'This is where you can add new accounts.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-sidebar > div > ul > li:nth-child(6)', popover: { title: 'Pay a Friend', description: 'This is where you can pay your friends.', side: "bottom", align: 'start' }},
+        { element: '#root > div > div.layout-topbar > ul > li:nth-child(2)', popover: { title: 'Personalize', description: 'This is where you can personalize your banking experience.', side: "bottom", align: 'start' }},
+        { popover: { title: 'Happy Banking!!', description: 'That\'s it! Enjoy banking with BankOne!' } }
+      ]
     });
 
     return (

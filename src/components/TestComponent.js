@@ -24,6 +24,11 @@ import SubmitAddAccount from "./addAccountForm/8SubmitAddAccount";
 import axios from 'axios';
 import { Divider } from 'primereact/divider';
 
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
+
+
+
 
 const AddAccounts = () => {
   const accountTypes = ['Savings', 'Checking'];
@@ -271,11 +276,23 @@ const AddAccounts = () => {
     }
   };
 
+  const driverObj = driver({
+    showProgress: true,
+    steps: [
+      { element: '#tour-example', popover: { title: 'Animated Tour Example', description: 'Here is the code example showing animated tour. Let\'s walk you through it.', side: "left", align: 'start' }},
+      { element: '#accountTypeSelectButton', popover: { title: 'Import the Library', description: 'It works the same in vanilla JavaScript as well as frameworks.', side: "bottom", align: 'start' }},
+      { element: '#individualOrJointDiv', popover: { title: 'Importing CSS', description: 'Import the CSS which gives you the default styling for popover and overlay.', side: "bottom", align: 'start' }},
+      { popover: { title: 'Happy Banking', description: 'And that is all, go ahead and start banking!!' } }
+    ]
+  });
+
+  driverObj.drive();
+
     return (
         <div>
             <div className="card">
                 <h5>Add New Account &nbsp;&nbsp;
-                <Button label="Start New Account Wizard" icon="pi pi-bolt" className="p-button-sm" onClick={() => onClickDialog('displayBasic')}></Button>
+                <Button id="startNewAccountWizardButton" label="Start New Account Wizard" icon="pi pi-bolt" className="p-button-sm" onClick={() => onClickDialog('displayBasic')}></Button>
                 </h5>
                 <div className="field col-12 md:col-4"></div>
                 <Messages ref={wizardFormSuccessMessage} />
@@ -293,10 +310,10 @@ const AddAccounts = () => {
                             <b>Account Type</b>
                           </div>
                         </Divider>
-                        <SelectButton value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
+                        <SelectButton id="accountTypeSelectButton" value={accountType} options={accountTypes} onChange={(e) => accountTypeButtonClick(e.value)} />
                       </div>
 
-                      <div className="grid col-12">
+                      <div id="individualOrJointDiv" className="grid col-12">
                         <Divider align="left">
                           <div className="inline-flex align-items-center">
                             <i className="pi pi-user-plus mr-2"></i>
