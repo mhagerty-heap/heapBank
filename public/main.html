@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      BankOne | Banking Made Easy!
+      BankOne | Banking Made For You!
     </title>
     <link
       rel="shortcut icon"
@@ -29,13 +29,13 @@
     <script>
       randomNumber = Math.floor(Math.random() * 100) + 1
       if (randomNumber >=1 && randomNumber <= 30) {
-        document.abTestGroup = "fun";
+        document.abTestGroup = "VariantA Fun";
         //console.log('abTestGroup = ' + document.abTestGroup);
       } else if (randomNumber >= 31 && randomNumber <= 60) {
-        document.abTestGroup = "fast";
+        document.abTestGroup = "VariantB Fast";
         //console.log('abTestGroup = ' + document.abTestGroup);
       } else {
-        document.abTestGroup = "control";
+        document.abTestGroup = "Control Easy";
         //console.log('abTestGroup = ' + document.abTestGroup);
       }
     </script>
@@ -464,6 +464,13 @@
               >
                 Personal Banking Can Be Easy!
               </h1>
+              <!-- <script>
+                if (document.abTestGroup == "VariantA Fun") {
+                  document.getElementById("heroTitle").innerText="Personal Banking Can Be Fun!";
+                } else if (document.abTestGroup == "VariantB Fast") {
+                  document.getElementById("heroTitle").innerText="Personal Banking Can Be Fast!";
+                }
+              </script> -->
               <p
                 class="
                   text-base
