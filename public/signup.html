@@ -887,6 +887,13 @@
                                       console.log("blank annualIncome not sent as user property");
                                     }
 
+                                    if (accountTypeSelected) {
+                                        heap.addUserProperties({ "Account Opening - Account Type": accountTypeSelected });
+                                        console.log("accountTypeSelected sent as user property")
+                                    } else {
+                                      console.log("blank accountTypeSelected not sent as user property");
+                                    }
+
                                     if (totalNetWorth) {
                                         heap.addUserProperties({ "Account Opening - Total Net Worth": totalNetWorth });
                                         console.log("totalNetWorth sent as user property");
