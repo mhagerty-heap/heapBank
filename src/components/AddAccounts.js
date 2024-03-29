@@ -258,6 +258,7 @@ const AddAccounts = () => {
     if (savingsLastName && savingsFirstName) {
       nonWizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
     } else {
+      window._uxa.push(["trackError", "For Demo purposes, at a minimum, enter the First and Last Name", {type: "formValidation", severity:"high", language: "english"}]);
       nonWizardFormFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
     }
   };
