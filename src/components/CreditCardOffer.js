@@ -8,6 +8,7 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
+import axios from 'axios';
 
 const CreditCardOffer = () => {
   const [applicantFirstName, setApplicantFirstName] = useState('')
@@ -31,14 +32,17 @@ const CreditCardOffer = () => {
   const onSubmitApplicationSuccessMessage = useRef(null);
   const onSubmitApplicationFailMessage = useRef(null);
 
-
-
   const onSubmitApplication = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (applicantFirstName && applicantLastName) {
-      onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted for Processing'});
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    console.log("apiErrorPercentage= (>=40 = success)" + apiErrorPercentage);
+    if (applicantFirstName && applicantLastName && (apiErrorPercentage >= 40)) {
+        onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted for Processing'});
+    } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 40)){
+        axios.get("https://my.api.mockaroo.com/getApiData.json?key=17612760");
+        onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'API Error'});
     } else {
-      onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
+        onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
     }
   };
 
