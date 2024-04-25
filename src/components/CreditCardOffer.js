@@ -35,7 +35,7 @@ const CreditCardOffer = () => {
   const onSubmitApplication = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    console.log("apiErrorPercentage= (>=40 = success)" + apiErrorPercentage);
+    console.log("apiErrorPercentage (>=40 = success) = " + apiErrorPercentage);
     if (applicantFirstName && applicantLastName && (apiErrorPercentage >= 40)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted for Processing'});
     } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 40)){
