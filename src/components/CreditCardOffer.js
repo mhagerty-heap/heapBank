@@ -36,13 +36,13 @@ const CreditCardOffer = () => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
     console.log("apiErrorPercentage (>=40 = success) = " + apiErrorPercentage);
-    if (applicantFirstName && applicantLastName && (apiErrorPercentage >= 40)) {
+    if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 40)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted for Processing'});
     } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 40)){
         axios.get("https://my.api.mockaroo.com/getApiData.json?key=17612760");
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'API Error'});
     } else {
-        onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'For Demo purposes, at a minimum, enter the First and Last Name'});
+        onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please enter all Required fields.'});
     }
   };
 
@@ -65,11 +65,11 @@ const CreditCardOffer = () => {
                               <h5 id="personalContactInformationHeader">Personal Contact Information</h5>
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>First Name</h6>
+                              <h6>First Name (Required)</h6>
                               <InputText id="applicantFirstName" value={applicantFirstName} onChange={(e) => setApplicantFirstName(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Last Name</h6>
+                              <h6>Last Name (Required)</h6>
                               <InputText id="applicantLastName" value={applicantLastName} onChange={(e) => setApplicantLastName(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
@@ -77,15 +77,15 @@ const CreditCardOffer = () => {
                               <InputText id="applicantMiddleInitial" value={applicantMiddleInitial} onChange={(e) => setApplicantMiddleInitial(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Date of Birth (mm/dd/yyyy)</h6>
+                              <h6>Date of Birth (Required, mm/dd/yyyy)</h6>
                               <InputText id="applicantDateOfBirth" value={applicantDateOfBirth} onChange={(e) => setApplicantDateOfBirth(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Phone Number</h6>
+                              <h6>Phone Number (Required)</h6>
                               <InputText id="applicantPhoneNumber" value={applicantPhoneNumber} onChange={(e) => setApplicantPhoneNumber(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Email Address</h6>
+                              <h6>Email Address (Required)</h6>
                               <InputText id="applicantEmailAddress" value={applicantEmailAddress} onChange={(e) => setApplicantEmailAddress(e.target.value)} />
                             </div>
                           </div>
@@ -97,23 +97,23 @@ const CreditCardOffer = () => {
                               <h5 id="personalAddressInformationHeader">Personal Address Information</h5>
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Street Address</h6>
+                              <h6>Street Address (Required)</h6>
                               <InputText id="applicantStreetAddress" value={applicantStreetAddress} onChange={(e) => setApplicantStreetAddress(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>City</h6>
+                              <h6>City (Required)</h6>
                               <InputText id="applicantCity" value={applicantCity} onChange={(e) => setApplicantCity(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>State</h6>
+                              <h6>State (Required)</h6>
                               <InputText id="applicantState" value={applicantState} onChange={(e) => setApplicantState(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Zip Code</h6>
+                              <h6>Zip Code (Required)</h6>
                               <InputText id="applicantZipCode" value={applicantZipCode} onChange={(e) => setApplicantZipCode(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
-                              <h6>Country</h6>
+                              <h6>Country (Required)</h6>
                               <InputText id="applicantCountry" value={applicantCountry} onChange={(e) => setApplicantCountry(e.target.value)} />
                             </div>
                           </div>
