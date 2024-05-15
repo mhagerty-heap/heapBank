@@ -62,7 +62,7 @@ const CreditCardOffer = () => {
                         <div className="card">
                           <div className="grid p-fluid">
                             <div className="col-12">
-                              <h5>Personal Contact Information</h5>
+                              <h5 id="personalContactInformationHeader">Personal Contact Information</h5>
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>First Name</h6>
@@ -94,7 +94,7 @@ const CreditCardOffer = () => {
                         <div className="card">
                           <div className="grid p-fluid">
                             <div className="col-12">
-                              <h5>Personal Address Information</h5>
+                              <h5 id="personalAddressInformationHeader">Personal Address Information</h5>
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Street Address</h6>
@@ -122,7 +122,7 @@ const CreditCardOffer = () => {
                         <div className="card">
                           <div className="grid p-fluid">
                             <div className="col-12">
-                              <h5>Personal Financial Information</h5>
+                              <h5 id="personalFinancialInformationHeader">Personal Financial Information</h5>
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Homeowner or Renter?</h6>
