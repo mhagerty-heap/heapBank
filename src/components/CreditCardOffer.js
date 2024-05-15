@@ -66,27 +66,27 @@ const CreditCardOffer = () => {
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>First Name</h6>
-                              <InputText value={applicantFirstName} onChange={(e) => setApplicantFirstName(e.target.value)} />
+                              <InputText id="applicantFirstName" value={applicantFirstName} onChange={(e) => setApplicantFirstName(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Last Name</h6>
-                              <InputText value={applicantLastName} onChange={(e) => setApplicantLastName(e.target.value)} />
+                              <InputText id="applicantLastName" value={applicantLastName} onChange={(e) => setApplicantLastName(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Middle Initial</h6>
-                              <InputText value={applicantMiddleInitial} onChange={(e) => setApplicantMiddleInitial(e.target.value)} />
+                              <InputText id="applicantMiddleInitial" value={applicantMiddleInitial} onChange={(e) => setApplicantMiddleInitial(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Date of Birth (mm/dd/yyyy)</h6>
-                              <InputText value={applicantDateOfBirth} onChange={(e) => setApplicantDateOfBirth(e.target.value)} />
+                              <InputText id="applicantDateOfBirth" value={applicantDateOfBirth} onChange={(e) => setApplicantDateOfBirth(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Phone Number</h6>
-                              <InputText value={applicantPhoneNumber} onChange={(e) => setApplicantPhoneNumber(e.target.value)} />
+                              <InputText id="applicantPhoneNumber" value={applicantPhoneNumber} onChange={(e) => setApplicantPhoneNumber(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Email Address</h6>
-                              <InputText value={applicantEmailAddress} onChange={(e) => setApplicantEmailAddress(e.target.value)} />
+                              <InputText id="applicantEmailAddress" value={applicantEmailAddress} onChange={(e) => setApplicantEmailAddress(e.target.value)} />
                             </div>
                           </div>
                         </div>
@@ -98,23 +98,23 @@ const CreditCardOffer = () => {
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Street Address</h6>
-                              <InputText value={applicantStreetAddress} onChange={(e) => setApplicantStreetAddress(e.target.value)} />
+                              <InputText id="applicantStreetAddress" value={applicantStreetAddress} onChange={(e) => setApplicantStreetAddress(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>City</h6>
-                              <InputText value={applicantCity} onChange={(e) => setApplicantCity(e.target.value)} />
+                              <InputText id="applicantCity" value={applicantCity} onChange={(e) => setApplicantCity(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>State</h6>
-                              <InputText value={applicantState} onChange={(e) => setApplicantState(e.target.value)} />
+                              <InputText id="applicantState" value={applicantState} onChange={(e) => setApplicantState(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Zip Code</h6>
-                              <InputText value={applicantZipCode} onChange={(e) => setApplicantZipCode(e.target.value)} />
+                              <InputText id="applicantZipCode" value={applicantZipCode} onChange={(e) => setApplicantZipCode(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Country</h6>
-                              <InputText value={applicantCountry} onChange={(e) => setApplicantCountry(e.target.value)} />
+                              <InputText id="applicantCountry" value={applicantCountry} onChange={(e) => setApplicantCountry(e.target.value)} />
                             </div>
                           </div>
                         </div>
@@ -126,15 +126,15 @@ const CreditCardOffer = () => {
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Homeowner or Renter?</h6>
-                              <InputText value={applicantHomeownerRenter} onChange={(e) => setApplicantHomeownerRenter(e.target.value)} />
+                              <InputText id="applicantHomeownerRenter" value={applicantHomeownerRenter} onChange={(e) => setApplicantHomeownerRenter(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Gross Monthly Income</h6>
-                              <InputText value={applicantGrossMonthlyIncome} onChange={(e) => setApplicantGrossMonthlyIncome(e.target.value)} />
+                              <InputText id="applicantGrossMonthlyIncome" value={applicantGrossMonthlyIncome} onChange={(e) => setApplicantGrossMonthlyIncome(e.target.value)} />
                             </div>
                             <div className="col-12 lg:col-6">
                               <h6>Mortgage/Rent Payment Monthly</h6>
-                              <InputText value={applicantPaymentMonthly} onChange={(e) => setApplicantPaymentMonthly(e.target.value)} />
+                              <InputText id="applicantPaymentMonthly" value={applicantPaymentMonthly} onChange={(e) => setApplicantPaymentMonthly(e.target.value)} />
                             </div>
                           </div>
                         </div>
