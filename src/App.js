@@ -42,6 +42,7 @@ import FriendPay from './components/FriendPay';
 import AddBillPayAccount from './components/AddBillPayAccount';
 import AddFriendPayFriend from './components/AddFriendPayFriend';
 import CreditCardOffer from './components/CreditCardOffer'
+import CreditCardOfferThankYou from './components/CreditCardOfferThankYou'
 import AdminScreen from './components/AdminScreen'
 import TestComponent from './components/TestComponent'
 
@@ -314,6 +315,7 @@ const App = () => {
                     <Route path="/addBillPayAccount" component={AddBillPayAccount} />
                     <Route path="/addFriendPayFriend" component={AddFriendPayFriend} />
                     <Route path="/creditCardOffer" component={CreditCardOffer} />
+                    <Route path="/creditCardOfferThankYou" component={CreditCardOfferThankYou} />
                     <Route path="/addAccountForm" component={AddAccountForm} />
                     <Route path="/adminScreen" component={AdminScreen} />
                     <Route path="/testComponent" component={TestComponent} />
