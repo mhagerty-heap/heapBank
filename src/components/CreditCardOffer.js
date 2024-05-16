@@ -163,7 +163,7 @@ const CreditCardOffer = () => {
                             <div className="col-12">
                               <h5>Submit Application</h5>
                               <div className="col-2">
-                                <Button label="Submit Application" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
+                                <Button id="submitApplication" label="Submit Application" type="submit" icon="pi pi-check-square" className="p-button-success"></Button>
                               </div>
                               <div>
                                   <Messages ref={onSubmitApplicationSuccessMessage} />
