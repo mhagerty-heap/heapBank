@@ -35,8 +35,8 @@ const CreditCardOffer = () => {
   const onSubmitApplication = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    console.log("apiErrorPercentage (>=40 = success) = " + apiErrorPercentage);
-    if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 40)) {
+    console.log("apiErrorPercentage (>=20 = success) = " + apiErrorPercentage);
+    if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 20)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted...Please wait.'});
         setTimeout(function() {
           window.location.replace('/creditCardOfferThankYou');
