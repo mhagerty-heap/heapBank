@@ -148,9 +148,9 @@ const CreditCardOffer = () => {
                         <div className="card">
                           <div className="grid p-fluid">
                             <div className="col-12">
-                              <h5 id="Disclosures">Disclosures</h5>
+                              <h5 id="disclosures">Disclosures</h5>
                             </div>
-                            <div className="col-12">
+                            <div id="disclosureText" className="col-12">
                               This Credit Card Agreement and Disclosures, the applicable Schedule of Fees, the signature card and
                               other account opening documents for your account are part of the binding contract between you and
                               us (this “Agreement”) for your deposit account and your deposit relationship with us. They contain
