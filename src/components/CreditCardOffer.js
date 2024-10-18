@@ -148,7 +148,7 @@ const CreditCardOffer = () => {
                         <div className="card">
                           <div className="grid p-fluid">
                             <div className="col-12">
-                              <h5>Disclosures</h5>
+                              <h5 id="Disclosures">Disclosures</h5>
                             </div>
                             <div className="col-12">
                               This Credit Card Agreement and Disclosures, the applicable Schedule of Fees, the signature card and
