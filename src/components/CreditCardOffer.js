@@ -43,7 +43,7 @@ const CreditCardOffer = () => {
         }, 1000);
     } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 30)){
         console.log("apiErrorPercentage (<30 = apiFailure) = " + apiErrorPercentage)
-        axios.get("https://my.api.mockaroo.com/getApiData.json?key=17612760");
+        axios.get("https://my.api.mockaroo.com/creditCardOffer.json?key=17612760");
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'API Error'});
     } else {
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please enter all Required fields.'});
