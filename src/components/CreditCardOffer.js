@@ -35,13 +35,14 @@ const CreditCardOffer = () => {
   const onSubmitApplication = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    console.log("apiErrorPercentage (>=20 = success) = " + apiErrorPercentage);
-    if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 20)) {
+    //console.log("apiErrorPercentage (>=20 = success) = " + apiErrorPercentage);
+    if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 30)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted...Please wait.'});
         setTimeout(function() {
           window.location.replace('/creditCardOfferThankYou');
         }, 1000);
-    } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 40)){
+    } else if (applicantFirstName && applicantLastName && (apiErrorPercentage < 30)){
+        console.log("apiErrorPercentage (<30 = apiFailure) = " + apiErrorPercentage)
         axios.get("https://my.api.mockaroo.com/getApiData.json?key=17612760");
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'API Error'});
     } else {
