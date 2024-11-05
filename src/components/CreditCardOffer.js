@@ -38,6 +38,7 @@ const CreditCardOffer = () => {
     //console.log("apiErrorPercentage (>=20 = success) = " + apiErrorPercentage);
     if (applicantFirstName == "forcedApiError") { //added forced error by entering specific value in firstName
       axios.post(`https://run.mocky.io/v3/565efd39-8689-4b5d-98ea-f6fed47f1c51`);
+      onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error: ', detail: 'There was a problem with your submission'});  
     } else if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 30)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted...Please wait.'});
         setTimeout(function() {
