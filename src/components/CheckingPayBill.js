@@ -78,7 +78,7 @@ const CheckingPayBill = () => {
     event.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
     //const apiErrorPercentage = 10;
-    if (transactorName && transactionAmount && transactionDate && apiErrorPercentage >= 30) {
+    if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage >= 30) {
       var newTransactionNumber = getRandomInt(200000, 299999);  //define random value between 69999 and 80000
       var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
       var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
@@ -104,14 +104,14 @@ const CheckingPayBill = () => {
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
-    } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forceApiError" && apiErrorPercentage < 30) {
+    } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api-call/400?parm1=checkingPayBill&parm2=US');
         xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to complete pay bill due to API error");
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill API Error:', detail: 'API Error'});
-    } else if (transactionNotes == "forceApiError") {
+    } else if (transactionNotes == "forcedApiError") {
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api-call/400?parm1=checkingPayBillForced&parm2=US');
         xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
