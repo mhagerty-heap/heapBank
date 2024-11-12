@@ -57,7 +57,9 @@ const AddBillPayAccount = () => {
 
   const onAddBillPayAccount = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (addBillPayAccount) {
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    //const apiErrorPercentage = 10;
+    if (addBillPayAccount && apiErrorPercentage >=30) {
       //console.log(addBillPayAccount.name);
 
       var addAccountArray = {
@@ -67,10 +69,16 @@ const AddBillPayAccount = () => {
       customerBillPayAccountsDataLocalCopyParsed.push(addAccountArray); // add form data array to local copy of checking data
       const billPayAccountDataString = JSON.stringify(customerBillPayAccountsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
       const billPayAccountsDataLocalCopy = sessionStorage.setItem('customerBillPayAccountsData', billPayAccountDataString); // store updated ticketsLocalCopy sessionStorage
-
       addBillPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to Bill Pay List'});
+    } else if (addBillPayAccount && apiErrorPercentage < 30) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=addBillPayAccount&parm2=US');
+        xhr.setRequestHeader("api_test_addBillPayAccount", "Add Bill Pay Account API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to add account due to api error");
+        addBillPayAccountFailMessage.current.show({severity: 'error', summary: 'Add Bill Pay Account Failed:', detail: 'Add Bill Pay Account API Error'});
     } else {
-      addBillPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});
+        addBillPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});
     }
     setAddBillPayAccount('');
   }
