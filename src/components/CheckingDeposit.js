@@ -50,45 +50,61 @@ const CheckingDeposit = () => {
 
     const makeDeposit = (event) => {
         event.preventDefault();
-        //console.log('transactorName = ' + event.target.transactorName.value);
-        //console.log('transactionAmount = ' + event.target.transactionAmount.value);
-        //console.log('transactionNote = '+ event.target.transactionNote.value);
-        var newTransactionNumber = getRandomInt(200000, 299999);  //define random value between 69999 and 80000
-        var randomAccountPastActivityNumber = getRandomInt(1, 100);
-        var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
-        var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
-        //var todaysDate = new Date().toLocaleDateString('fr-CA', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        // Create a date object from a date string
-        // Get year, month, and day part from the date
-        //var date = new Date();
-        // var year = date.toLocaleString("default", { year: "numeric" });
-        // var month = date.toLocaleString("default", { month: "2-digit" });
-        // var day = date.toLocaleString("default", { day: "2-digit" });
-        // var todaysDate = year + "-" + month + "-" + day;
-        var todaysDate = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        // console.log('transactorName = ' + transactorName);
-        // console.log('transactionAmount = ' + transactionAmount);
-        // console.log('transactionNote = '+ transactionNotes);
-        // console.log('transactionNumber = ' + newTransactionNumber);
-        // console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
-        // console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
-        // console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
-        var transactionArray = {
-          transactionNumber: newTransactionNumber,
-          transactorName: transactorName,
-          transactionDate: todaysDate,
-          transactionAmount: transactionAmount,
-          transactionStatus: "RECEIVED",
-          transactorPastActivity: randomAccountPastActivityNumber,
-          transactionNotes: transactionNotes,
-          transactionAccountNumber: newTransactionAccountNumber,
-          transactionRoutingNumber: newTransactionRoutingNumber
+        const apiErrorPercentage = Math.floor(Math.random() * 101);
+        if (transactorName == "forcedApiError") {
+          const xhr = new XMLHttpRequest();
+          xhr.open('POST', '/api-call/400?parm1=deposit_international&parm2=EU');
+          xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
+          xhr.setRequestHeader("content-type","text/html");
+          xhr.send("failed to complete deposit due to forced error");
+          depositToast.current.show({ severity: 'error', summary: 'Forced Deposit API Error', detail: 'Checking Deposit Failed' });
+        } else if (apiErrorPercentage >= 30) { // successful deposit
+          //console.log('transactorName = ' + event.target.transactorName.value);
+          //console.log('transactionAmount = ' + event.target.transactionAmount.value);
+          //console.log('transactionNote = '+ event.target.transactionNote.value);
+          var newTransactionNumber = getRandomInt(200000, 299999);  //define random value between 69999 and 80000
+          var randomAccountPastActivityNumber = getRandomInt(1, 100);
+          var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
+          var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
+          //var todaysDate = new Date().toLocaleDateString('fr-CA', {year: 'numeric', month: '2-digit', day: '2-digit'});
+          // Create a date object from a date string
+          // Get year, month, and day part from the date
+          //var date = new Date();
+          // var year = date.toLocaleString("default", { year: "numeric" });
+          // var month = date.toLocaleString("default", { month: "2-digit" });
+          // var day = date.toLocaleString("default", { day: "2-digit" });
+          // var todaysDate = year + "-" + month + "-" + day;
+          var todaysDate = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
+          // console.log('transactorName = ' + transactorName);
+          // console.log('transactionAmount = ' + transactionAmount);
+          // console.log('transactionNote = '+ transactionNotes);
+          // console.log('transactionNumber = ' + newTransactionNumber);
+          // console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
+          // console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
+          // console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
+          var transactionArray = {
+            transactionNumber: newTransactionNumber,
+            transactorName: transactorName,
+            transactionDate: todaysDate,
+            transactionAmount: transactionAmount,
+            transactionStatus: "RECEIVED",
+            transactorPastActivity: randomAccountPastActivityNumber,
+            transactionNotes: transactionNotes,
+            transactionAccountNumber: newTransactionAccountNumber,
+            transactionRoutingNumber: newTransactionRoutingNumber
+          }
+          checkingDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of checking data
+          const checkingDataString = JSON.stringify(checkingDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
+          const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', checkingDataString); // store updated ticketsLocalCopy sessionStorage
+          depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Checking Deposit' });
+        }  else {
+          const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/api-call/400?parm1=deposit_international&parm2=EU');
+            xhr.setRequestHeader("forced_api_test", "Deposits API Error");
+            xhr.setRequestHeader("content-type","text/html");
+            xhr.send("failed to complete deposit due to error");
+            depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Checking Deposit Failed' });
         }
-        checkingDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of checking data
-        const checkingDataString = JSON.stringify(checkingDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
-        const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', checkingDataString); // store updated ticketsLocalCopy sessionStorage
-        depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Checking Download' });
-
     };
 
     return (
