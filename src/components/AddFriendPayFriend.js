@@ -57,7 +57,11 @@ const AddFriendPayAccount = () => {
 
   const onAddFriendPayAccount = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (addFriendPayAccount) {
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    //const apiErrorPercentage = 10;
+
+
+    if (addFriendPayAccount && apiErrorPercentage >=30) {
       //console.log(addFriendPayAccount.name);
 
       var addAccountArray = {
@@ -69,6 +73,13 @@ const AddFriendPayAccount = () => {
       const friendPayAccountsDataLocalCopy = sessionStorage.setItem('customerFriendPayAccountsData', friendPayAccountDataString); // store updated ticketsLocalCopy sessionStorage
 
       addFriendPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to FriendPay List'});
+    } else if (addFriendPayAccount && apiErrorPercentage < 30){
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=addfriendPayFriend&parm2=US');
+        xhr.setRequestHeader("api_test_addFriendPayFriend", "Add Friend Pay Friend API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to add Friend due to api error");
+        addFriendPayAccountSuccessMessage.current.show({ severity: 'error', summary: 'Add Friend API Error:', detail: 'Add Friend Failed' });
     } else {
       addFriendPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});
     }

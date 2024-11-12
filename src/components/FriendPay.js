@@ -134,7 +134,7 @@ const FriendPay = () => {
     } else if (transactorName && transactionFromAccount && transactionAmount && transactionDate && apiErrorPercentage < 30){
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/api-call/400?parm1=friendPay&parm2=US');
-        xhr.setRequestHeader("api_test_friendPAy", "Friend Pay API Error");
+        xhr.setRequestHeader("api_test_friendPay", "Friend Pay API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to Friend Pay due to api error");
         depositFailMessage.current.show({ severity: 'error', summary: 'Friend Pay API Error:', detail: 'Friend Pay Failed' });
