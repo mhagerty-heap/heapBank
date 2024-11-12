@@ -59,7 +59,9 @@ const MakeATransfer = () => {
 
   const onButtonClick = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (toAccount && fromAccount && transactionAmount) {  // if all values are present and toAccount does not equal fromAccount
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+
+    if (toAccount && fromAccount && transactionAmount && apiErrorPercentage >= 30 ) {  // if all values are present and toAccount does not equal fromAccount
       if (toAccount !== fromAccount) {
         var checkingStatus;
         var savingsStatus;
@@ -114,6 +116,13 @@ const MakeATransfer = () => {
       } else {
         depositFailMessage.current.show({severity: 'error', summary: 'Error:', detail: ' From Account Must be Different Than To Account'});
       }
+    } else if (toAccount && fromAccount && transactionAmount && apiErrorPercentage < 30) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=makeATransfer&parm2=US');
+        xhr.setRequestHeader("makeATransfer", "Transfer API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to complete transfer due to API error");
+        depositFailMessage.current.show({severity: 'error', summary: 'Make A Transfer API Error:', detail: ' API Error'});
     } else {
       depositFailMessage.current.show({severity: 'error', summary: 'Error:', detail: ' Please Complete All Steps'});
     };
