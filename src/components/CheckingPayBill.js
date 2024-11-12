@@ -74,9 +74,11 @@ const CheckingPayBill = () => {
 
 
   // what happens when they click the submit deposit button
-  const submitPayment = (e) => {
-    e.preventDefault(); // prevents page from reloading
-    if (transactorName && transactionAmount && transactionDate) {
+  const submitPayment = (event) => {
+    event.preventDefault(); // prevents page from reloading
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    //const apiErrorPercentage = 10;
+    if (transactorName && transactionAmount && transactionDate && apiErrorPercentage >= 30) {
       var newTransactionNumber = getRandomInt(200000, 299999);  //define random value between 69999 and 80000
       var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
       var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
@@ -102,8 +104,22 @@ const CheckingPayBill = () => {
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
+    } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forceApiError" && apiErrorPercentage < 30) {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=checkingPayBill&parm2=US');
+        xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to complete pay bill due to API error");
+        depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill API Error:', detail: 'API Error'});
+    } else if (transactionNotes == "forceApiError") {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=checkingPayBillForced&parm2=US');
+        xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to complete pay bill due to forced error");
+        depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill Forced Error:', detail: 'Forced API Error'});
     } else {
-      depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
+        depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill Entry Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
     };
   };
 
