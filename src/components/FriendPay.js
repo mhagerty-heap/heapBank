@@ -94,7 +94,9 @@ const FriendPay = () => {
   // what happens when they click the submit deposit button
   const submitPayment = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (transactorName && transactionFromAccount && transactionAmount && transactionDate) {
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    //const apiErrorPercentage = 10;
+    if (transactorName && transactionFromAccount && transactionAmount && transactionDate && apiErrorPercentage >=30) {
       var newTransactionNumber = getRandomInt(400000, 499999);  //define random value between 69999 and 80000
       var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
       var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
@@ -123,13 +125,19 @@ const FriendPay = () => {
         const checkingDataString = JSON.stringify(checkingDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
         const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', checkingDataString); // store updated ticketsLocalCopy sessionStorage
       }
-
       depositSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Friend Paid'});
       setTransactorName('');
       setTransactionFromAccount('');
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
+    } else if (transactorName && transactionFromAccount && transactionAmount && transactionDate && apiErrorPercentage < 30){
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api-call/400?parm1=friendPay&parm2=US');
+        xhr.setRequestHeader("api_test_friendPAy", "Friend Pay API Error");
+        xhr.setRequestHeader("content-type","text/html");
+        xhr.send("failed to Friend Pay due to api error");
+        depositFailMessage.current.show({ severity: 'error', summary: 'Friend Pay API Error:', detail: 'Friend Pay Failed' });
     } else {
       depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
     };
