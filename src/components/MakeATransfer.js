@@ -123,7 +123,7 @@ const MakeATransfer = () => {
         // xhr.setRequestHeader("makeATransfer", "Transfer API Error");
         // xhr.setRequestHeader("content-type","text/html");
         // xhr.send("failed to complete transfer due to API error");
-        axios.post(`https://my.api.mockaroo.com/makeATransfer.json?key=3fa20c10`);
+        axios.post(`https://my.api.mockaroo.com/bankone/makeATransfer.json?key=3fa20c10`);
         depositFailMessage.current.show({severity: 'error', summary: 'Make A Transfer API Error:', detail: ' API Error'});
     } else {
       depositFailMessage.current.show({severity: 'error', summary: 'Error:', detail: ' Please Complete All Steps'});

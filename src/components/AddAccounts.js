@@ -256,15 +256,16 @@ const AddAccounts = () => {
   const nonWizardFormSubmit = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    //const apiErrorPercentage = 10;
+    //const apiErrorPercentage = 10; //debug
     if (savingsLastName && savingsFirstName && apiErrorPercentage >= 30) {
       nonWizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
     } else if (savingsLastName && savingsFirstName && apiErrorPercentage < 30) {
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/addAccount?parm1=addAccount&parm2=US');
-        xhr.setRequestHeader("api_test_addAccount", "Add Account API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to add account due to api error");
+        // const xhr = new XMLHttpRequest();
+        // xhr.open('POST', '/api-call/addAccount?parm1=addAccount&parm2=US');
+        // xhr.setRequestHeader("api_test_addAccount", "Add Account API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to add account due to api error");
+        axios.post(`https://my.api.mockaroo.com/bankone/addAccounts.json?key=3fa20c10`);
         nonWizardFormFailMessage.current.show({ severity: 'error', summary: 'Add Account API Error', detail: 'Add Account Failed' });
     } else {
       window._uxa.push(["trackError", "For Demo purposes, at a minimum, enter the First and Last Name", {type: "formValidation", severity:"high", language: "english"}]);

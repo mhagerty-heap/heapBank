@@ -37,7 +37,7 @@ const CreditCardOffer = () => {
     const apiErrorPercentage = Math.floor(Math.random() * 101);
     //console.log("apiErrorPercentage (>=20 = success) = " + apiErrorPercentage);
     if (applicantFirstName == "forcedApiError") { //added forced error by entering specific value in firstName
-      axios.post(`https://my.api.mockaroo.com/creditCardOffer.json?key=3fa20c10`);
+      axios.post(`https://my.api.mockaroo.com/bankone/creditCardOffer.json?key=3fa20c10`);
       onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error: ', detail: 'There was a problem with your submission'});
     } else if (applicantFirstName && applicantLastName && applicantDateOfBirth && applicantPhoneNumber && applicantEmailAddress && applicantStreetAddress && applicantCity && applicantState && applicantZipCode && applicantCountry && (apiErrorPercentage >= 30)) {
         onSubmitApplicationSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Credit Card Application Submitted...Please wait.'});
@@ -49,7 +49,7 @@ const CreditCardOffer = () => {
         //axios.get("https://my.api.mockaroo.com/creditCardOffer.json?key=17612760");
 
         //axios.post(`https://my.api.mockaroo.com/creditCardOffer.json`, null, { params: {key: "17612760"}});
-        axios.post(`https://my.api.mockaroo.com/creditCardOffer.json?key=3fa20c10`);
+        axios.post(`https://my.api.mockaroo.com/bankone/creditCardOffer.json?key=3fa20c10`);
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'API Error'});
     } else {
         onSubmitApplicationFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please enter all Required fields.'});

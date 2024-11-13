@@ -58,7 +58,7 @@ const CheckingDeposit = () => {
           // xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
           // xhr.setRequestHeader("content-type","text/html");
           // xhr.send("failed to complete deposit due to forced error");
-          axios.post(`https://my.api.mockaroo.com/checkingDeposit.json?key=3fa20c10`);
+          axios.post(`https://my.api.mockaroo.com/bankone/checkingDeposit.json?key=3fa20c10`);
           depositToast.current.show({ severity: 'error', summary: 'Forced Deposit API Error', detail: 'Checking Deposit Failed' });
         } else if (apiErrorPercentage >= 30) { // successful deposit
           //console.log('transactorName = ' + event.target.transactorName.value);
@@ -105,7 +105,7 @@ const CheckingDeposit = () => {
             // xhr.setRequestHeader("forced_api_test", "Deposits API Error");
             // xhr.setRequestHeader("content-type","text/html");
             // xhr.send("failed to complete deposit due to error");
-            axios.post(`https://my.api.mockaroo.com/checkingDeposit.json?key=3fa20c10`);
+            axios.post(`https://my.api.mockaroo.com/bankone/checkingDeposit.json?key=3fa20c10`);
             depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Checking Deposit Failed' });
         }
     };

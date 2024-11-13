@@ -92,10 +92,10 @@ const SavingsDeposit = () => {
           const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
           depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Deposit' });
         }  else if (apiErrorPercentage < 30 && transactorName !== "forcedApiError") {
-          axios.post(`https://my.api.mockaroo.com/savingsDeposit.json?key=3fa20c10`);
+          axios.post(`https://my.api.mockaroo.com/bankone/savingsDeposit.json?key=3fa20c10`);
           depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Savings Deposit Failed' });
         } else {
-          axios.post(`https://my.api.mockaroo.com/savingsDeposit.json?key=3fa20c10`); // if forcedApiError exists
+          axios.post(`https://my.api.mockaroo.com/bankone/savingsDeposit.json?key=3fa20c10`); // if forcedApiError exists
           depositToast.current.show({ severity: 'error', summary: 'Forced Deposit API Error', detail: 'Savings Deposit Failed' });
         }
     };

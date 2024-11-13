@@ -7,6 +7,7 @@ import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const AddFriendPayAccount = () => {
   const friendPayAccountsDataService = new CustomerService();
@@ -58,7 +59,7 @@ const AddFriendPayAccount = () => {
   const onAddFriendPayAccount = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    //const apiErrorPercentage = 10;
+    //const apiErrorPercentage = 10; //debug
 
 
     if (addFriendPayAccount && apiErrorPercentage >=30) {
@@ -74,11 +75,12 @@ const AddFriendPayAccount = () => {
 
       addFriendPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to FriendPay List'});
     } else if (addFriendPayAccount && apiErrorPercentage < 30){
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/addFriendPay?parm1=addfriendPayFriend&parm2=US');
-        xhr.setRequestHeader("api_test_addFriendPayFriend", "Add Friend Pay Friend API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to add Friend due to api error");
+        // const xhr = new XMLHttpRequest();
+        // xhr.open('POST', '/api-call/addFriendPay?parm1=addfriendPayFriend&parm2=US');
+        // xhr.setRequestHeader("api_test_addFriendPayFriend", "Add Friend Pay Friend API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to add Friend due to api error");
+        axios.post(`https://my.api.mockaroo.com/bankone/addfriendpayfriend.json?key=3fa20c10`);
         addFriendPayAccountSuccessMessage.current.show({ severity: 'error', summary: 'Add Friend API Error:', detail: 'Add Friend Failed' });
     } else {
       addFriendPayAccountFailMessage.current.show({severity: 'error', summary: 'Error:', detail: 'Please Select New Account'});

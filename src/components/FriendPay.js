@@ -8,6 +8,7 @@ import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const FriendPay = () => {
   const savingsDataService = new CustomerService(); // savingsDataService is used to request savings json data
@@ -95,7 +96,7 @@ const FriendPay = () => {
   const submitPayment = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-    //const apiErrorPercentage = 10;
+    // const apiErrorPercentage = 10; //debug
     if (transactorName && transactionFromAccount && transactionAmount && transactionDate && apiErrorPercentage >=30) {
       var newTransactionNumber = getRandomInt(400000, 499999);  //define random value between 69999 and 80000
       var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
@@ -132,11 +133,12 @@ const FriendPay = () => {
       setTransactionDate('');
       setTransactionNotes('');
     } else if (transactorName && transactionFromAccount && transactionAmount && transactionDate && apiErrorPercentage < 30){
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/friendPay?parm1=friendPay&parm2=US');
-        xhr.setRequestHeader("api_test_friendPay", "Friend Pay API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to Friend Pay due to api error");
+        // const xhr = new XMLHttpRequest();
+        // xhr.open('POST', '/api-call/friendPay?parm1=friendPay&parm2=US');
+        // xhr.setRequestHeader("api_test_friendPay", "Friend Pay API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to Friend Pay due to api error");
+        axios.post(`https://my.api.mockaroo.com/bankone/friendpay.json?key=3fa20c10`);
         depositFailMessage.current.show({ severity: 'error', summary: 'Friend Pay API Error:', detail: 'Friend Pay Failed' });
     } else {
       depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
