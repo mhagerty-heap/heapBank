@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const SavingsDeposit = () => {
     const customerService = new CustomerService(); // CustomerService is used to request ticket json data
@@ -50,45 +51,53 @@ const SavingsDeposit = () => {
 
     const makeDeposit = (event) => {
         event.preventDefault();
-        //console.log('transactorName = ' + event.target.transactorName.value);
-        //console.log('transactionAmount = ' + event.target.transactionAmount.value);
-        //console.log('transactionNote = '+ event.target.transactionNote.value);
-        var newTransactionNumber = getRandomInt(300000, 399999);  //define random value between 69999 and 80000
-        var randomAccountPastActivityNumber = getRandomInt(1, 100);
-        var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
-        var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
-        //var todaysDate = new Date().toLocaleDateString('fr-CA', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        // Create a date object from a date string
-        // Get year, month, and day part from the date
-        //var date = new Date();
-        // var year = date.toLocaleString("default", { year: "numeric" });
-        // var month = date.toLocaleString("default", { month: "2-digit" });
-        // var day = date.toLocaleString("default", { day: "2-digit" });
-        // var todaysDate = year + "-" + month + "-" + day;
-        var todaysDate = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
-        // console.log('transactorName = ' + transactorName);
-        // console.log('transactionAmount = ' + transactionAmount);
-        // console.log('transactionNote = '+ transactionNotes);
-        // console.log('transactionNumber = ' + newTransactionNumber);
-        // console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
-        // console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
-        // console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
-        var transactionArray = {
-          transactionNumber: newTransactionNumber,
-          transactorName: transactorName,
-          transactionDate: todaysDate,
-          transactionAmount: transactionAmount,
-          transactionStatus: "RECEIVED",
-          transactorPastActivity: randomAccountPastActivityNumber,
-          transactionNotes: transactionNotes,
-          transactionAccountNumber: newTransactionAccountNumber,
-          transactionRoutingNumber: newTransactionRoutingNumber
+        const apiErrorPercentage = Math.floor(Math.random() * 101);
+        if (apiErrorPercentage >= 30 && transactorName !== "forcedApiError") {
+          //console.log('transactorName = ' + event.target.transactorName.value);
+          //console.log('transactionAmount = ' + event.target.transactionAmount.value);
+          //console.log('transactionNote = '+ event.target.transactionNote.value);
+          var newTransactionNumber = getRandomInt(300000, 399999);  //define random value between 69999 and 80000
+          var randomAccountPastActivityNumber = getRandomInt(1, 100);
+          var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
+          var newTransactionRoutingNumber = getRandomInt(20000000, 29999999);
+          //var todaysDate = new Date().toLocaleDateString('fr-CA', {year: 'numeric', month: '2-digit', day: '2-digit'});
+          // Create a date object from a date string
+          // Get year, month, and day part from the date
+          //var date = new Date();
+          // var year = date.toLocaleString("default", { year: "numeric" });
+          // var month = date.toLocaleString("default", { month: "2-digit" });
+          // var day = date.toLocaleString("default", { day: "2-digit" });
+          // var todaysDate = year + "-" + month + "-" + day;
+          var todaysDate = new Date().toLocaleDateString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit'});
+          // console.log('transactorName = ' + transactorName);
+          // console.log('transactionAmount = ' + transactionAmount);
+          // console.log('transactionNote = '+ transactionNotes);
+          // console.log('transactionNumber = ' + newTransactionNumber);
+          // console.log('accountPastActivityNumber = ' + randomAccountPastActivityNumber);
+          // console.log('transactionAccountNumber = ' + newTransactionAccountNumber);
+          // console.log('transactionRoutingNumber = ' + newTransactionRoutingNumber);
+          var transactionArray = {
+            transactionNumber: newTransactionNumber,
+            transactorName: transactorName,
+            transactionDate: todaysDate,
+            transactionAmount: transactionAmount,
+            transactionStatus: "RECEIVED",
+            transactorPastActivity: randomAccountPastActivityNumber,
+            transactionNotes: transactionNotes,
+            transactionAccountNumber: newTransactionAccountNumber,
+            transactionRoutingNumber: newTransactionRoutingNumber
+          }
+          savingsDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of savings data
+          const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
+          const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
+          depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Deposit' });
+        }  else if (apiErrorPercentage < 30 && transactorName !== "forcedApiError") {
+          axios.post(`https://my.api.mockaroo.com/savingsDeposit.json?key=3fa20c10`);
+          depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Savings Deposit Failed' });
+        } else {
+          axios.post(`https://my.api.mockaroo.com/savingsDeposit.json?key=3fa20c10`); // if forcedApiError exists
+          depositToast.current.show({ severity: 'error', summary: 'Forced Deposit API Error', detail: 'Savings Deposit Failed' });
         }
-        savingsDataLocalCopyParsed.push(transactionArray); // add form data array to local copy of savings data
-        const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
-        const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
-        depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Deposit' });
-
     };
 
     return (

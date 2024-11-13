@@ -8,6 +8,7 @@ import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const SavingsPayBill = () => {
   const savingsDataService = new CustomerService(); // savingsDataService is used to request savings json data
@@ -76,7 +77,8 @@ const SavingsPayBill = () => {
   // what happens when they click the submit deposit button
   const submitPayment = (e) => {
     e.preventDefault(); // prevents page from reloading
-    if (transactorName && transactionAmount && transactionDate) {
+    const apiErrorPercentage = Math.floor(Math.random() * 101);
+    if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage >= 30) {
       var newTransactionNumber = getRandomInt(300000, 399999);  //define random value between 69999 and 80000
       var randomAccountPastActivityNumber = 51 //getRandomInt(1, 100);
       var newTransactionAccountNumber = getRandomInt(1700000000, 1799999999);
@@ -102,8 +104,13 @@ const SavingsPayBill = () => {
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
+    } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
+      axios.post(`https://my.api.mockaroo.com/savingsPayBill.json?key=3fa20c10`);
+    } else if (transactionNotes == "forcedApiError") {
+      axios.post(`https://my.api.mockaroo.com/savingsPayBill.json?key=3fa20c10`);
+      depositFailMessage.current.show({severity: 'error', summary: 'Savings Pay Bill Forced Error:', detail: 'Forced API Error'});
     } else {
-      depositFailMessage.current.show({severity: 'error', summary: 'Bill Pay Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
+      depositFailMessage.current.show({severity: 'error', summary: 'Savings Pay Bill Entry Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
     };
   };
 
