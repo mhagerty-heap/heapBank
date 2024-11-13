@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const MakeATransfer = () => {
   const savingsDataService = new CustomerService();
@@ -60,7 +61,7 @@ const MakeATransfer = () => {
   const onButtonClick = (e) => {
     e.preventDefault(); // prevents page from reloading
     const apiErrorPercentage = Math.floor(Math.random() * 101);
-
+    //const apiErrorPercentage = 10; // debug
     if (toAccount && fromAccount && transactionAmount && apiErrorPercentage >= 30 ) {  // if all values are present and toAccount does not equal fromAccount
       if (toAccount !== fromAccount) {
         var checkingStatus;
@@ -118,10 +119,11 @@ const MakeATransfer = () => {
       }
     } else if (toAccount && fromAccount && transactionAmount && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/makeATransfer?parm1=makeATransfer&parm2=US');
-        xhr.setRequestHeader("makeATransfer", "Transfer API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to complete transfer due to API error");
+        // xhr.open('POST', '/api-call/makeATransfer?parm1=makeATransfer&parm2=US');
+        // xhr.setRequestHeader("makeATransfer", "Transfer API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to complete transfer due to API error");
+        axios.post(`https://my.api.mockaroo.com/makeATransfer.json?key=3fa20c10`);
         depositFailMessage.current.show({severity: 'error', summary: 'Make A Transfer API Error:', detail: ' API Error'});
     } else {
       depositFailMessage.current.show({severity: 'error', summary: 'Error:', detail: ' Please Complete All Steps'});
