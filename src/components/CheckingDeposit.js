@@ -53,7 +53,7 @@ const CheckingDeposit = () => {
         const apiErrorPercentage = Math.floor(Math.random() * 101);
         if (transactorName == "forcedApiError") {
           const xhr = new XMLHttpRequest();
-          xhr.open('POST', '/api-call/400?parm1=checkingDeposit&parm2=US');
+          xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
           xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
           xhr.setRequestHeader("content-type","text/html");
           xhr.send("failed to complete deposit due to forced error");
@@ -99,7 +99,7 @@ const CheckingDeposit = () => {
           depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Checking Deposit' });
         }  else {
           const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api-call/400?parm1=checkingDeposit&parm2=US');
+            xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
             xhr.setRequestHeader("forced_api_test", "Deposits API Error");
             xhr.setRequestHeader("content-type","text/html");
             xhr.send("failed to complete deposit due to error");

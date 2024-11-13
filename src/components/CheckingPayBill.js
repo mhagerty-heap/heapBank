@@ -106,14 +106,14 @@ const CheckingPayBill = () => {
       setTransactionNotes('');
     } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=checkingPayBill&parm2=US');
+        xhr.open('POST', '/api-call/checkingPayBill?parm1=checkingPayBill&parm2=US');
         xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to complete pay bill due to API error");
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill API Error:', detail: 'API Error'});
     } else if (transactionNotes == "forcedApiError") {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=checkingPayBillForced&parm2=US');
+        xhr.open('POST', '/api-call/4checkingPayBill?parm1=checkingPayBillForced&parm2=US');
         xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to complete pay bill due to forced error");

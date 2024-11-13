@@ -261,7 +261,7 @@ const AddAccounts = () => {
       nonWizardFormSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account Submitted for Processing'});
     } else if (savingsLastName && savingsFirstName && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=addAccount&parm2=US');
+        xhr.open('POST', '/api-call/addAccount?parm1=addAccount&parm2=US');
         xhr.setRequestHeader("api_test_addAccount", "Add Account API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to add account due to api error");

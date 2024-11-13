@@ -118,7 +118,7 @@ const MakeATransfer = () => {
       }
     } else if (toAccount && fromAccount && transactionAmount && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=makeATransfer&parm2=US');
+        xhr.open('POST', '/api-call/makeATransfer?parm1=makeATransfer&parm2=US');
         xhr.setRequestHeader("makeATransfer", "Transfer API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to complete transfer due to API error");

@@ -72,7 +72,7 @@ const AddBillPayAccount = () => {
       addBillPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to Bill Pay List'});
     } else if (addBillPayAccount && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=addBillPayAccount&parm2=US');
+        xhr.open('POST', '/api-call/addBillPayAccount?parm1=addBillPayAccount&parm2=US');
         xhr.setRequestHeader("api_test_addBillPayAccount", "Add Bill Pay Account API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to add account due to api error");

@@ -75,7 +75,7 @@ const AddFriendPayAccount = () => {
       addFriendPayAccountSuccessMessage.current.show({severity: 'success', summary: 'Success:', detail: 'Account added to FriendPay List'});
     } else if (addFriendPayAccount && apiErrorPercentage < 30){
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/400?parm1=addfriendPayFriend&parm2=US');
+        xhr.open('POST', '/api-call/addFriendPay?parm1=addfriendPayFriend&parm2=US');
         xhr.setRequestHeader("api_test_addFriendPayFriend", "Add Friend Pay Friend API Error");
         xhr.setRequestHeader("content-type","text/html");
         xhr.send("failed to add Friend due to api error");
