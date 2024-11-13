@@ -5,6 +5,7 @@ import { Button } from 'primereact/button';
 import { FileUpload } from 'primereact/fileupload';
 import { Toast } from 'primereact/toast';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const CheckingDeposit = () => {
     const customerService = new CustomerService(); // CustomerService is used to request ticket json data
@@ -52,11 +53,12 @@ const CheckingDeposit = () => {
         event.preventDefault();
         const apiErrorPercentage = Math.floor(Math.random() * 101);
         if (transactorName == "forcedApiError") {
-          const xhr = new XMLHttpRequest();
-          xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
-          xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
-          xhr.setRequestHeader("content-type","text/html");
-          xhr.send("failed to complete deposit due to forced error");
+          // const xhr = new XMLHttpRequest();
+          // xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
+          // xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
+          // xhr.setRequestHeader("content-type","text/html");
+          // xhr.send("failed to complete deposit due to forced error");
+          axios.post(`https://my.api.mockaroo.com/checkingDeposit.json?key=3fa20c10`);
           depositToast.current.show({ severity: 'error', summary: 'Forced Deposit API Error', detail: 'Checking Deposit Failed' });
         } else if (apiErrorPercentage >= 30) { // successful deposit
           //console.log('transactorName = ' + event.target.transactorName.value);
@@ -99,10 +101,11 @@ const CheckingDeposit = () => {
           depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Checking Deposit' });
         }  else {
           const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
-            xhr.setRequestHeader("forced_api_test", "Deposits API Error");
-            xhr.setRequestHeader("content-type","text/html");
-            xhr.send("failed to complete deposit due to error");
+            // xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
+            // xhr.setRequestHeader("forced_api_test", "Deposits API Error");
+            // xhr.setRequestHeader("content-type","text/html");
+            // xhr.send("failed to complete deposit due to error");
+            axios.post(`https://my.api.mockaroo.com/checkingDeposit.json?key=3fa20c10`);
             depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Checking Deposit Failed' });
         }
     };

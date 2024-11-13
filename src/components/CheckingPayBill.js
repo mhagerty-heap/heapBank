@@ -8,6 +8,7 @@ import { Messages } from 'primereact/messages';
 import { Message } from 'primereact/message';
 import { Calendar } from 'primereact/calendar';
 import { CustomerService } from '../service/CustomerService';
+import axios from 'axios';
 
 const CheckingPayBill = () => {
   const checkingDataService = new CustomerService(); // checkingDataService is used to request checking json data
@@ -106,17 +107,19 @@ const CheckingPayBill = () => {
       setTransactionNotes('');
     } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/checkingPayBill?parm1=checkingPayBill&parm2=US');
-        xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to complete pay bill due to API error");
+        // xhr.open('POST', '/api-call/checkingPayBill?parm1=checkingPayBill&parm2=US');
+        // xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to complete pay bill due to API error");
+        axios.post(`https://my.api.mockaroo.com/checkingPayBill.json?key=3fa20c10`);
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill API Error:', detail: 'API Error'});
     } else if (transactionNotes == "forcedApiError") {
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api-call/4checkingPayBill?parm1=checkingPayBillForced&parm2=US');
-        xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
-        xhr.setRequestHeader("content-type","text/html");
-        xhr.send("failed to complete pay bill due to forced error");
+        // xhr.open('POST', '/api-call/4checkingPayBill?parm1=checkingPayBillForced&parm2=US');
+        // xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
+        // xhr.setRequestHeader("content-type","text/html");
+        // xhr.send("failed to complete pay bill due to forced error");
+        axios.post(`https://my.api.mockaroo.com/checkingPayBill.json?key=3fa20c10`);
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill Forced Error:', detail: 'Forced API Error'});
     } else {
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill Entry Error:', detail: 'Please complete All Steps (Account/Amount/Date)'});
