@@ -51,8 +51,13 @@ const SavingsDeposit = () => {
 
     const makeDeposit = (event) => {
         event.preventDefault();
+        const todayDayOfWeek = new Date().getDay(); //0=Sun, 1=Mon, etc
         const apiErrorPercentage = Math.floor(Math.random() * 101);
-        if (apiErrorPercentage >= 30 && transactorName !== "forcedApiError") {
+
+        if (todayDayOfWeek == 6 || todayDayOfWeek == 7) { //every sat/sun this will cause all errors
+          axios.post(`https://my.api.mockaroo.com/bankone/savingsDeposit.json?key=3fa20c10`);
+          depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Savings Deposit Failed' });
+        } else if (apiErrorPercentage >= 30 && transactorName !== "forcedApiError") {
           //console.log('transactorName = ' + event.target.transactorName.value);
           //console.log('transactionAmount = ' + event.target.transactionAmount.value);
           //console.log('transactionNote = '+ event.target.transactionNote.value);
@@ -91,7 +96,7 @@ const SavingsDeposit = () => {
           const savingsDataString = JSON.stringify(savingsDataLocalCopyParsed); // stringify local copy of ticket data, required for sessionStorage
           const savingsDataLocalCopy = sessionStorage.setItem('customerSavingsData', savingsDataString); // store updated ticketsLocalCopy sessionStorage
           depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Savings Deposit' });
-        }  else if (apiErrorPercentage < 30 && transactorName !== "forcedApiError") {
+        } else if (apiErrorPercentage < 30 && transactorName !== "forcedApiError") {
           axios.post(`https://my.api.mockaroo.com/bankone/savingsDeposit.json?key=3fa20c10`);
           depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Savings Deposit Failed' });
         } else {
