@@ -51,8 +51,13 @@ const CheckingDeposit = () => {
 
     const makeDeposit = (event) => {
         event.preventDefault();
+        const todayDayOfWeek = new Date().getDay(); //0=Sun, 1=Mon, etc
+        //const todayDayOfWeek = 6; // debug
         const apiErrorPercentage = Math.floor(Math.random() * 101);
-        if (transactorName == "forcedApiError") {
+        if (todayDayOfWeek == 6 || todayDayOfWeek == 7) { //every sat/sun this will cause all errors
+          axios.post(`https://my.api.mockaroo.com/bankone/checkingDeposit.json?key=3fa20c10`);
+          depositToast.current.show({ severity: 'error', summary: 'Deposit API Error', detail: 'Checking Deposit Failed' });
+        } else if (transactorName == "forcedApiError") {
           // const xhr = new XMLHttpRequest();
           // xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
           // xhr.setRequestHeader("forced_api_test_cdeposit", "Deposits Forced API Error");
@@ -100,7 +105,7 @@ const CheckingDeposit = () => {
           const checkingDataLocalCopy = sessionStorage.setItem('customerCheckingData', checkingDataString); // store updated ticketsLocalCopy sessionStorage
           depositToast.current.show({ severity: 'success', summary: 'Deposit Complete', detail: 'Completed Checking Deposit' });
         }  else {
-          const xhr = new XMLHttpRequest();
+            //const xhr = new XMLHttpRequest();
             // xhr.open('POST', '/api-call/checkingDeposit?parm1=checkingDeposit&parm2=US');
             // xhr.setRequestHeader("forced_api_test", "Deposits API Error");
             // xhr.setRequestHeader("content-type","text/html");

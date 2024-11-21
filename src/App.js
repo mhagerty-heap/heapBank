@@ -42,9 +42,12 @@ import FriendPay from './components/FriendPay';
 import AddBillPayAccount from './components/AddBillPayAccount';
 import AddFriendPayFriend from './components/AddFriendPayFriend';
 import CreditCardOffer from './components/CreditCardOffer'
-import CreditCardOfferThankYou from './components/CreditCardOfferThankYou'
-import AdminScreen from './components/AdminScreen'
-import TestComponent from './components/TestComponent'
+import CreditCardOfferThankYou from './components/CreditCardOfferThankYou';
+import AdminScreen from './components/AdminScreen';
+import TestComponent from './components/TestComponent';
+import CheckingPayBillThankYou from './components/CheckingPayBillThankYou';
+import SavingsPayBillThankYou from './components/SavingsPayBillThankYou';
+import TransferThankYou from './components/TransferThankYou';
 
 import Crud from './pages/Crud';
 import EmptyPage from './pages/EmptyPage';
@@ -319,6 +322,9 @@ const App = () => {
                     <Route path="/addAccountForm" component={AddAccountForm} />
                     <Route path="/adminScreen" component={AdminScreen} />
                     <Route path="/testComponent" component={TestComponent} />
+                    <Route path="/checkingPayBillThankYou" component={CheckingPayBillThankYou} />
+                    <Route path="/savingsPayBillThankYou" component={SavingsPayBillThankYou} />
+                    <Route path="/transferThankYou" component={TransferThankYou} />
                 </div>
 
                 <AppFooter layoutColorMode={layoutColorMode} />

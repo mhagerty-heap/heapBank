@@ -105,8 +105,11 @@ const CheckingPayBill = () => {
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
+      setTimeout(function() {
+        window.location.replace('/checkingPayBillThankYou');
+      }, 2000);
     } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
-        const xhr = new XMLHttpRequest();
+        //const xhr = new XMLHttpRequest();
         // xhr.open('POST', '/api-call/checkingPayBill?parm1=checkingPayBill&parm2=US');
         // xhr.setRequestHeader("api_test_cpaybill", "Pay Bill API Error");
         // xhr.setRequestHeader("content-type","text/html");
@@ -114,7 +117,7 @@ const CheckingPayBill = () => {
         axios.post(`https://my.api.mockaroo.com/bankone/checkingPayBill.json?key=3fa20c10`);
         depositFailMessage.current.show({severity: 'error', summary: 'Checking Pay Bill API Error:', detail: 'API Error'});
     } else if (transactionNotes == "forcedApiError") {
-        const xhr = new XMLHttpRequest();
+        //const xhr = new XMLHttpRequest();
         // xhr.open('POST', '/api-call/4checkingPayBill?parm1=checkingPayBillForced&parm2=US');
         // xhr.setRequestHeader("forced_api_test_ccpaybill", "Pay Bill Forced API Error");
         // xhr.setRequestHeader("content-type","text/html");

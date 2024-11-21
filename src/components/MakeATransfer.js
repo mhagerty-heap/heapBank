@@ -112,6 +112,10 @@ const MakeATransfer = () => {
         setToAccount('');
         setFromAccount('');
         setTransactionAmount('');
+
+        setTimeout(function() {
+          window.location.replace('/transferThankYou');
+        }, 2000);
         // let payload = { name: 'John Doe', occupation: 'gardener' };
         // let res = axios.post('http://httpbin.org/post', payload);
       } else {

@@ -104,6 +104,9 @@ const SavingsPayBill = () => {
       setTransactionAmount('');
       setTransactionDate('');
       setTransactionNotes('');
+      setTimeout(function() {
+        window.location.replace('/savingsPayBillThankYou');
+      }, 2000);
     } else if (transactorName && transactionAmount && transactionDate && transactionNotes !== "forcedApiError" && apiErrorPercentage < 30) {
       axios.post(`https://my.api.mockaroo.com/bankone/savingsPayBill.json?key=3fa20c10`);
     } else if (transactionNotes == "forcedApiError") {
