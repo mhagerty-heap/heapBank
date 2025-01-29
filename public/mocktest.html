@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MSW Mock Service Worker Example</title>
+  <!-- Correct URL for MSW v1.2.0 from unpkg -->
+  <script src="https://unpkg.com/msw@1.2.0/lib/iife/index.js"></script>
+</head>
+<body>
+  <h1>Mock Service Worker 404 Example</h1>
+  <pre id="result"></pre>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      if (typeof MockServiceWorker === 'undefined') {
+        alert("MSW failed to load!");
+        return;
+      }
+
+      // Define a mock handler using MockServiceWorker directly
+      const worker = MockServiceWorker.setupWorker(
+        MockServiceWorker.http.get('https://api.example.com/data', (req, res, ctx) => {
+          return res(
+            ctx.status(404),
+            ctx.json({ error: 'Not Found' })
+          );
+        })
+      );
+
+      // Start the mock service worker
+      worker.start().then(() => {
+        // Make a fetch request to the mocked endpoint
+        fetch('https://api.example.com/data')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+          })
+          .catch(error => {
+            document.getElementById('result').textContent = `Error: ${error.message}`;
+          });
+      });
+    });
+  </script>
+</body>
+</html>
