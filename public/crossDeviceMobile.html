@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>
-        // *** SETTING DOMAIN TO VERSEL.COM ***
-        document.domain = "vercel.app";
-    </script>
-
     <script type="text/javascript">
       window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
       heap.load("527942070");
@@ -37,30 +32,37 @@
     <script>
         let currentIdentity = 'UNSET';
 
-        // Function to reliably read and display the Heap IDs (NOW POSSIBLE)
-        function displayHeapIds() {
-            if (window.heap && typeof heap.getUserId === 'function' && heap.getUserId()) {
-                const userId = heap.getUserId();
-                const sessionId = heap.getSessionId();
+        // Function to reliably read and display the Heap IDs and SEND to Host
+        function displayAndSendIds() {
+            if (window.heap && typeof heap.getUserId === 'function') {
+                const userId = heap.getUserId() || "N/A (Loading)";
+                const sessionId = heap.getSessionId() || "N/A (Loading)";
 
-                document.getElementById('user-id').textContent = userId;
-                document.getElementById('session-id').textContent = sessionId;
-                document.getElementById('identity-id').textContent = currentIdentity;
+                if (userId !== "N/A (Loading)") {
+                    // 1. Display Locally
+                    document.getElementById('user-id').textContent = userId;
+                    document.getElementById('session-id').textContent = sessionId;
+                    document.getElementById('identity-id').textContent = currentIdentity;
 
-                document.getElementById('user-id').classList.remove('note');
-                document.getElementById('session-id').classList.remove('note');
+                    document.getElementById('user-id').classList.remove('note');
+                    document.getElementById('session-id').classList.remove('note');
 
-                // Send data to Host page via postMessage bridge
-                window.parent.postMessage({
-                    type: 'anonymousIds',
-                    platform: 'mobile',
-                    userId: userId,
-                    sessionId: sessionId
-                }, '*');
+                    // 2. Send to Host (The PostMessage Bridge)
+                    window.parent.postMessage({
+                        type: 'anonymousIds',
+                        platform: 'mobile',
+                        userId: userId,
+                        sessionId: sessionId
+                    }, '*');
 
+                } else {
+                    // Keep trying until Heap finishes loading
+                    setTimeout(displayAndSendIds, 100);
+                }
             } else {
-                // Keep trying until Heap finishes loading
-                setTimeout(displayHeapIds, 100);
+                // FALLBACK: Display generic error if Heap SDK fails to load entirely
+                document.getElementById('user-id').textContent = "SDK failed to load";
+                document.getElementById('session-id').textContent = "SDK failed to load";
             }
         }
 
@@ -71,11 +73,11 @@
             document.getElementById('identity-id').textContent = 'UNSET';
             document.getElementById('identity-id').classList.remove('identified');
             document.getElementById('signup-btn').style.display = 'block';
-            displayHeapIds();
+            displayAndSendIds();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-             setTimeout(displayHeapIds, 100);
+             setTimeout(displayAndSendIds, 100);
         });
 
         document.getElementById('browse-btn').addEventListener('click', function() {
@@ -96,7 +98,7 @@
 
                 document.getElementById('app-title').textContent = 'Account Started & Identified!';
                 document.getElementById('signup-btn').style.display = 'none';
-                displayHeapIds();
+                displayAndSendIds();
             }
         });
 
