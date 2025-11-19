@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>document.domain = "vercel.com"; // Replace 'example.com' with your actual root domain</script>
     <script type="text/javascript">
       window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
       heap.load("527942070");
@@ -23,7 +24,7 @@
         <p>Session ID: <span id='session-id' class='heap-id'>...</span></p>
         <p>Identity: <span id='identity-id' class='heap-id'>UNSET</span></p>
     </div>
-    
+
     <p style='font-size: 0.9em;'><em>(Heap is Autocapturing all taps.)</em></p>
     <button id='browse-btn'>Browse Products (Tap)</button>
     <p style='margin-top: 40px;'>Ready to continue on Desktop?</p>
@@ -32,7 +33,7 @@
     <script>
         let currentIdentity = 'UNSET';
         const ACCESS_BLOCKED_MSG = "Can't show for locally served demo";
-        
+
         // Function to safely check/display IDs
         function displayHeapIds() {
             try {
@@ -53,7 +54,7 @@
                 document.getElementById('session-id').classList.add('note');
             }
         }
-        
+
         // Function to reset the UI state
         function resetUI() {
             currentIdentity = 'UNSET';
@@ -79,12 +80,12 @@
                 heap.identify(userId);
                 currentIdentity = userId;
                 console.log('MOBILE: heap.identify(' + userId + ') called. Session is now stitched via Identity.');
-                
+
                 document.getElementById('identity-id').textContent = currentIdentity;
                 document.getElementById('identity-id').classList.add('identified');
-                
+
                 window.parent.postMessage({ type: 'heapIdentify', userId: userId }, '*');
-                
+
                 document.getElementById('app-title').textContent = 'Account Started & Identified!';
                 document.getElementById('signup-btn').style.display = 'none';
                 displayHeapIds();
