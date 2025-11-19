@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript">
+      window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
+      heap.load("527942070");
+    </script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #f7f7f7; }
+        h2 { color: #4CAF50; }
+        button { padding: 10px 20px; background-color: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        .data-box { background-color: #e8f0fe; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; font-size: 0.9em; }
+        .heap-id { font-family: monospace; background-color: #fff; padding: 1px 3px; border-radius: 3px; }
+        .identified { color: green; font-weight: bold; }
+        .note { color: #cc0000; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h2 id='app-title'>Product Discovery (Mobile)</h2>
+    <div class="data-box">
+        <p><strong>Heap State:</strong></p>
+        <p>User ID: <span id='user-id' class='heap-id'>...</span></p>
+        <p>Session ID: <span id='session-id' class='heap-id'>...</span></p>
+        <p>Identity: <span id='identity-id' class='heap-id'>UNSET</span></p>
+    </div>
+    
+    <p style='font-size: 0.9em;'><em>(Heap is Autocapturing all taps.)</em></p>
+    <button id='browse-btn'>Browse Products (Tap)</button>
+    <p style='margin-top: 40px;'>Ready to continue on Desktop?</p>
+    <button id='signup-btn'>Start Sign Up (Call heap.identify)</button>
+
+    <script>
+        let currentIdentity = 'UNSET';
+        const ACCESS_BLOCKED_MSG = "Can't show for locally served demo";
+        
+        // Function to safely check/display IDs
+        function displayHeapIds() {
+            try {
+                const userId = heap.getUserId();
+                const sessionId = heap.getSessionId();
+
+                if (userId && sessionId) {
+                    document.getElementById('user-id').textContent = userId;
+                    document.getElementById('session-id').textContent = sessionId;
+                    document.getElementById('identity-id').textContent = currentIdentity;
+                } else {
+                    setTimeout(displayHeapIds, 100);
+                }
+            } catch (e) {
+                document.getElementById('user-id').textContent = ACCESS_BLOCKED_MSG;
+                document.getElementById('session-id').textContent = ACCESS_BLOCKED_MSG;
+                document.getElementById('user-id').classList.add('note');
+                document.getElementById('session-id').classList.add('note');
+            }
+        }
+        
+        // Function to reset the UI state
+        function resetUI() {
+            currentIdentity = 'UNSET';
+            document.getElementById('app-title').textContent = 'Product Discovery (Mobile)';
+            document.getElementById('identity-id').textContent = 'UNSET';
+            document.getElementById('identity-id').classList.remove('identified');
+            document.getElementById('signup-btn').style.display = 'block';
+            displayHeapIds(); // Refresh IDs after reset
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+             // Initial check
+             setTimeout(displayHeapIds, 100);
+        });
+
+        document.getElementById('browse-btn').addEventListener('click', function() {
+            console.log('MOBILE: Click captured by Autocapture.');
+        });
+
+        document.getElementById('signup-btn').addEventListener('click', function() {
+            const userId = prompt('Enter a User ID for Stitching (e.g., test@test.com):');
+            if (userId && window.heap) {
+                heap.identify(userId);
+                currentIdentity = userId;
+                console.log('MOBILE: heap.identify(' + userId + ') called. Session is now stitched via Identity.');
+                
+                document.getElementById('identity-id').textContent = currentIdentity;
+                document.getElementById('identity-id').classList.add('identified');
+                
+                window.parent.postMessage({ type: 'heapIdentify', userId: userId }, '*');
+                
+                document.getElementById('app-title').textContent = 'Account Started & Identified!';
+                document.getElementById('signup-btn').style.display = 'none';
+                displayHeapIds();
+            }
+        });
+
+        // LISTENER FOR HOST RESET COMMAND
+        window.addEventListener('message', function(event) {
+            if (event.data.type === 'resetIdentity') {
+                if (window.heap) {
+                    heap.resetIdentity();
+                    console.log('MOBILE: Received resetIdentity command and executed heap.resetIdentity().');
+                }
+                resetUI();
+            }
+        });
+
+        // Execute initial reset on load to catch any stale identity cookies
+        if (window.heap) {
+            heap.resetIdentity();
+        }
+        resetUI(); // Reset UI immediately on load
+    </script>
+</body>
+</html>
