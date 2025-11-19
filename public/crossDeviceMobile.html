@@ -35,37 +35,43 @@
 
         // Function to reliably read and display the Heap IDs and SEND to Host
         function displayAndSendIds() {
-            if (window.heap && typeof heap.getUserId === 'function') {
-                const userId = heap.getUserId() || "N/A (Loading)";
-                const sessionId = heap.getSessionId() || "N/A (Loading)";
+            let userId = ACCESS_BLOCKED_MSG;
+            let sessionId = ACCESS_BLOCKED_MSG;
+            let isDataReady = false;
 
-                if (userId !== "N/A (Loading)") {
-                    // 1. Display Locally
-                    document.getElementById('user-id').textContent = userId;
-                    document.getElementById('session-id').textContent = sessionId;
-                    document.getElementById('identity-id').textContent = currentIdentity;
+            if (window.heap && typeof heap.getUserId === 'function') {
+                const heapUserId = heap.getUserId();
+                const heapSessionId = heap.getSessionId();
+
+                if (heapUserId && heapSessionId) {
+                    // Success: Use actual IDs
+                    userId = heapUserId;
+                    sessionId = heapSessionId;
+                    isDataReady = true;
 
                     document.getElementById('user-id').classList.remove('note');
                     document.getElementById('session-id').classList.remove('note');
-
-                    // 2. Send to Host (The PostMessage Bridge)
-                    window.parent.postMessage({
-                        type: 'anonymousIds',
-                        platform: 'mobile',
-                        userId: userId,
-                        sessionId: sessionId
-                    }, '*');
-
-                } else {
-                    // Keep trying until Heap finishes loading
-                    setTimeout(displayAndSendIds, 100);
                 }
-            } else {
-                // FALLBACK: Display generic message since API access is blocked
-                document.getElementById('user-id').textContent = ACCESS_BLOCKED_MSG;
-                document.getElementById('session-id').textContent = ACCESS_BLOCKED_MSG;
+            }
+
+            // 1. Display Locally
+            document.getElementById('user-id').textContent = userId;
+            document.getElementById('session-id').textContent = sessionId;
+            document.getElementById('identity-id').textContent = currentIdentity;
+
+            // 2. Send to Host (CRITICAL: Always send a status or data to prove the bridge is alive)
+            window.parent.postMessage({
+                type: 'anonymousIds',
+                platform: 'mobile',
+                userId: userId,
+                sessionId: sessionId
+            }, '*');
+
+            if (!isDataReady) {
+                // Keep trying until Heap finishes loading
                 document.getElementById('user-id').classList.add('note');
                 document.getElementById('session-id').classList.add('note');
+                setTimeout(displayAndSendIds, 100);
             }
         }
 
