@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script>document.domain = "vercel.com"; // Replace 'example.com' with your actual root domain</script>
+    <script>
+        // *** SETTING DOMAIN TO VERSEL.COM ***
+        document.domain = "vercel.com";
+    </script>
+
     <script type="text/javascript">
       window.heap=window.heap||[],heap.load=function(e,t){window.heap.appid=e,window.heap.config=t=t||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src="https://cdn.heapanalytics.com/js/heap-"+e+".js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a);for(var n=function(e){return function(){heap.push([e].concat(Array.prototype.slice.call(arguments,0)))}},p=["addEventProperties","addUserProperties","clearEventProperties","identify","resetIdentity","removeEventProperty","setEventProperties","track","unsetEventProperty"],o=0;o<p.length;o++)heap[p[o]]=n(p[o])};
       heap.load("527942070");
@@ -32,26 +36,31 @@
 
     <script>
         let currentIdentity = 'UNSET';
-        const ACCESS_BLOCKED_MSG = "Can't show for locally served demo";
 
-        // Function to safely check/display IDs
+        // Function to reliably read and display the Heap IDs (NOW POSSIBLE)
         function displayHeapIds() {
-            try {
+            if (window.heap && typeof heap.getUserId === 'function' && heap.getUserId()) {
                 const userId = heap.getUserId();
                 const sessionId = heap.getSessionId();
 
-                if (userId && sessionId) {
-                    document.getElementById('user-id').textContent = userId;
-                    document.getElementById('session-id').textContent = sessionId;
-                    document.getElementById('identity-id').textContent = currentIdentity;
-                } else {
-                    setTimeout(displayHeapIds, 100);
-                }
-            } catch (e) {
-                document.getElementById('user-id').textContent = ACCESS_BLOCKED_MSG;
-                document.getElementById('session-id').textContent = ACCESS_BLOCKED_MSG;
-                document.getElementById('user-id').classList.add('note');
-                document.getElementById('session-id').classList.add('note');
+                document.getElementById('user-id').textContent = userId;
+                document.getElementById('session-id').textContent = sessionId;
+                document.getElementById('identity-id').textContent = currentIdentity;
+
+                document.getElementById('user-id').classList.remove('note');
+                document.getElementById('session-id').classList.remove('note');
+
+                // Send data to Host page via postMessage bridge
+                window.parent.postMessage({
+                    type: 'anonymousIds',
+                    platform: 'mobile',
+                    userId: userId,
+                    sessionId: sessionId
+                }, '*');
+
+            } else {
+                // Keep trying until Heap finishes loading
+                setTimeout(displayHeapIds, 100);
             }
         }
 
@@ -62,11 +71,10 @@
             document.getElementById('identity-id').textContent = 'UNSET';
             document.getElementById('identity-id').classList.remove('identified');
             document.getElementById('signup-btn').style.display = 'block';
-            displayHeapIds(); // Refresh IDs after reset
+            displayHeapIds();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-             // Initial check
              setTimeout(displayHeapIds, 100);
         });
 
@@ -103,11 +111,11 @@
             }
         });
 
-        // Execute initial reset on load to catch any stale identity cookies
+        // Execute initial reset on load
         if (window.heap) {
             heap.resetIdentity();
         }
-        resetUI(); // Reset UI immediately on load
+        resetUI();
     </script>
 </body>
 </html>
