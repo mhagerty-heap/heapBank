@@ -9,19 +9,27 @@
         body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #f7f7f7; }
         h2 { color: #4CAF50; }
         button { padding: 10px 20px; background-color: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
-        .data-box { background-color: #e8f0fe; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; font-size: 0.9em; }
+
+        /* Removed: .data-box styles */
+
         .heap-id { font-family: monospace; background-color: #fff; padding: 1px 3px; border-radius: 3px; }
         .identified { color: green; font-weight: bold; }
         .note { color: #cc0000; font-style: italic; }
+
+        /* Style for the identity display field */
+        #identity-display {
+            font-size: 1.2em;
+            margin: 15px 0;
+            padding: 5px 0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
     <h2 id='app-title'>Product Discovery (Mobile)</h2>
-    <div class="data-box">
-        <p><strong>Heap State:</strong></p>
-        <p>User ID: <span id='user-id' class='heap-id'>...</span></p>
-        <p>Session ID: <span id='session-id' class='heap-id'>...</span></p>
-        <p>Identity: <span id='identity-id' class='heap-id'>UNSET</span></p>
+
+    <div id="identity-display">
+        Identity: <span id='identity-id' class='heap-id'>UNSET</span>
     </div>
 
     <p style='font-size: 0.9em;'><em>(Heap is Autocapturing all taps.)</em></p>
@@ -31,47 +39,10 @@
 
     <script>
         let currentIdentity = 'UNSET';
-        // FIX: Define constant globally
-        const ACCESS_BLOCKED_MSG = "API access blocked";
 
-        // Function to reliably read and display the Heap IDs and SEND to Host
-        function displayAndSendIds() {
-            let userId = ACCESS_BLOCKED_MSG;
-            let sessionId = ACCESS_BLOCKED_MSG;
-            let isDataReady = false;
-
-            if (window.heap && typeof heap.getUserId === 'function') {
-                const heapUserId = heap.getUserId();
-                const heapSessionId = heap.getSessionId();
-
-                if (heapUserId && heapSessionId) {
-                    userId = heapUserId;
-                    sessionId = heapSessionId;
-                    isDataReady = true;
-
-                    document.getElementById('user-id').classList.remove('note');
-                    document.getElementById('session-id').classList.remove('note');
-                }
-            }
-
-            // 1. Display Locally
-            document.getElementById('user-id').textContent = userId;
-            document.getElementById('session-id').textContent = sessionId;
+        // Function to update the Identity field
+        function updateIdentityDisplay() {
             document.getElementById('identity-id').textContent = currentIdentity;
-
-            // 2. Send to Host (CRITICAL: Always send a status or data)
-            window.parent.postMessage({
-                type: 'anonymousIds',
-                platform: 'mobile',
-                userId: userId,
-                sessionId: sessionId
-            }, '*');
-
-            if (!isDataReady) {
-                document.getElementById('user-id').classList.add('note');
-                document.getElementById('session-id').classList.add('note');
-                setTimeout(displayAndSendIds, 100);
-            }
         }
 
         // Function to reset the UI state
@@ -81,11 +52,11 @@
             document.getElementById('identity-id').textContent = 'UNSET';
             document.getElementById('identity-id').classList.remove('identified');
             document.getElementById('signup-btn').style.display = 'block';
-            displayAndSendIds();
+            updateIdentityDisplay();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-             setTimeout(displayAndSendIds, 100);
+             updateIdentityDisplay();
         });
 
         document.getElementById('browse-btn').addEventListener('click', function() {
@@ -106,7 +77,7 @@
 
                 document.getElementById('app-title').textContent = 'Account Started & Identified!';
                 document.getElementById('signup-btn').style.display = 'none';
-                displayAndSendIds();
+                updateIdentityDisplay();
             }
         });
 
