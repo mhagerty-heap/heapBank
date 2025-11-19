@@ -31,6 +31,7 @@
 
     <script>
         let currentIdentity = 'UNSET';
+        // FIX: Define constant globally
         const ACCESS_BLOCKED_MSG = "API access blocked";
 
         // Function to reliably read and display the Heap IDs and SEND to Host
@@ -44,7 +45,6 @@
                 const heapSessionId = heap.getSessionId();
 
                 if (heapUserId && heapSessionId) {
-                    // Success: Use actual IDs
                     userId = heapUserId;
                     sessionId = heapSessionId;
                     isDataReady = true;
@@ -59,7 +59,7 @@
             document.getElementById('session-id').textContent = sessionId;
             document.getElementById('identity-id').textContent = currentIdentity;
 
-            // 2. Send to Host (CRITICAL: Always send a status or data to prove the bridge is alive)
+            // 2. Send to Host (CRITICAL: Always send a status or data)
             window.parent.postMessage({
                 type: 'anonymousIds',
                 platform: 'mobile',
@@ -68,7 +68,6 @@
             }, '*');
 
             if (!isDataReady) {
-                // Keep trying until Heap finishes loading
                 document.getElementById('user-id').classList.add('note');
                 document.getElementById('session-id').classList.add('note');
                 setTimeout(displayAndSendIds, 100);
