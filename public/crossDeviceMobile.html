@@ -6,9 +6,26 @@
       heap.load("527942070");
     </script>
     <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #f7f7f7; }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            text-align: center; /* ALIGN CENTER */
+            background-color: #f7f7f7;
+        }
         h2 { color: #4CAF50; }
-        button { padding: 10px 20px; background-color: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
+        button {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block; /* Make buttons take full available width to center */
+            width: 90%;
+            margin-left: auto; /* CENTER ALIGNMENT FIX */
+            margin-right: auto; /* CENTER ALIGNMENT FIX */
+        }
         .data-box { background-color: #e8f0fe; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; font-size: 0.9em; }
         .heap-id { font-family: monospace; background-color: #fff; padding: 1px 3px; border-radius: 3px; }
         .identified { color: green; font-weight: bold; }
@@ -37,43 +54,10 @@
 
     <script>
         let currentIdentity = 'UNSET';
-        const ACCESS_BLOCKED_MSG = "API access blocked";
 
-        // Function to reliably read and display the Heap IDs and SEND to Host
-        function displayAndSendIds() {
-            let userId = ACCESS_BLOCKED_MSG;
-            let sessionId = ACCESS_BLOCKED_MSG;
-            let isDataReady = false;
-
-            if (window.heap && typeof heap.getUserId === 'function') {
-                const heapUserId = heap.getUserId() || "N/A (Loading)";
-                const heapSessionId = heap.getSessionId() || "N/A (Loading)";
-
-                if (heapUserId !== "N/A (Loading)" && heapUserId !== "N/A (Loading)") {
-                    // 1. Display Locally
-                    // Note: This block is currently being skipped due to the Vercel security issue.
-                    // If the security restriction were removed, this logic would run perfectly.
-
-                    document.getElementById('identity-id').textContent = currentIdentity;
-
-                    isDataReady = true;
-
-                    // 2. Send to Host (The PostMessage Bridge)
-                    window.parent.postMessage({
-                        type: 'anonymousIds',
-                        platform: 'mobile',
-                        userId: heapUserId,
-                        sessionId: heapSessionId
-                    }, '*');
-
-                }
-            }
-
-            // This is the fallback/retry loop
-            if (!isDataReady) {
-                // Keep trying until Heap finishes loading
-                setTimeout(displayAndSendIds, 100);
-            }
+        // Function to update the Identity field
+        function updateIdentityDisplay() {
+            document.getElementById('identity-id').textContent = currentIdentity;
         }
 
         // Function to reset the UI state
@@ -83,11 +67,11 @@
             document.getElementById('identity-id').textContent = 'UNSET';
             document.getElementById('identity-id').classList.remove('identified');
             document.getElementById('signup-btn').style.display = 'block';
-            displayAndSendIds();
+            updateIdentityDisplay();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-             setTimeout(displayAndSendIds, 100);
+             updateIdentityDisplay();
         });
 
         document.getElementById('browse-btn').addEventListener('click', function() {
@@ -97,7 +81,7 @@
         document.getElementById('signup-btn').addEventListener('click', function() {
             const userId = prompt('Enter a User ID for Stitching (e.g., test@test.com):');
             if (userId && window.heap) {
-                heap.identify(userId); // Changed to identify()
+                heap.identify(userId);
                 currentIdentity = userId;
                 console.log('MOBILE: Contentsquare identify(' + userId + ') called. Session is now stitched via Identity.');
 
@@ -108,7 +92,7 @@
 
                 document.getElementById('app-title').textContent = 'Account Started & Identified!';
                 document.getElementById('signup-btn').style.display = 'none';
-                displayAndSendIds();
+                updateIdentityDisplay();
             }
         });
 
