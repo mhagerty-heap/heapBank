@@ -33,14 +33,47 @@
     <p style='font-size: 0.9em;'><em>(Contentsquare is Autocapturing all taps.)</em></p>
     <button id='browse-btn'>Browse Products (Tap)</button>
     <p style='margin-top: 40px;'>Ready to continue on Desktop?</p>
-    <button id='signup-btn'>Start Sign Up (Call Contentsquare.identify)</button>
+    <button id='signup-btn'>Start Sign Up (Call identify)</button>
 
     <script>
         let currentIdentity = 'UNSET';
+        const ACCESS_BLOCKED_MSG = "API access blocked";
 
-        // Function to update the Identity field
-        function updateIdentityDisplay() {
-            document.getElementById('identity-id').textContent = currentIdentity;
+        // Function to reliably read and display the Heap IDs and SEND to Host
+        function displayAndSendIds() {
+            let userId = ACCESS_BLOCKED_MSG;
+            let sessionId = ACCESS_BLOCKED_MSG;
+            let isDataReady = false;
+
+            if (window.heap && typeof heap.getUserId === 'function') {
+                const heapUserId = heap.getUserId() || "N/A (Loading)";
+                const heapSessionId = heap.getSessionId() || "N/A (Loading)";
+
+                if (heapUserId !== "N/A (Loading)" && heapUserId !== "N/A (Loading)") {
+                    // 1. Display Locally
+                    // Note: This block is currently being skipped due to the Vercel security issue.
+                    // If the security restriction were removed, this logic would run perfectly.
+
+                    document.getElementById('identity-id').textContent = currentIdentity;
+
+                    isDataReady = true;
+
+                    // 2. Send to Host (The PostMessage Bridge)
+                    window.parent.postMessage({
+                        type: 'anonymousIds',
+                        platform: 'mobile',
+                        userId: heapUserId,
+                        sessionId: heapSessionId
+                    }, '*');
+
+                }
+            }
+
+            // This is the fallback/retry loop
+            if (!isDataReady) {
+                // Keep trying until Heap finishes loading
+                setTimeout(displayAndSendIds, 100);
+            }
         }
 
         // Function to reset the UI state
@@ -50,11 +83,11 @@
             document.getElementById('identity-id').textContent = 'UNSET';
             document.getElementById('identity-id').classList.remove('identified');
             document.getElementById('signup-btn').style.display = 'block';
-            updateIdentityDisplay();
+            displayAndSendIds();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-             updateIdentityDisplay();
+             setTimeout(displayAndSendIds, 100);
         });
 
         document.getElementById('browse-btn').addEventListener('click', function() {
@@ -64,8 +97,7 @@
         document.getElementById('signup-btn').addEventListener('click', function() {
             const userId = prompt('Enter a User ID for Stitching (e.g., test@test.com):');
             if (userId && window.heap) {
-                // Changed references to Contentsquare.identify (using heap function name)
-                heap.identify(userId);
+                heap.identify(userId); // Changed to identify()
                 currentIdentity = userId;
                 console.log('MOBILE: Contentsquare identify(' + userId + ') called. Session is now stitched via Identity.');
 
@@ -76,7 +108,7 @@
 
                 document.getElementById('app-title').textContent = 'Account Started & Identified!';
                 document.getElementById('signup-btn').style.display = 'none';
-                updateIdentityDisplay();
+                displayAndSendIds();
             }
         });
 
