@@ -9,9 +9,7 @@
         body { font-family: sans-serif; padding: 20px; text-align: center; background-color: #f7f7f7; }
         h2 { color: #4CAF50; }
         button { padding: 10px 20px; background-color: #1a73e8; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 20px; }
-
-        /* Removed: .data-box styles */
-
+        .data-box { background-color: #e8f0fe; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; font-size: 0.9em; }
         .heap-id { font-family: monospace; background-color: #fff; padding: 1px 3px; border-radius: 3px; }
         .identified { color: green; font-weight: bold; }
         .note { color: #cc0000; font-style: italic; }
@@ -32,10 +30,10 @@
         Identity: <span id='identity-id' class='heap-id'>UNSET</span>
     </div>
 
-    <p style='font-size: 0.9em;'><em>(Heap is Autocapturing all taps.)</em></p>
+    <p style='font-size: 0.9em;'><em>(Contentsquare is Autocapturing all taps.)</em></p>
     <button id='browse-btn'>Browse Products (Tap)</button>
     <p style='margin-top: 40px;'>Ready to continue on Desktop?</p>
-    <button id='signup-btn'>Start Sign Up (Call heap.identify)</button>
+    <button id='signup-btn'>Start Sign Up (Call Contentsquare.identify)</button>
 
     <script>
         let currentIdentity = 'UNSET';
@@ -66,9 +64,10 @@
         document.getElementById('signup-btn').addEventListener('click', function() {
             const userId = prompt('Enter a User ID for Stitching (e.g., test@test.com):');
             if (userId && window.heap) {
+                // Changed references to Contentsquare.identify (using heap function name)
                 heap.identify(userId);
                 currentIdentity = userId;
-                console.log('MOBILE: heap.identify(' + userId + ') called. Session is now stitched via Identity.');
+                console.log('MOBILE: Contentsquare identify(' + userId + ') called. Session is now stitched via Identity.');
 
                 document.getElementById('identity-id').textContent = currentIdentity;
                 document.getElementById('identity-id').classList.add('identified');
@@ -86,7 +85,7 @@
             if (event.data.type === 'resetIdentity') {
                 if (window.heap) {
                     heap.resetIdentity();
-                    console.log('MOBILE: Received resetIdentity command and executed heap.resetIdentity().');
+                    console.log('MOBILE: Received resetIdentity command and executed Contentsquare.resetIdentity().');
                 }
                 resetUI();
             }
