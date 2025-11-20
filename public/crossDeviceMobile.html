@@ -21,10 +21,10 @@
             border-radius: 5px;
             cursor: pointer;
             margin-top: 20px;
-            display: block; /* Make buttons take full available width to center */
+            display: block;
             width: 90%;
-            margin-left: auto; /* Center alignment fix */
-            margin-right: auto; /* Center alignment fix */
+            margin-left: auto;
+            margin-right: auto;
         }
         .data-box { background-color: #e8f0fe; padding: 10px; border-radius: 5px; margin-bottom: 10px; text-align: left; font-size: 0.9em; }
         .heap-id { font-family: monospace; background-color: #fff; padding: 1px 3px; border-radius: 3px; }
@@ -54,6 +54,14 @@
 
     <script>
         let currentIdentity = 'UNSET';
+        const COOKIE_NAME = '_hp2_id'; // Standard Heap cookie name
+
+        function deleteCookie(name, domain) {
+            // Note: Since this is an iframe, we must target the iframe's current domain,
+            // not the root domain, for deletion to work.
+            document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            console.log(`MOBILE: Deleted cookie: ${name}.`);
+        }
 
         // Function to update the Identity field
         function updateIdentityDisplay() {
@@ -98,10 +106,16 @@
 
         // LISTENER FOR HOST RESET COMMAND
         window.addEventListener('message', function(event) {
-            if (event.data.type === 'resetIdentity') {
+            const data = event.data;
+            if (data.type === 'resetIdentity') {
                 if (window.heap) {
                     heap.resetIdentity();
                     console.log('MOBILE: Received resetIdentity command and executed Contentsquare.resetIdentity().');
+                }
+
+                // NEW: Delete the cookie on this specific domain/subdomain
+                if (data.clearCookie) {
+                    deleteCookie(COOKIE_NAME);
                 }
                 resetUI();
             }
