@@ -7,6 +7,12 @@ import { Message } from 'primereact/message';
 import { CustomerService } from '../service/CustomerService';
 import axios from 'axios';
 
+// Helper function to detect a mobile device
+const isMobileDevice = () => {
+    // This check uses common User Agent keywords for mobile devices and tablets
+    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
 const MakeATransfer = () => {
   const savingsDataService = new CustomerService();
   const checkingDataService = new CustomerService();
@@ -60,6 +66,25 @@ const MakeATransfer = () => {
 
   const onButtonClick = (e) => {
     e.preventDefault(); // prevents page from reloading
+
+
+
+
+  // *** ADDED: MOBILE DEVICE CHECK LOGIC ***
+  if (isMobileDevice()) {
+      depositFailMessage.current.show({
+          severity: 'error',
+          summary: 'Transfer Not Supported:',
+          detail: 'Mobile Transfers are not supported. Please go to web'
+      });
+      //return; // Halt the function to prevent transfer processing
+  }
+  // *** END MOBILE DEVICE CHECK ***
+
+
+
+
+
     const apiErrorPercentage = Math.floor(Math.random() * 101);
     //const apiErrorPercentage = 10; // debug
     if (toAccount && fromAccount && transactionAmount && apiErrorPercentage >= 30 ) {  // if all values are present and toAccount does not equal fromAccount
@@ -134,40 +159,43 @@ const MakeATransfer = () => {
     };
   };
 
-    return (
-      <form onSubmit={onButtonClick}>
-        <div className="grid p-fluid">
-          <div className="col-12 lg:col-6">
-            <div className="card">
-                <h5>Step1: Select From Account</h5>
-                <ListBox id="fromAccount" value={fromAccount} options={accounts} onChange={(e) => setFromAccount(e.value)} />
-            </div>
-          </div>
-          <div className="col-12 lg:col-6">
-            <div className="card">
-                <h5>Step2: Select To Account</h5>
-                <ListBox id="toAccount" value={toAccount} options={accounts} onChange={(e) => setToAccount(e.value)} />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="card">
-              <h5>Step #3: Enter a Transfer Amount</h5>
-              <InputNumber id="transferAmount" value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
-              <h5>Step #4: Submit Transfer</h5>
-              <Button id="submitTransferButton" label="Submit Transfer" icon="pi pi-check-square" className="p-button-success"></Button>
-              <div className="card">
-                  <Messages ref={depositSuccessMessage} />
-                  <Messages ref={depositFailMessage} />
-              </div>
-            </div>
-
-
-
-          </div>
-        </div>
-      </form>
-    );
-}
+  return (
+        <form onSubmit={onButtonClick}>
+          <div className="grid p-fluid">
+            {/* Step 1: Select From Account */}
+            <div className="col-12 lg:col-6">
+              <div className="card">
+                  <h5>Step1: Select From Account</h5>
+                  <ListBox id="fromAccount" value={fromAccount} options={accounts} onChange={(e) => setFromAccount(e.value)} />
+              </div>
+            </div>
+           
+            {/* Step 2: Select To Account */}
+            <div className="col-12 lg:col-6">
+              <div className="card">
+                  <h5>Step2: Select To Account</h5>
+                  <ListBox id="toAccount" value={toAccount} options={accounts} onChange={(e) => setToAccount(e.value)} />
+              </div>
+            </div>
+           
+            {/* Step 3 & 4: Enter Amount and Submit */}
+            {/* FIX: Change col-6 to col-12 on mobile, but keep col-6 on large screens (optional, depending on desired desktop look) */}
+            <div className="col-12 lg:col-6">
+              <div className="card">
+                <h5>Step #3: Enter a Transfer Amount</h5>
+                <InputNumber id="transferAmount" value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
+                <h5>Step #4: Submit Transfer</h5>
+                <Button id="submitTransferButton" label="Submit Transfer" icon="pi pi-check-square" className="p-button-success"></Button>
+                <div classname="card">
+                    <Messages ref={depositSuccessMessage} />
+                    <Messages ref={depositFailMessage} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      );
+  }
 
 const comparisonFn = function (prevProps, nextProps) {
     return prevProps.location.pathname === nextProps.location.pathname;

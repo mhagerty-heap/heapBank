@@ -155,7 +155,7 @@ const MakeATransfer = () => {
               <InputNumber id="transferAmount" value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
               <h5>Step #4: Submit Transfer</h5>
               <Button id="submitTransferButton" label="Submit Transfer" icon="pi pi-check-square" className="p-button-success"></Button>
-              <div className="card">
+              <div classname="card">
                   <Messages ref={depositSuccessMessage} />
                   <Messages ref={depositFailMessage} />
               </div>
