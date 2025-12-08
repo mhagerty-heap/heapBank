@@ -17,6 +17,8 @@ const MakeATransfer = () => {
   const [transactionAmount, setTransactionAmount] = useState(null);
   const depositSuccessMessage = useRef(null);
   const depositFailMessage = useRef(null);
+  const mobileTransferFail = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   const accounts = [
     {label: 'Checking (XX91)', value: 'checkingxx91'},
@@ -29,6 +31,16 @@ const MakeATransfer = () => {
   useEffect(() => {
       savingsDataService.getCustomersSavingsData().then(data => {setInitiallyRetrievedSavingsData(data);});
       checkingDataService.getCustomersCheckingData().then(data => { setInitiallyRetrievedCheckingData(data);  });
+      // detect mobile devices and show a mobile-specific message
+      try {
+        const mobile = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent || '');
+        setIsMobile(mobile);
+        if (mobile && mobileTransferFail && mobileTransferFail.current) {
+          mobileTransferFail.current.show({severity: 'error', summary: 'Not Supported:', detail: 'Transfers are not supported on Mobile yet', life: 10000});
+        }
+      } catch (err) {
+        // ignore server-side rendering or navigator absence
+      }
   },[]);
   // set local data for savings
   if ("customerSavingsData" in sessionStorage && sessionStorage.getItem("customerSavingsData") !== null && sessionStorage.getItem("customerSavingsData") !== '""') { // check if data already exists in sessionStorage
@@ -60,6 +72,13 @@ const MakeATransfer = () => {
 
   const onButtonClick = (e) => {
     e.preventDefault(); // prevents page from reloading
+    if (isMobile) {
+      // prevent transfer attempts from mobile and show specific message
+      if (mobileTransferFail && mobileTransferFail.current) {
+        mobileTransferFail.current.show({severity: 'error', summary: 'Not Supported:', detail: 'Transfers are not supported on Mobile yet', life: 10000});
+      }
+      return;
+    }
     const apiErrorPercentage = Math.floor(Math.random() * 101);
     //const apiErrorPercentage = 10; // debug
     if (toAccount && fromAccount && transactionAmount && apiErrorPercentage >= 30 ) {  // if all values are present and toAccount does not equal fromAccount
@@ -136,6 +155,10 @@ const MakeATransfer = () => {
 
     return (
       <form onSubmit={onButtonClick}>
+        {/* Mobile transfer banner - moved to top to ensure full width on small screens */}
+        <div className="mobile-transfer-banner-container">
+          <Messages ref={mobileTransferFail} className="mobile-transfer-banner" />
+        </div>
         <div className="grid p-fluid">
           <div className="col-12 lg:col-6">
             <div className="card">
@@ -154,11 +177,11 @@ const MakeATransfer = () => {
               <h5>Step #3: Enter a Transfer Amount</h5>
               <InputNumber id="transferAmount" value={transactionAmount} onValueChange={(e) => setTransactionAmount(e.value)} mode="currency" currency="USD" locale="en-US" required/>
               <h5>Step #4: Submit Transfer</h5>
-              <Button id="submitTransferButton" label="Submit Transfer" icon="pi pi-check-square" className="p-button-success"></Button>
-              <div className="card">
+                <Button id="submitTransferButton" label="Submit Transfer" icon="pi pi-check-square" className="p-button-success" disabled={isMobile} style={isMobile ? {opacity: 0.5, cursor: 'not-allowed'} : {}}></Button>
+                <div className="card">
                   <Messages ref={depositSuccessMessage} />
                   <Messages ref={depositFailMessage} />
-              </div>
+                </div>
             </div>
 
 
