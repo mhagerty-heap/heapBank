@@ -25,10 +25,10 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/_force_api_404_failure_route"
+            "destination": "/_api_force_404_static_target"
         },
         {
-            "source": "/(?!.*\\.).*",
+            "source": "/(.*)",
             "destination": "/index.html"
         }
     ]
