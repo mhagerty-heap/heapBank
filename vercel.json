@@ -25,7 +25,11 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/_404_API_FAIL_STATIC_FILE.html"
+            "destination": "/_force_api_404_failure_route"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
         }
     ]
 }
