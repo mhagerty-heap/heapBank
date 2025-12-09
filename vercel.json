@@ -25,7 +25,8 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/_api_force_404_static_target"
+            "destination": "/index.html",
+            "status": 404
         }
     ]
 }
