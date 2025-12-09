@@ -22,10 +22,12 @@
             ]
         }
     ],
-    "rewrites": [
+    "redirects": [
         {
             "source": "/api/(.*)",
-            "destination": "/_api_failure_404_static_target"
+            "destination": "/404",
+            "permanent": false,
+            "statusCode": 404
         }
     ]
 }
