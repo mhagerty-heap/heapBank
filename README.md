@@ -3,7 +3,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).  
 
-## Table of Contents
+## Table of Contents 
 
 - [Updating to New Releases](#updating-to-new-releases)
 - [Sending Feedback](#sending-feedback)
@@ -20,7 +20,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Debugging in the Editor](#debugging-in-the-editor)
 - [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
-- [Installing a Dependency](#installing-a-dependency) 
+- [Installing a Dependency](#installing-a-dependency)
 - [Importing a Component](#importing-a-component)
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
