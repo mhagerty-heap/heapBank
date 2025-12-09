@@ -23,10 +23,9 @@
         }
     ],
     "rewrites": [
-      {
-        "source": "/api/(.*)",
-        "destination": "/404.html" // Route all /api/* requests to a non-existent file
-      }
+        {
+            "source": "/api/(.*)",
+            "destination": "/non-existent-api-path-to-force-404"
+        }
     ]
-
 }
