@@ -21,7 +21,7 @@ You can find the most recent version of this guide [here](https://github.com/fac
 - [Formatting Code Automatically](#formatting-code-automatically)
 - [Changing the Page `<title>`](#changing-the-page-title)
 - [Installing a Dependency](#installing-a-dependency)
-- [Importing a Component](#importing-a-component)
+- [Importing a Component](#importing-a-component) 
 - [Code Splitting](#code-splitting)
 - [Adding a Stylesheet](#adding-a-stylesheet)
 - [Post-Processing CSS](#post-processing-css)
