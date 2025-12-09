@@ -28,7 +28,7 @@
             "destination": "/_force_api_404_failure_route"
         },
         {
-            "source": "/(.*)",
+            "source": "/(?!.*\\.).*",
             "destination": "/index.html"
         }
     ]
