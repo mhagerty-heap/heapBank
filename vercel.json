@@ -22,11 +22,10 @@
             ]
         }
     ],
-    "routes": [
+    "rewrites": [
         {
-            "src": "/api/(.*)",
-            "dest": "/index.html",
-            "status": 404
+            "source": "/api/(.*)",
+            "destination": "/_api_failure_404_static_target"
         }
     ]
 }
