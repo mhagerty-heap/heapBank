@@ -21,5 +21,12 @@
                 }
             ]
         }
+    ],
+    "rewrites": [
+      {
+        "source": "/api/(.*)",
+        "destination": "/404.html" // Route all /api/* requests to a non-existent file
+      }
     ]
+
 }
